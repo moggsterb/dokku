@@ -3,14 +3,15 @@
   --background-rgb: 33, 33, 33;
   /* --background-rgb: 80, 0, 0; */
 
-  --grid-width: 360px;
+  --grid-size: 360px;
+  --cell-size: 40px;
 }
 
 /* Medium devices (tablets, 640px and up) */
 @media only screen and (min-width: 640px) {
   :root {
     /* --background-rgb: 0, 80, 0; */
-    --grid-width: 580px;
+    --grid-size: 580px;
   }
 }
 
@@ -18,7 +19,7 @@
 @media only screen and (min-width: 1024px) {
   :root {
     /* --background-rgb: 0, 0, 80; */
-    --grid-width: 600px;
+    --grid-size: 600px;
   }
 }
 
@@ -26,7 +27,7 @@
 @media only screen and (min-width: 1200px) {
   :root {
     /* --background-rgb: 80, 80, 0; */
-    --grid-width: 700px;
+    --grid-size: 700px;
   }
 }
 
@@ -34,8 +35,15 @@
 @media only screen and (min-width: 1440px) {
   :root {
     /* --background-rgb: 0, 80, 80; */
-    --grid-width: 800px;
+    --grid-size: 810px;
   }
+}
+
+:root {
+  --grid-unit: calc(var(--grid-size) / 100);
+  --grid-padding: calc(var(--grid-unit) * 3);
+  --cell-size: calc(var(--grid-unit) * 10);
+  --block-gutter: calc(var(--grid-unit) * 2);
 }
 
 * {
@@ -79,13 +87,41 @@ body {
 
 .grid {
   background: #333;
-  width: var(--grid-width);
-  height: var(--grid-width);
+  width: var(--grid-size);
+  height: var(--grid-size);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: var(--grid-padding);
+}
+.cell {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  padding: 1px;
+  display: flex;
+}
+
+.row-3,
+.row-6 {
+  margin-top: var(--block-gutter);
+}
+.col-3,
+.col-6 {
+  margin-left: var(--block-gutter);
+}
+
+.cell-inner {
+  display: flex;
+  flex: 1;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .selector {
   background: #444;
-  width: var(--grid-width);
+  width: var(--grid-size);
   margin-top: 10px;
   height: 100px;
 }
