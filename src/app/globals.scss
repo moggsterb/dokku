@@ -1,0 +1,215 @@
+:root {
+  --main-fg: rgb(255, 255, 255);
+  --main-bg: rgb(33, 33, 33);
+  /* --background-rgb: 80, 0, 0; */
+
+  --grid-size: 360px;
+  --cell-value-size: 30px;
+
+  --grid-bg: rgb(255, 255, 255, 0.05);
+  --cell-bg: rgb(255, 255, 255, 0.05);
+  --cell-preset-bg: rgb(255, 255, 255, 0.2);
+  --cell-preset-fg: rgb(209, 201, 45);
+  --cell-active-bg: rgb(228, 129, 30);
+  --cell-active-fg: rgb(255, 229, 202);
+  --cell-lit-bg: rgba(0, 96, 96, 0.2);
+  --cell-lit-fg: rgba(0, 96, 96, 1);
+  --cell-lit-preset-bg: rgb(0, 96, 96, 0.5);
+  --cell-lit-preset-fg: rgba(92, 232, 232);
+}
+
+/* Medium devices (tablets, 640px and up) */
+@media only screen and (min-width: 640px) {
+  :root {
+    --grid-size: 540px;
+  }
+}
+
+/* Large devices (desktops, 1024px and up) */
+@media only screen and (min-width: 1024px) {
+  :root {
+    --grid-size: 630px;
+  }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  :root {
+    --grid-size: 720px;
+  }
+}
+
+/* XXLarge devices (larger desktops, 1440px and up) */
+@media only screen and (min-width: 1440px) {
+  :root {
+    --grid-size: 810px;
+  }
+}
+
+:root {
+  --grid-unit: calc(var(--grid-size) / 100);
+  --grid-padding: calc(var(--grid-unit) * 2);
+  --block-gutter: calc(var(--grid-unit) * 0.75);
+  --cell-size: calc(
+    (
+        var(--grid-size) - calc(var(--grid-padding) * 2) -
+          calc(var(--block-gutter) * 2)
+      ) / 9
+  );
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  height: 100%;
+}
+
+body {
+  color: var(--main-fg);
+  background: var(--main-bg);
+}
+
+.two-col {
+  display: flex;
+  height: 100%;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+
+  @media (orientation: portrait) {
+    flex-direction: column;
+  }
+}
+
+.grid-container,
+.selector {
+  background: rgba(255, 0, 0, 0.1);
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.grid {
+  background: var(--grid-bg);
+  width: var(--grid-size);
+  height: var(--grid-size);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: var(--grid-padding);
+  border-radius: var(--grid-padding);
+}
+
+.cell {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  padding: 1px;
+  display: flex;
+
+  &.row-3,
+  &.row-6 {
+    margin-top: var(--block-gutter);
+  }
+
+  &.col-3,
+  &.col-6 {
+    margin-left: var(--block-gutter);
+  }
+
+  &__inner {
+    display: flex;
+    flex: 1;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background: var(--cell-bg);
+    transition: background 0.25s ease-in;
+    border-radius: 8px;
+
+    &.lit {
+      background-color: var(--cell-lit-bg);
+      color: var(--cell-lit-fg);
+
+      &.preset {
+        background-color: var(--cell-lit-preset-bg);
+        color: var(--cell-lit-preset-fg);
+      }
+    }
+
+    &.active {
+      background-color: var(--cell-active-bg);
+    }
+
+    &.preset {
+      background-color: var(--cell-preset-bg);
+      color: var(--cell-preset-fg);
+    }
+
+    &.can-activate {
+      cursor: pointer;
+    }
+  }
+
+  &__value {
+    font-size: var(--cell-value-size);
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+}
+
+.grid-controls {
+  width: var(--grid-size);
+  margin-top: 10px;
+  height: 100px;
+}
+
+.value-selector {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex: 1;
+
+  &__row {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  &__value {
+    flex: 1;
+    background: #333;
+    margin: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+
+    &.available {
+      background-color: var(--cell-active-bg);
+      color: var(--cell-active-fg);
+    }
+
+    &.taken {
+      background-color: var(--cell-lit-preset-bg);
+      color: var(--cell-lit-preset-fg);
+    }
+  }
+}
+
+.extra-container {
+  /* background: orange; */
+  flex: 1;
+}
