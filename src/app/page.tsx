@@ -1,21 +1,29 @@
-import Grid from '@/components/Grid';
-import { initialCells, loadCells } from '@/utils/cell';
+import MainContainer from '@/components/MainContainer';
 import Link from 'next/link';
 
 export default function Home() {
+  const header = <h1 style={{ textAlign: 'center' }}>Dokku</h1>;
   return (
-    <main className='two-col'>
-      <div className='grid-container'>
-        {/* <Grid initialCells={loadCells(3)} /> */}
-        {/* <Grid initialCells={initialCells()} /> */}
-        <h1>Dokku</h1>
-        <Link href='/selector/easy'>Easy</Link>
-        <Link href='/selector/normal'>Normal</Link>
-        <Link href='/selector/difficult'>Difficult</Link>
-        <Link href='/selector/expert'>Expert</Link>
-        <Link href='/builder'>Create Your Own Puzzle</Link>
+    <MainContainer header={header}>
+      <div className='grid'>
+        <ul>
+          <li>
+            <Link href='/selector/easy'>Easy</Link>
+          </li>
+          <li>
+            <Link href='/selector/normal'>Normal</Link>
+          </li>
+          <li>
+            <Link href='/selector/difficult'>Difficult</Link>
+          </li>
+          <li>
+            <Link href='/selector/expert'>Expert</Link>
+          </li>
+          <li>
+            <Link href='/builder'>Create Your Own Puzzle</Link>
+          </li>
+        </ul>
       </div>
-      <div className='extra-container'></div>
-    </main>
+    </MainContainer>
   );
 }

@@ -1,0 +1,121 @@
+.cell {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  padding: 1px;
+  display: flex;
+
+  &.topGutter {
+    margin-top: var(--grid-gutter);
+  }
+
+  &.rightGutter {
+    margin-left: var(--grid-gutter);
+  }
+
+  & .inner {
+    display: flex;
+    flex: 1;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background: var(--cell-bg);
+    color: var(--cell-fg);
+    transition: background 0.25s ease-in;
+    border-radius: var(--cell-radius);
+    position: relative;
+
+    &.preset {
+      background-color: var(--cell-preset-bg);
+      color: var(--cell-preset-fg);
+    }
+
+    &.barredColumn,
+    &.barredRow {
+      background-color: rgba(67, 8, 8, 0.3);
+      color: rgba(195, 58, 16, 0.3);
+    }
+
+    &.barredBlock {
+      background-color: rgba(67, 8, 8, 0.4);
+      color: rgba(195, 58, 16, 0.3);
+    }
+
+    &.connectedColumn,
+    &.connectedRow {
+      background-color: var(--cell-connected-bg);
+      color: var(--cell-connected-fg);
+    }
+
+    &.connectedBlock {
+      background-color: var(--cell-connected-block-bg);
+      color: var(--cell-connected-block-fg);
+    }
+
+    &.active {
+      background-color: var(--cell-active-bg);
+      color: var(--cell-active-fg);
+    }
+
+    &.focusedValue {
+      background-color: rgb(67, 18, 8);
+      color: rgb(223, 181, 169);
+    }
+
+    &.scanSolveable {
+      background: var(--cell-solve-scan-bg);
+
+      .solveIcon {
+        font-size: calc(var(--cell-value-size) * 0.5);
+        color: rgb(45, 145, 34);
+        position: absolute;
+        top: 3px;
+        right: 5px;
+      }
+
+      .solveableValue {
+        font-size: var(--cell-value-size);
+        color: var(--cell-solve-scan-fg);
+      }
+    }
+
+    &.singleSolveable {
+      background: var(--cell-solve-single-bg);
+      .solveableValue {
+        font-size: var(--cell-value-size);
+        color: var(--cell-solve-single-fg);
+      }
+    }
+
+    &.canActivate {
+      cursor: pointer;
+    }
+  }
+
+  & .value {
+    font-size: var(--cell-value-size);
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+}
+
+.inSelector {
+  width: var(--selector-cell-size);
+  height: var(--selector-cell-size);
+
+  &.topGutter {
+    margin-top: var(--selector-grid-gutter);
+  }
+
+  &.rightGutter {
+    margin-left: var(--selector-grid-gutter);
+  }
+
+  & .inner {
+    border-radius: var(--selector-cell-radius);
+  }
+
+  & .value {
+    font-size: calc(var(--cell-value-size) / 3);
+  }
+}

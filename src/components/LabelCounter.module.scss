@@ -1,0 +1,59 @@
+.wrapper {
+  background: #555;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  height: 30px;
+  border-radius: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding-right: 40px;
+
+  &:hover {
+    background: #333;
+    cursor: pointer;
+  }
+
+  &.scanning {
+    .count {
+      background: var(--cell-solve-scan-bg);
+      color: var(--cell-solve-scan-fg);
+    }
+  }
+
+  &.single {
+    .count {
+      background: var(--cell-solve-single-bg);
+      color: var(--cell-solve-single-fg);
+    }
+  }
+}
+
+.label {
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding-left: 15px;
+  padding-right: 10px;
+  font-size: 12px;
+}
+
+.countHolder {
+  position: relative;
+}
+
+.count {
+  background: grey;
+  color: white;
+  border: 5px solid #333;
+  width: 40px;
+  height: 30px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 0px;
+  top: -15px;
+  font-size: 16px;
+}

@@ -1,73 +1,95 @@
-'use client';
-
-import { cellReducer, getTakenValues, initialCells } from '@/utils/cell';
-import { useReducer, useState } from 'react';
+import { ICell, IEnneads, IGrid } from '@/utils/types';
 import Cell from './Cell';
-import { ICell } from '@/utils/types';
-import ValueSelector from './ValueSelector';
+import { Dispatch, SetStateAction } from 'react';
+import GridStatus from './GridStatus';
+
+import styles from './Grid.module.scss';
+import { displayCell } from '@/utils/display';
+import { GridActions } from '@/utils/grid';
 
 interface Props {
-  initialCells: ICell[];
+  grid: IGrid;
+  showCandidates?: boolean;
+  gridDispatch?: Dispatch<GridActions>;
 }
 
-const Grid = ({ initialCells }: Props) => {
-  const [cells, cellDispatch] = useReducer(cellReducer, initialCells);
-  const [activeCell, setActiveCell] = useState<number>();
+const Grid = ({ grid, showCandidates, gridDispatch }: Props) => {
+  const {
+    cells,
+    enneads,
+    gridStatus,
+    displayMode,
+    focusCell,
+    focusValue,
+    scanningSolves,
+    singleSolves,
+    focusSolveable,
+  } = grid;
 
-  const handleCellClick = (value: number) => {
-    setActiveCell(value !== activeCell ? value : undefined);
+  const handleCellClick = (cellID: number) => {
+    if (!gridDispatch || gridStatus === 'preview') return;
+    if (cells[cellID].value) {
+      const cellIDs = scanningSolves
+        .filter((item) => item.option === focusValue)
+        .map((item) => item.cellID);
+
+      gridDispatch({
+        type: 'SOLVE_CELLS',
+        payload: {
+          cellIDs,
+          value: cells[cellID].value,
+        },
+      });
+    }
   };
 
-  const setCellValue = (value: number | string) => {
-    if (activeCell !== undefined) {
-      const cell = { ...cells[activeCell] };
+  const handleCellFocus = (cellID: number, canFocus: boolean) => {
+    if (!gridDispatch || gridStatus === 'preview') return;
+    gridDispatch({ type: 'FOCUS_CELL', payload: { cellID } });
+  };
 
-      cell.value = typeof value === 'number' ? value : 0;
-      cell.status = typeof value === 'number' ? 'preset' : 'unsolved';
-
-      cellDispatch({ type: 'UPDATE_CELL', payload: { cell } });
-      setActiveCell(undefined);
-    }
+  const handleCellBlur = (value: number) => {
+    if (!gridDispatch || gridStatus === 'preview') return;
+    gridDispatch({ type: 'BLUR_CELL' });
   };
 
   const RenderCells = () => {
-    let litRow: number, litColumn: number, litBlock: number;
-    if (activeCell) {
-      const activeCellOObject = cells[activeCell];
-      litRow = activeCellOObject.row;
-      litColumn = activeCellOObject.column;
-      litBlock = activeCellOObject.block;
-    }
+    const focusCellObj = focusCell !== undefined ? cells[focusCell] : undefined;
 
     return cells.map((cell, index) => {
       return (
         <Cell
           key={index}
-          cell={cell}
-          isActive={activeCell === cell.id}
-          isLit={
-            cell.row === litRow ||
-            cell.column === litColumn ||
-            cell.block === litBlock
-          }
+          displayCell={displayCell(
+            cells,
+            enneads,
+            cell,
+            gridStatus,
+            displayMode,
+            focusCellObj,
+            focusValue,
+            scanningSolves,
+            singleSolves,
+            focusSolveable
+          )}
           clickHandler={handleCellClick}
+          focusHandler={handleCellFocus}
+          blurHandler={handleCellBlur}
+          showCandidates={showCandidates || false}
         />
       );
     });
   };
 
+  const gridStyle = `${styles.grid} ${
+    gridStatus === 'selector' ? styles.gridSelector : ''
+  }`;
+
   return (
-    <>
-      <div className='grid'>{RenderCells()}</div>
-      <div className='grid-controls'>
-        {activeCell !== undefined && (
-          <ValueSelector
-            taken={getTakenValues(cells, cells[activeCell])}
-            setCellValue={setCellValue}
-          />
-        )}
-      </div>
-    </>
+    <div className={styles.wrapper}>
+      <div className={gridStyle}>{RenderCells()}</div>
+      <GridStatus grid={grid} gridDispatch={gridDispatch} />
+    </div>
   );
 };
 

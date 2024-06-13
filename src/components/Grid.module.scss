@@ -1,0 +1,26 @@
+.wrapper {
+  position: relative;
+}
+
+.grid {
+  background-color: var(--grid-bg);
+  width: var(--grid-size);
+  height: var(--grid-size);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: var(--grid-padding);
+  border-radius: var(--grid-padding);
+}
+
+.gridSelector {
+  width: var(--selector-grid-size);
+  height: var(--selector-grid-size);
+  padding: var(--selector-grid-padding);
+  border-radius: var(--selector-grid-padding);
+  transition: background 0.25s ease-in;
+  &:hover {
+    background: rgba(160, 160, 160, 0.3);
+    cursor: pointer;
+  }
+}

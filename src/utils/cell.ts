@@ -1,8 +1,8 @@
 import { examples } from "./examples";
-import { EnneadType, ICell, IEnneads, IOption, ITrio } from "./types";
+import { EnneadType, ICell, IEnneads, ICandidate, ITrio } from "./types";
 
 
-type CellAction = { type: 'UPDATE_CELL', payload: { cell: ICell } };
+export type CellAction = { type: 'UPDATE_CELL', payload: { cell: ICell } } | { type: 'UPDATE_CELLS', payload: { cells: ICell[] } };
 
 export const cellReducer = (state: ICell[], action: CellAction) => {
   switch (action.type) {
@@ -13,6 +13,8 @@ export const cellReducer = (state: ICell[], action: CellAction) => {
         updateCell,
         ...state.slice(updateCell.id + 1),
       ]
+    case 'UPDATE_CELLS':
+      return [...action.payload.cells];
     default:
       return state;
   }
@@ -34,8 +36,8 @@ export const initialCells = (): ICell[] => {
         column,
         block: blockRow * 3 + blockColumn,
         status: 'unsolved',
-        value: 0,
-        options: [1, 2, 3, 4, 5, 6, 7, 8, 9].map((value) => {
+        value: undefined,
+        candidates: [1, 2, 3, 4, 5, 6, 7, 8, 9].map((value) => {
           return { value };
         }),
         solution: [],
@@ -55,9 +57,9 @@ export const loadCells = (id: number): ICell[] => {
       Array.from(row).forEach((column, c) => {
         if (column !== '-') {
           // const solved = { stage: 0, value: Number(column), reason: 'fix' };
-          const cellId = r * 9 + c;
-          cells[cellId].status = 'preset'
-          cells[cellId].value = Number(column);
+          const cellID = r * 9 + c;
+          cells[cellID].status = 'preset'
+          cells[cellID].value = Number(column);
         }
       });
     });
@@ -83,49 +85,9 @@ export const cellsInTrio = (cells: ICell[], trio: ITrio): ICell[] => {
     )
 }
 
-// returns a 81 element ICell[] with options up to date
-export const updateCellOptions = (cells: ICell[], stage: number): ICell[] => {
-  return cells.map((cell) => {
-    return {
-      ...cell,
-      ...(cell.value === 0 && { options: cellOptions(cells, cell, stage) }),
-    };
-  });
-};
-
-// returns updated IOption[] for a particular cell
-const cellOptions = (cells: ICell[], cell: ICell, stage: number): IOption[] => {
-  const takenAll = getTakenValues(cells, cell);
-
-  return cell.options.map((option) => {
-    const rejected = takenAll.includes(option.value) && !option.rejected
-      ? { stage, reason: 'TAKEN' }
-      : undefined;
-    return {
-      ...option,
-      ...(rejected && { rejected }),
-    };
-  });
-};
-
-export const getTakenValues = (cells: ICell[], cell: ICell) => {
-  const taken = takenCellValues([
-    ...cellsInEnnead(cells, 'row', cell.row),
-    ...cellsInEnnead(cells, 'column', cell.column),
-    ...cellsInEnnead(cells, 'block', cell.block),
-  ])
-  const uniqueArray = taken.filter((value, index) => taken.indexOf(value) === index);
-  return uniqueArray;
-}
-
-// returns a number[] of taken values for a given  ICell[]
-export const takenCellValues = (cells: ICell[]): number[] => {
-  return cells.filter((cell) => cell.value > 0).map((cell) => cell.value);
-};
-
 export const setSolvedByCLO = (cells: ICell[]) => {
   return cells.map((cell) => {
-    const solvedByCLO = cell.value === 0 && flagCellsLastOption(cell)
+    const solvedByCLO = cell.value === 0 && flagCellsLastCandidate(cell)
     return {
       ...cell,
       ...(solvedByCLO && { solved: solvedByCLO }),
@@ -133,10 +95,10 @@ export const setSolvedByCLO = (cells: ICell[]) => {
   })
 }
 
-export const flagCellsLastOption = (cell: ICell) => {
-  const available = cell.options
-    .filter((option) => !option.rejected)
-    .map((option) => option.value);
+export const flagCellsLastCandidate = (cell: ICell) => {
+  const available = cell.candidates
+    .filter((candidate) => !candidate.rejected)
+    .map((candidate) => candidate.value);
   return available.length === 1 && { stage: 1, reason: 'clo', value: available[0] }
 }
 
@@ -151,15 +113,15 @@ export const setSolvedByVLC = (cells: ICell[], enneads: IEnneads) => {
 };
 
 export const flagValuesLastCell = (cell: ICell, enneads: IEnneads) => {
-  // check option.value in each of the 3 enneads ... if any are 1 ... we can solve
-  const onlyOption = cell.options
-    .filter((option) => !option.rejected)
-    .filter((option) => (
-      (enneads.column[cell.column].values.find(value => value.option === option.value)?.count === 1) ||
-      (enneads.row[cell.row].values.find(value => value.option === option.value)?.count === 1) ||
-      (enneads.block[cell.block].values.find(value => value.option === option.value)?.count === 1)
+  // check candidate.value in each of the 3 enneads ... if any are 1 ... we can solve
+  const onlyCandidate = cell.candidates
+    .filter((candidate) => !candidate.rejected)
+    .filter((candidate) => (
+      (enneads.column[cell.column].values.find(value => value.option === candidate.value)?.count === 1) ||
+      (enneads.row[cell.row].values.find(value => value.option === candidate.value)?.count === 1) ||
+      (enneads.block[cell.block].values.find(value => value.option === candidate.value)?.count === 1)
     ))
-  return onlyOption.length === 1 && { stage: 1, reason: 'vlc', value: onlyOption[0].value }
+  return onlyCandidate.length === 1 && { stage: 1, reason: 'vlc', value: onlyCandidate[0].value }
 }
 
 
@@ -173,11 +135,11 @@ export const unsolvedCells = (cells: ICell[]) => {
 };
 
 export const solvedCells = (cells: ICell[]) => {
-  return cells.filter((cell) => cell.value > 0).length;
+  return cells.filter((cell) => cell.value !== undefined).length;
 };
 
-export const outstandingCellOptions = (cells: ICell[]) => {
-  return cells.filter(cell => cell.value === 0).reduce((total, cell) => { return total + cell.options.filter(option => !option.rejected).length }, 0);
+export const outstandingCellCandidates = (cells: ICell[]) => {
+  return cells.filter(cell => cell.value === 0).reduce((total, cell) => { return total + cell.candidates.filter(candidate => !candidate.rejected).length }, 0);
 }
 
 
