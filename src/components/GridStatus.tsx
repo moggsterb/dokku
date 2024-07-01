@@ -3,7 +3,7 @@ import styles from './GridStatus.module.scss';
 import { onlyUnique } from '@/utils/helpers';
 import LabelCounter from './LabelCounter';
 import { Dispatch } from 'react';
-import { GridActions } from '@/utils/grid';
+import { filterSolveableCells, GridActions } from '@/utils/grid';
 
 interface Props {
   grid: IGrid;
@@ -28,21 +28,19 @@ const GridStatus = ({
   grid: {
     gridStatus,
     displayMode,
-    focusCell,
+    focusCellID,
     focusValue,
     cells,
-    scanningSolves,
-    singleSolves,
+    solveableCells,
   },
   gridDispatch,
 }: Props) => {
   const unsolvedCells = cells.filter((item) => item.status === 'unsolved');
 
-  const scannableCells = scanningSolves
-    .map((item) => item.cellID)
-    .filter(onlyUnique).length;
-
-  const singles = singleSolves.length;
+  const scanBlock = filterSolveableCells(solveableCells, 'block');
+  const scanColumn = filterSolveableCells(solveableCells, 'column');
+  const scanRow = filterSolveableCells(solveableCells, 'row');
+  const singles = filterSolveableCells(solveableCells, 'single');
 
   const updateStatus = (newMode: string, state: boolean) => {
     if (!gridDispatch) return;
@@ -55,33 +53,89 @@ const GridStatus = ({
   return (
     <>
       <div className={styles.top}>
-        <LabelCounter text='Unsolved' count={unsolvedCells.length} />
         {gridStatus === 'ready' && (
           <div className={styles.solvers}>
             <LabelCounter
-              text='Scannable'
-              count={scannableCells}
+              text='Block'
+              count={scanBlock.length}
               theme={'scanning'}
-              handler={(state: boolean) => {
-                updateStatus('scanning_all', state);
+              enterHandler={(state: boolean) => {
+                updateStatus('scanning_blocks', state);
+              }}
+              clickHandler={() => {
+                if (!gridDispatch) return;
+                gridDispatch({
+                  type: 'BATCH_SOLVE',
+                  payload: {
+                    items: scanBlock,
+                  },
+                });
+              }}
+            />
+            <LabelCounter
+              text='Column'
+              count={scanColumn.length}
+              theme={'scanning'}
+              enterHandler={(state: boolean) => {
+                updateStatus('scanning_columns', state);
+              }}
+              clickHandler={() => {
+                if (!gridDispatch) return;
+                gridDispatch({
+                  type: 'BATCH_SOLVE',
+                  payload: {
+                    items: scanColumn,
+                  },
+                });
+              }}
+            />
+            <LabelCounter
+              text='Row'
+              count={scanRow.length}
+              theme={'scanning'}
+              enterHandler={(state: boolean) => {
+                updateStatus('scanning_rows', state);
+              }}
+              clickHandler={() => {
+                if (!gridDispatch) return;
+                gridDispatch({
+                  type: 'BATCH_SOLVE',
+                  payload: {
+                    items: scanRow,
+                  },
+                });
               }}
             />
             <LabelCounter
               text='Singles'
-              count={singles}
+              count={singles.length}
               theme={'single'}
-              handler={(state: boolean) => {
+              enterHandler={(state: boolean) => {
                 updateStatus('singles_all', state);
+              }}
+              clickHandler={() => {
+                if (!gridDispatch) return;
+                gridDispatch({
+                  type: 'BATCH_SOLVE',
+                  payload: {
+                    items: singles,
+                  },
+                });
               }}
             />
           </div>
         )}
       </div>
       <div className={styles.bottom}>
-        <Setting label='Status' value={gridStatus} />
-        <Setting label='Mode' value={displayMode} />
-        <Setting label='Cell' value={focusCell} />
-        <Setting label='Value' value={focusValue} />
+        <Setting label='Unsolved' value={unsolvedCells.length} />
+        {gridStatus !== 'selector' && (
+          <>
+            <Setting label='Status' value={gridStatus} />
+            <Setting label='Mode' value={displayMode} />
+            <Setting label='Cell' value={focusCellID} />
+            <Setting label='Value' value={focusValue} />
+          </>
+        )}
       </div>
     </>
   );

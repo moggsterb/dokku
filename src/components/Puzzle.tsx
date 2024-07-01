@@ -1,17 +1,11 @@
 'use client';
 
-import { useReducer } from 'react';
 import { ICell } from '@/utils/types';
-import ValueSelector from './ValueSelector';
-import { getTakenValues } from '@/utils/solving/analysis';
 import MainContainer from './MainContainer';
 import Grid from './Grid';
-import ControlPanel from './ControlPanel';
 
-import { gridReducer, initialGrid } from '@/utils/grid';
-import Scanner from './SolveScanning';
-import SolveScanning from './SolveScanning';
-import SolveSingles from './SolveSingles';
+import useControl from '@/utils/hooks/useControl';
+import ControlBuilder from './ControlBuilder';
 
 interface Props {
   initialCells: ICell[];
@@ -24,16 +18,12 @@ const Puzzle = ({
   initialStatus,
   showCandidates = false,
 }: Props) => {
-  const [grid, gridDispatch] = useReducer(
-    gridReducer,
-    initialGrid(initialStatus, initialCells)
-  );
-
-  const { gridStatus, cells, enneads, focusCell, focusValue } = grid;
+  const { grid, gridDispatch } = useControl(initialStatus, initialCells);
+  const { gridStatus, cells, enneads, focusCellID, focusValue } = grid;
 
   const setCellValue = (value: number | string) => {
-    if (focusCell !== undefined) {
-      const cell = { ...cells[focusCell] };
+    if (focusCellID !== undefined) {
+      const cell = { ...cells[focusCellID] };
 
       cell.value = typeof value === 'number' ? value : 0;
       cell.status =
@@ -43,57 +33,25 @@ const Puzzle = ({
             : 'solved'
           : 'unsolved';
 
-      gridDispatch({ type: 'UPDATE_CELL', payload: { cell } });
+      // gridDispatch({ type: 'UPDATE_CELL', payload: { cell } });
       // setActiveCell(undefined);
     }
   };
 
-  const updateCandidates = () => {
-    // const newCells = updateCellCandidates(cells, 1);
-    // cellDispatch({
-    //   type: 'UPDATE_CELLS',
-    //   payload: { cells: newCells },
-    // });
-    // console.log({ newCells });
-  };
-
-  const header = (
-    <>
-      {gridStatus === 'ready' && (
-        <>
-          {/* <SolveScanning grid={grid} gridDispatch={gridDispatch} />
-          <SolveSingles grid={grid} gridDispatch={gridDispatch} /> */}
-        </>
-      )}
-      {/* {focusCell !== undefined ? (
-        <ValueSelector
-          taken={getTakenValues(cells, cells[focusCell])}
-          setCellValue={setCellValue}
-        />
-      ) : (
-        <ControlPanel
-          cells={cells}
-          enneads={enneads}
-          showCandidates={showCandidates}
-          gridDispatch={gridDispatch}
-          // cellDispatch={cellDispatch}
-          // setGridStatus={setGridStatus}
-          // setShowCandidates={setShowCandidates}
-          updateCandidates={updateCandidates}
-        />
-      )} */}
-    </>
-  );
+  const header =
+    gridStatus === 'builder' ? (
+      <ControlBuilder grid={grid} gridDispatch={gridDispatch} />
+    ) : gridStatus !== 'preview' ? (
+      <></>
+    ) : undefined;
 
   return (
     <>
-      <MainContainer header={initialStatus !== 'preview' && header}>
+      <MainContainer header={header}>
         <Grid
           grid={grid}
           showCandidates={showCandidates}
           gridDispatch={gridDispatch}
-          // setActiveCell={setActiveCell}
-          // setFocusCell={setFocusCell}
         />
       </MainContainer>
     </>

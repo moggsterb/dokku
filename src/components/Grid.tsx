@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction } from 'react';
 import GridStatus from './GridStatus';
 
 import styles from './Grid.module.scss';
-import { displayCell } from '@/utils/display';
+import { displayCell, isCellSolveable } from '@/utils/display';
 import { GridActions } from '@/utils/grid';
 
 interface Props {
@@ -19,27 +19,36 @@ const Grid = ({ grid, showCandidates, gridDispatch }: Props) => {
     enneads,
     gridStatus,
     displayMode,
-    focusCell,
+    focusCellID,
     focusValue,
-    scanningSolves,
-    singleSolves,
+    solveableCells,
     focusSolveable,
   } = grid;
 
   const handleCellClick = (cellID: number) => {
     if (!gridDispatch || gridStatus === 'preview') return;
-    if (cells[cellID].value) {
-      const cellIDs = scanningSolves
-        .filter((item) => item.option === focusValue)
-        .map((item) => item.cellID);
 
-      gridDispatch({
-        type: 'SOLVE_CELLS',
-        payload: {
-          cellIDs,
-          value: cells[cellID].value,
-        },
-      });
+    if (gridStatus === 'builder') {
+      if (cells[cellID].value) {
+        gridDispatch({
+          type: 'RESET_CELL',
+          payload: {
+            cellID: cellID,
+          },
+        });
+      }
+    } else {
+      const solveable = isCellSolveable(solveableCells, cellID, 'any', 'any');
+
+      if (solveable) {
+        gridDispatch({
+          type: 'SOLVE_CELLS',
+          payload: {
+            cellIDs: [cellID],
+            value: solveable.value,
+          },
+        });
+      }
     }
   };
 
@@ -53,8 +62,14 @@ const Grid = ({ grid, showCandidates, gridDispatch }: Props) => {
     gridDispatch({ type: 'BLUR_CELL' });
   };
 
+  const handleCandidateClick = (cellID: number, value: number) => {
+    if (!gridDispatch || gridStatus === 'preview') return;
+    gridDispatch({ type: 'PRESET_CELL', payload: { cellID, value } });
+  };
+
   const RenderCells = () => {
-    const focusCellObj = focusCell !== undefined ? cells[focusCell] : undefined;
+    const focusCellObj =
+      focusCellID !== undefined ? cells[focusCellID] : undefined;
 
     return cells.map((cell, index) => {
       return (
@@ -68,13 +83,13 @@ const Grid = ({ grid, showCandidates, gridDispatch }: Props) => {
             displayMode,
             focusCellObj,
             focusValue,
-            scanningSolves,
-            singleSolves,
+            solveableCells,
             focusSolveable
           )}
           clickHandler={handleCellClick}
           focusHandler={handleCellFocus}
           blurHandler={handleCellBlur}
+          setHandler={handleCandidateClick}
           showCandidates={showCandidates || false}
         />
       );

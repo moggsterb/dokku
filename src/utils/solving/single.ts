@@ -1,6 +1,6 @@
-import { ICell, ISingleSolve } from "../types";
+import { ICell, ISingleSolveCell } from "../types";
 
-export const findSingleSolves = (cells: ICell[]): ISingleSolve[] => {
+export const findSingleSolves = (cells: ICell[]): ISingleSolveCell[] => {
 
   return cells.filter((item) => item.status === 'unsolved')
     .map(item => {
@@ -10,5 +10,11 @@ export const findSingleSolves = (cells: ICell[]): ISingleSolve[] => {
       }
     })
     .filter(item => item.candidates.length === 1)
-    .map(item => { return { cellID: item.cellID, option: item.candidates[0].value } })
+    .map(item => {
+      return {
+        method: 'single',
+        cellID: item.cellID,
+        solution: item.candidates[0].value
+      }
+    })
 }

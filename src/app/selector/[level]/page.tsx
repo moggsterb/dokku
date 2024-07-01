@@ -7,6 +7,7 @@ import { examples } from '@/utils/examples';
 import { useRouter } from 'next/navigation';
 import Grid from '@/components/Grid';
 import { initialGrid } from '@/utils/grid';
+import AnimReveal from '@/components/AnimReveal';
 
 export default function Selector({
   params: { level },
@@ -29,17 +30,25 @@ export default function Selector({
   return (
     <MainContainer header={header}>
       <div className='selector'>
-        {grids.map((grid, index) => (
-          <div
-            className={`selector-block block-${index}`}
-            key={index}
-            onClick={() => {
-              router.push(`/selector/preview/${grid.id}`);
-            }}
-          >
-            <Grid grid={initialGrid('selector', loadCells(grid.id))} />
-          </div>
-        ))}
+        <AnimReveal
+          items={grids.map((grid, index) => {
+            return {
+              initX: 0,
+              initOpacity: 0,
+              component: (
+                <div
+                  className={`selector-block block-${index}`}
+                  key={index}
+                  onClick={() => {
+                    router.push(`/selector/preview/${grid.id}`);
+                  }}
+                >
+                  <Grid grid={initialGrid('selector', loadCells(grid.id))} />
+                </div>
+              ),
+            };
+          })}
+        />
       </div>
     </MainContainer>
   );

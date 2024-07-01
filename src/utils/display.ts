@@ -1,6 +1,6 @@
 import { cellsInEnnead } from "./cell";
 import { takenCellValues, takenInEnnead } from "./solving/analysis";
-import { EnneadType, ICell, IEnneads, IScanningSolve, ISingleSolve, IsSolveable } from "./types";
+import { EnneadType, ICell, IEnneads, IsSolveable, SolveableCells } from "./types";
 
 
 export interface IDisplayCellProps {
@@ -17,7 +17,7 @@ export interface IDisplayCellProps {
   inBarredRow: boolean;
   inBarredColumn: boolean;
   isSolveable: IsSolveable;
-  // scanTypes: EnneadType[];
+  // scanEnneadTypes: EnneadType[];
 
   gridStatus: string;
 }
@@ -30,8 +30,7 @@ export const displayCell = (
   displayMode: string,
   focusCellObj: ICell | undefined,
   focusValue: number | undefined,
-  scanningSolves: IScanningSolve[],
-  singleSolves: ISingleSolve[],
+  solveableCells: SolveableCells,
   focusSolveable: IsSolveable
 ): IDisplayCellProps => {
 
@@ -51,22 +50,6 @@ export const displayCell = (
     cell,
   }
 
-
-
-  // const inBarredBlock = (hasValue && focusValue !== undefined) || takenInEnnead(cells, 'block', cell.block, focusValue);
-  // const inBarredColumn = takenInEnnead(cells, 'column', cell.column, focusValue);
-  // const inBarredRow = takenInEnnead(cells, 'row', cell.row, focusValue);
-
-
-
-  // true if in scanningSolves.filter (cellID and option = value)
-  // const scanning = scanningSolves.filter(item => item.cellID === cell.id && item.option === focusValue)
-  // const isSolveable = scanning.length > 0;
-  // const solveableValue = isSolveable ? focusValue : undefined;
-  // const scanTypes = scanning.map(item => item.type).sort()
-
-
-
   const modeState = () => {
     switch (displayMode) {
       case 'manual':
@@ -81,7 +64,7 @@ export const displayCell = (
       case 'singles_all':
         return {
           ...state,
-          isSolveable: isCellSolveable(singleSolves, cell.id, 'single', 'all')
+          isSolveable: isCellSolveable(solveableCells, cell.id, 'single', 'any')
         }
 
       case 'singles_solve_cell':
@@ -90,53 +73,63 @@ export const displayCell = (
           inActiveBlock: cell.block === focusCellObj?.block,
           inActiveColumn: cell.column === focusCellObj?.column,
           inActiveRow: cell.row === focusCellObj?.row,
-          isSolveable: cell.id === focusCellObj?.id && isCellSolveable(singleSolves, cell.id, 'single', 'all')
+          isSolveable: cell.id === focusCellObj?.id && isCellSolveable(solveableCells, cell.id, 'single', 'any')
         }
-      case 'scanning_all':
+      case 'scanning_blocks':
         return {
           ...state,
-          isSolveable: isCellSolveable(scanningSolves, cell.id, 'scanning', 'all')
+          isSolveable: isCellSolveable(solveableCells, cell.id, 'block', 'any')
         }
+      case 'scanning_columns':
+        return {
+          ...state,
+          isSolveable: isCellSolveable(solveableCells, cell.id, 'column', 'any')
+        }
+      case 'scanning_rows':
+        return {
+          ...state,
+          isSolveable: isCellSolveable(solveableCells, cell.id, 'row', 'any')
+        }
+
       case 'scanning_value':
         return {
           ...state,
           inBarredBlock: (state.hasValue && focusValue !== undefined) || takenInEnnead(cells, 'block', cell.block, focusValue),
           inBarredColumn: takenInEnnead(cells, 'column', cell.column, focusValue),
           inBarredRow: takenInEnnead(cells, 'row', cell.row, focusValue),
-          isSolveable: isCellSolveable(scanningSolves, cell.id, 'scanning', focusValue),
+          isSolveable: isCellSolveable(solveableCells, cell.id, 'any', focusValue),
           hasFocusedValue: cell.value === focusValue,
         }
 
       case 'scanning_solve_cell':
 
-        if (focusSolveable && focusCellObj && focusSolveable.scanType && cell.id !== focusCellObj?.id) {
-          const { scanType, value } = focusSolveable;
-          const intersects = enneads[scanType][focusCellObj[scanType]].intersects;
-          const cellValues = enneads[scanType][focusCellObj[scanType]].cellValues;
+        if (focusSolveable && focusCellObj && focusSolveable.scanEnneadType && cell.id !== focusCellObj?.id) {
+          const { scanEnneadType, value } = focusSolveable;
+          const scanEnneadID = focusCellObj[scanEnneadType]
 
-          console.log({ cellValues, scanType, row: cell[scanType] })
-
-
-          const inBarredBlock = intersects.block.includes(cell.block) && enneads.block[cell.block].taken.includes(value)
-          const inBarredColumn = intersects.column.filter(item => cellValues[item] === undefined || scanType === 'block').includes(cell.column) && enneads.column[cell.column].taken.includes(value)
-          const inBarredRow = intersects.row.filter(item => cellValues[item] === undefined || scanType === 'block').includes(cell.row) && enneads.row[cell.row].taken.includes(value)
+          const { inBarredBlock, inBarredColumn, inBarredRow } = getBarringEnneads(
+            cells,
+            enneads,
+            cell,
+            value,
+            scanEnneadType,
+            scanEnneadID)
 
           return {
             ...state,
             inBarredBlock,
             inBarredColumn,
             inBarredRow,
-            inActiveBlock: scanType === 'block' && cell.block === focusCellObj?.block && cell.value !== undefined,
-            inActiveColumn: scanType === 'column' && cell.column === focusCellObj?.column && cell.value !== undefined,
-            inActiveRow: scanType === 'row' && cell.row === focusCellObj?.row && cell.value !== undefined,
+            inActiveBlock: scanEnneadType === 'block' && cell.block === focusCellObj?.block && cell.value !== undefined,
+            inActiveColumn: scanEnneadType === 'column' && cell.column === focusCellObj?.column && cell.value !== undefined,
+            inActiveRow: scanEnneadType === 'row' && cell.row === focusCellObj?.row && cell.value !== undefined,
             hasFocusedValue: (inBarredBlock || inBarredColumn || inBarredRow) && cell.value === focusSolveable.value,
-
-            isSolveable: cell.id === focusCellObj?.id && isCellSolveable(scanningSolves, cell.id, 'scanning', focusValue)
+            isSolveable: cell.id === focusCellObj?.id && isCellSolveable(solveableCells, cell.id, 'any', focusValue)
           }
         }
         return {
           ...state,
-          isSolveable: cell.id === focusCellObj?.id && isCellSolveable(scanningSolves, cell.id, 'scanning', focusValue)
+          isSolveable: cell.id === focusCellObj?.id && isCellSolveable(solveableCells, cell.id, 'any', focusValue)
         }
 
       default:
@@ -152,14 +145,56 @@ interface ISolveList {
 }
 
 export const isCellSolveable = (
-  solveList: ISolveList[],
+  solveableCells: SolveableCells,
   cellID: number,
-  type: 'scanning' | 'single',
-  value: number | 'all' = 'all'
+  method: 'block' | 'column' | 'row' | 'single' | 'any',
+  value: number | 'any' = 'any'
 ): IsSolveable => {
-  const solves = solveList.filter(item => item.cellID === cellID && (value === 'all' || item.option === value));
+  const solves = solveableCells
+    .filter(cell => cell.method === method || method === 'any')
+    .filter(cell => cell.cellID === cellID && (value === 'any' || cell.solution === value));
 
   if (solves.length === 0) return false;
 
-  return { type, value: solves[0].option, scanType: solves[0].type && solves[0].type }
+  const scanEnneadType = solves[0].method !== 'single' ? solves[0].method : undefined;
+
+  return { type: solves[0].method, value: solves[0].solution, scanEnneadType }
+}
+
+const getBarringEnneads = (
+  cells: ICell[],
+  enneads: IEnneads,
+  cell: ICell,
+  value: number,
+  scanEnneadType: EnneadType,
+  scanEnneadID: number,
+) => {
+  const outstandingCellIDs = cellsInEnnead(cells, scanEnneadType, scanEnneadID)
+    .filter(cell => !cell.value)
+    .map(cell => cell.id);
+
+  return {
+    inBarredBlock: isEnneadBarring('block', outstandingCellIDs, cells, enneads, cell, value),
+    inBarredColumn: isEnneadBarring('column', outstandingCellIDs, cells, enneads, cell, value),
+    inBarredRow: isEnneadBarring('row', outstandingCellIDs, cells, enneads, cell, value)
+  }
+}
+
+const isEnneadBarring = (
+
+  enneadType: EnneadType,
+  outstandingCellIDs: number[],
+  cells: ICell[],
+  enneads: IEnneads,
+  cell: ICell,
+  value: number,
+
+): boolean => {
+  const intersecting = cellsInEnnead(cells, enneadType, cell[enneadType])
+    .map(cell => cell.id)
+    .filter(value => outstandingCellIDs.includes(value));
+
+  const taken = enneads[enneadType][cell[enneadType]].taken.includes(value)
+
+  return taken && intersecting.length > 0;
 }

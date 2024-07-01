@@ -12,46 +12,21 @@ export interface ICandidate {
   rejected?: IRejected;
 }
 
-// stage: x, value: y, reason: 'CLO' | 'VLC'
-export interface ISolved {
-  stage: number;
-  value: number;
-  reason: string;
+export interface ISolveableCellBase {
+  cellID: number,
+  solution: number,
 }
 
+export interface IScanningSolveCell extends ISolveableCellBase {
+  method: EnneadType;
+  enneadID: number;
+}
 
-export interface IScanningSolve { type: EnneadType, enneadId: number, cellID: number, option: number }
+export interface ISingleSolveCell extends ISolveableCellBase {
+  method: 'single';
+}
 
-export interface ISingleSolve { cellID: number, option: number }
-
-
-// CELL status
-
-// - 'preset' - cell was set at start
-// - 'unsolved' - cell is currently blank
-// - 'solved' - cell has been solved
-
-// modifier styles 
-
-// 'edit' mode => i.e. when a cell has been made active
-
-// - activated
-// - connected (same ennead as active and unsolved)
-// - influencing (same ennead as active and solved/preset)
-// - irrelevant
-
-// 'solveable' mode => when there are solveables
-
-// - solveable
-
-// 'solveableFocus' mode => when a solveable has focus
-
-// - solveable
-// - connected (ennead intersects focused cell and has a value)
-// - influencing (ennead intersects focused cell but doesn't match value)
-// - irrelevant
-
-
+export type SolveableCells = (IScanningSolveCell | ISingleSolveCell)[]
 export interface ICell {
   id: number;
   row: number;
@@ -63,19 +38,13 @@ export interface ICell {
   solution: { value: number; method: string }[];
   trioRow: number;
   trioColumn: number;
-  solved?: ISolved;
-  solveable?: IScanningSolve;
 }
-
-
 
 export interface IValue {
   option: number;
   count: number;
 }
 
-// an ennead is a 1-9 set (block, row, column) 
-// we need to keep track of how many options each value has
 export interface IEnnead {
   type: EnneadType;
   id: number;
@@ -95,16 +64,16 @@ export interface ITrio {
   candidates: ICandidate[];
 }
 
+export type IsSolveable = false | { type: 'block' | 'column' | 'row' | 'single', value: number, scanEnneadType?: EnneadType };
 
-export type IsSolveable = false | { type: 'scanning' | 'single', value: number, scanType?: EnneadType };
 export interface IGrid {
   gridStatus: string;
   displayMode: string;
   cells: ICell[],
   enneads: IEnneads;
-  scanningSolves: IScanningSolve[];
-  singleSolves: ISingleSolve[];
-  focusCell: number | undefined;
+  solveableCells: SolveableCells;
+  focusCellID: number | undefined;
   focusValue: number | undefined;
   focusSolveable: IsSolveable;
+  activeCellID: number | undefined;
 }

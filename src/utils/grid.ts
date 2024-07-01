@@ -1,9 +1,10 @@
+import { initialCells } from "./cell";
 import { isCellSolveable } from "./display";
 import { initialEnneads, updateEnneadsCounts } from "./ennead";
 import { updateCellCandidates } from "./solving/analysis";
-import { findScanningSolves, solveCells } from "./solving/scanning";
+import { batchSolveCells, findScanningSolves, setCells } from "./solving/scanning";
 import { findSingleSolves } from "./solving/single";
-import { ICell, IGrid } from "./types"
+import { ICell, IEnneads, IGrid, IScanningSolveCell, ISingleSolveCell, IsSolveable, SolveableCells } from "./types"
 
 export const initialGrid = (startStatus: string, startCells: ICell[]): IGrid => {
   return scanGrid({
@@ -11,61 +12,95 @@ export const initialGrid = (startStatus: string, startCells: ICell[]): IGrid => 
     displayMode: 'standard',
     cells: startCells,
     enneads: initialEnneads(),
-    scanningSolves: [],
-    singleSolves: [],
-    focusCell: undefined,
+    solveableCells: [] as SolveableCells,
+    focusCellID: undefined,
+    activeCellID: undefined,
     focusValue: undefined,
     focusSolveable: false
   })
 }
 
 export type GridActions =
-  | { type: 'START_PLAYING' }
+  | { type: 'RESET_GRID' }
   | { type: 'UPDATE_MODE', payload: { mode: string; } }
+  | { type: 'UPDATE_STATUS', payload: { status: string; } }
+  | { type: 'PRESET_CELL', payload: { cellID: number, value: number } }
+  | { type: 'RESET_CELL', payload: { cellID: number } }
   | { type: 'FOCUS_CELL', payload: { cellID: number } }
   | { type: 'BLUR_CELL' }
   | { type: 'FOCUS_VALUE', payload: { value: number | undefined } }
+  | { type: 'ACTIVATE_CELL', payload: { cellID: number } }
   | { type: 'SOLVE_CELLS', payload: { cellIDs: number[], value: number } }
-  | { type: 'UPDATE_CELL', payload: { cell: ICell } }
-  | { type: 'UPDATE_CELLS', payload: { cells: ICell[] } }
+  | { type: 'BATCH_SOLVE', payload: { items: { cellID: number, solution: number }[] } }
 
 export const gridReducer = (state: IGrid, action: GridActions) => {
-  console.log({ state })
   switch (action.type) {
+    case 'RESET_GRID': {
+      return scanGrid({
+        ...state,
+        cells: initialCells()
+      })
+    }
     case 'UPDATE_MODE':
       return {
         ...state,
         displayMode: action.payload.mode
       }
+    case 'UPDATE_STATUS':
+      return {
+        ...state,
+        gridStatus: action.payload.status
+      }
+    case 'PRESET_CELL':
+      return scanGrid({
+        ...state,
+        cells: setCells([...state.cells], [action.payload.cellID], action.payload.value, 'preset')
+      });
+
+    case 'RESET_CELL':
+      return scanGrid({
+        ...state,
+        cells: setCells([...state.cells], [action.payload.cellID], undefined, 'unsolved').map(cell => {
+          return {
+            ...cell,
+            candidates: [1, 2, 3, 4, 5, 6, 7, 8, 9].map((value) => {
+              return { value };
+            }),
+          }
+        })
+      })
+
     case 'FOCUS_CELL':
       const id = action.payload.cellID;
       const v = state.cells[id].value
+      if (v) {
+        return {
+          ...state,
+          focusCellID: id,
+          focusValue: v,
+          displayMode: 'scanning_value'
+        }
+      }
+      const solveable = isCellSolveable(state.solveableCells, id, 'any', 'any')
 
-      const scanningSolveable = isCellSolveable(state.scanningSolves, id, 'scanning');
-      const singleSolveable = isCellSolveable(state.singleSolves, id, 'single');
+      const displayMode = !solveable
+        ? 'manual'
+        : solveable.type === 'single'
+          ? 'singles_solve_cell'
+          : 'scanning_solve_cell'
 
-      // console.log({ id, scanningSolveable, singleSolveable, focus: scanningSolveable || singleSolveable || false })
-
-      const displayMode = v
-        ? 'scanning_value'
-        : scanningSolveable
-          ? 'scanning_solve_cell'
-          : singleSolveable
-            ? 'singles_solve_cell'
-            : 'manual';
       return {
         ...state,
-        focusCell: id,
-        focusValue: v,
-        focusSolveable: scanningSolveable || singleSolveable || false,
+        focusCellID: id,
+        focusSolveable: solveable,
         displayMode
       };
     case 'BLUR_CELL':
       return {
         ...state,
         focusValue: undefined,
-        focusCell: undefined,
-        focusSolveable: false,
+        focusCellID: undefined,
+        focusSolveable: false as IsSolveable,
         displayMode: 'ready'
       };
     case 'FOCUS_VALUE':
@@ -74,26 +109,64 @@ export const gridReducer = (state: IGrid, action: GridActions) => {
         focusValue: action.payload.value,
         displayMode: 'scanning_value'
       };
+    case 'ACTIVATE_CELL':
+      return {
+        ...state,
+        activeCellID: action.payload.cellID,
+        displayMode: 'active_cell'
+      }
     case 'SOLVE_CELLS':
       return scanGrid({
         ...state,
-        cells: solveCells([...state.cells], action.payload.cellIDs, action.payload.value)
+        cells: setCells([...state.cells], action.payload.cellIDs, action.payload.value, 'solved')
       });
+    case 'BATCH_SOLVE':
+      return scanGrid({
+        ...state,
+        cells: batchSolveCells([...state.cells], action.payload.items)
+      })
 
-    default: return state;
+    default:
+      return state;
   }
 }
 
-const scanGrid = (grid: IGrid) => {
+const scanGrid = (grid: IGrid): IGrid => {
   const cells = updateCellCandidates(grid.cells, 1);
   const enneads = updateEnneadsCounts(grid.enneads, cells);
-  const scanningSolves = (findScanningSolves(cells, enneads))
-  const singleSolves = (findSingleSolves(cells))
+  const solveableCells = findSolveableCells(cells, enneads);
+
   return {
     ...grid,
     cells,
     enneads,
-    scanningSolves,
-    singleSolves
+    solveableCells,
   }
 }
+
+const findSolveableCells = (cells: ICell[], enneads: IEnneads): SolveableCells => {
+  const scanningSolves: IScanningSolveCell[] = findScanningSolves(cells, enneads);
+  const singleSolves: ISingleSolveCell[] = findSingleSolves(cells);
+
+  return [
+    ...scanningSolves,
+    ...singleSolves
+  ];
+}
+
+export const filterSolveableCells = (solveableCells: SolveableCells, method: string) => {
+  return solveableCells
+    .filter((cell) => cell.method === method)
+    .map(({ cellID, solution }) => {
+      return { cellID, solution };
+    });
+}
+
+export const gridToString = (cells: ICell[]) => {
+  return cells.map((item) => (item.value ? item.value : '-')).join('');
+};
+
+export const gridToChunks = (cells: ICell[]) => {
+  const str = gridToString(cells);
+  return str.match(/.{1,9}/g);
+};

@@ -1,25 +1,24 @@
 import { examples } from "./examples";
 import { EnneadType, ICell, IEnneads, ICandidate, ITrio } from "./types";
 
+// REMOVE
+// export type CellAction = { type: 'UPDATE_CELL', payload: { cell: ICell } } | { type: 'UPDATE_CELLS', payload: { cells: ICell[] } };
 
-export type CellAction = { type: 'UPDATE_CELL', payload: { cell: ICell } } | { type: 'UPDATE_CELLS', payload: { cells: ICell[] } };
-
-export const cellReducer = (state: ICell[], action: CellAction) => {
-  switch (action.type) {
-    case 'UPDATE_CELL':
-      const updateCell = action.payload.cell;
-      return [
-        ...state.slice(0, updateCell.id),
-        updateCell,
-        ...state.slice(updateCell.id + 1),
-      ]
-    case 'UPDATE_CELLS':
-      return [...action.payload.cells];
-    default:
-      return state;
-  }
-
-}
+// export const cellReducer = (state: ICell[], action: CellAction) => {
+//   switch (action.type) {
+//     case 'UPDATE_CELL':
+//       const updateCell = action.payload.cell;
+//       return [
+//         ...state.slice(0, updateCell.id),
+//         updateCell,
+//         ...state.slice(updateCell.id + 1),
+//       ]
+//     case 'UPDATE_CELLS':
+//       return [...action.payload.cells];
+//     default:
+//       return state;
+//   }
+// }
 
 export const initialCells = (): ICell[] => {
   const cells: ICell[] = [];
@@ -50,19 +49,20 @@ export const initialCells = (): ICell[] => {
 };
 
 export const loadCells = (id: number): ICell[] => {
-  const cells = initialCells();
   const data = examples.find(item => item.id === id);
-  if (data) {
-    data.grid.forEach((row, r) => {
-      Array.from(row).forEach((column, c) => {
-        if (column !== '-') {
-          // const solved = { stage: 0, value: Number(column), reason: 'fix' };
-          const cellID = r * 9 + c;
-          cells[cellID].status = 'preset'
-          cells[cellID].value = Number(column);
-        }
-      });
-    });
+  const str = data?.grid.join('');
+  return customCells(str);
+}
+
+export const customCells = (str: string | undefined) => {
+  const cells = initialCells();
+  if (str) {
+    for (let cellID = 0; cellID < str.length; cellID++) {
+      if (str[cellID] !== '-') {
+        cells[cellID].status = 'preset'
+        cells[cellID].value = Number(str[cellID]);
+      }
+    }
   }
   return cells;
 }
@@ -75,7 +75,7 @@ export const cellsInEnnead = (cells: ICell[], type: EnneadType, id: number): ICe
 // returns a 3 element ICell[] for a given trio
 export const cellsInTrio = (cells: ICell[], trio: ITrio): ICell[] => {
   return cells
-    .filter((cell) => !cell.solved)
+    .filter((cell) => cell.status === 'unsolved')
     .filter(
       (cell) =>
         cell.block === trio.block &&
@@ -126,7 +126,7 @@ export const flagValuesLastCell = (cell: ICell, enneads: IEnneads) => {
 
 
 export const anythingToSolve = (cells: ICell[]) => {
-  return cells.filter(cell => cell.value === 0 && cell.solved).length
+  return cells.filter(cell => cell.status === 'unsolved').length
 }
 
 

@@ -5,10 +5,17 @@ interface Props {
   text: string;
   count: number;
   theme?: 'standard' | 'scanning' | 'single';
-  handler?: any;
+  enterHandler?: (state: boolean) => void;
+  clickHandler?: () => void;
 }
 
-const LabelCounter = ({ text, count, theme = 'standard', handler }: Props) => {
+const LabelCounter = ({
+  text,
+  count,
+  theme = 'standard',
+  enterHandler,
+  clickHandler,
+}: Props) => {
   const wrapperStyle = () => {
     return buildStyle([
       { style: styles.wrapper, condition: true },
@@ -21,12 +28,16 @@ const LabelCounter = ({ text, count, theme = 'standard', handler }: Props) => {
     <div
       className={wrapperStyle()}
       onMouseEnter={() => {
-        if (!handler) return;
-        handler(true);
+        if (!enterHandler) return;
+        enterHandler(true);
       }}
       onMouseLeave={() => {
-        if (!handler) return;
-        handler(false);
+        if (!enterHandler) return;
+        enterHandler(false);
+      }}
+      onClick={() => {
+        if (!clickHandler) return;
+        clickHandler();
       }}
     >
       <div className={styles.label}>{text}</div>

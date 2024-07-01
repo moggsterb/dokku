@@ -22,13 +22,14 @@ interface Props {
   // mode: string;
 
   // activeCell: number | undefined;
-  // focusCell: number | undefined;
+  // focusCellID: number | undefined;
   // gridStatus: string;
   // isLit: boolean;
 
   clickHandler?: (value: number) => void;
   focusHandler: (value: number, canFocus: boolean) => void;
   blurHandler: (value: number) => void;
+  setHandler: (cellID: number, value: number) => void;
   // canActivate: boolean;
   showCandidates: boolean;
 }
@@ -53,9 +54,39 @@ const Cell = ({
   clickHandler,
   focusHandler,
   blurHandler,
+  setHandler,
   showCandidates,
 }: Props) => {
   const { id, status, value, row, column, candidates } = cell;
+
+  const renderCandidates = (highlightSolve: number = 0) => {
+    return (
+      <div className={styles.candidates}>
+        {candidates.map(({ value, rejected }) => {
+          return (
+            <Candidate
+              key={`candidate-${cell.id}-${value}`}
+              cell={cell}
+              value={value}
+              rejected={rejected}
+              canSolve={highlightSolve === value}
+              clickHandler={setHandler}
+            />
+          );
+        })}
+      </div>
+    );
+  };
+
+  const renderCell = () => {
+    if (hasValue) return renderValue();
+    if (isSolveable)
+      return isSolveable.type === 'single'
+        ? renderSingleSolveable()
+        : renderScanSolveable(); // renderScanEnneadType();
+    if (showCandidates) return renderCandidates();
+    renderBlank();
+  };
 
   const renderBlank = () => {
     return <span className='cell__blank'></span>;
@@ -65,20 +96,36 @@ const Cell = ({
     return <div className={styles.value}>{value}</div>;
   };
 
-  const renderScanType = () => {
-    const type = isSolveable && isSolveable.scanType;
-    const solveableValue = isSolveable && isSolveable.value;
-    return (
-      <div className={styles.solveWrapper}>
-        <div className={styles.solveIcon}>
-          {type === 'block' && <FontAwesomeIcon icon={faSquareFull} />}
-          {type === 'column' && <FontAwesomeIcon icon={faArrowsUpDown} />}
-          {type === 'row' && <FontAwesomeIcon icon={faArrowsLeftRight} />}
-        </div>
+  // const renderScanEnneadType = () => {
+  //   const type = isSolveable && isSolveable.type;
+  //   const solveableValue = isSolveable && isSolveable.value;
+  //   return (
+  //     <div className={styles.solveWrapper}>
+  //       <div className={styles.solveIcon}>
+  //         {type === 'block' && <FontAwesomeIcon icon={faSquareFull} />}
+  //         {type === 'column' && <FontAwesomeIcon icon={faArrowsUpDown} />}
+  //         {type === 'row' && <FontAwesomeIcon icon={faArrowsLeftRight} />}
+  //       </div>
 
-        <div className={styles.solveableValue}>{solveableValue}</div>
-      </div>
-    );
+  //       <div className={styles.solveableValue}>{solveableValue}</div>
+  //     </div>
+  //   );
+  // };
+
+  const renderScanSolveable = () => {
+    const type = isSolveable && isSolveable.type;
+    const solveableValue = isSolveable && isSolveable.value;
+    if (solveableValue)
+      return (
+        <div className={styles.solveWrapper}>
+          <div className={styles.solveIcon}>
+            {type === 'block' && <FontAwesomeIcon icon={faSquareFull} />}
+            {type === 'column' && <FontAwesomeIcon icon={faArrowsUpDown} />}
+            {type === 'row' && <FontAwesomeIcon icon={faArrowsLeftRight} />}
+          </div>
+          {renderCandidates(solveableValue)}
+        </div>
+      );
   };
 
   const renderSingleSolveable = () => {
@@ -114,7 +161,8 @@ const Cell = ({
       { style: styles.barredRow, condition: inBarredRow },
       {
         style: styles.scanSolveable,
-        condition: isSolveable && isSolveable.type === 'scanning',
+        condition:
+          isSolveable && ['block', 'column', 'row'].includes(isSolveable.type),
       },
       {
         style: styles.singleSolveable,
@@ -136,33 +184,6 @@ const Cell = ({
 
   const handleBlur = () => {
     blurHandler(id);
-  };
-
-  const renderCandidates = (highlightSolve: number = 0) => {
-    return (
-      <div className='candidates'>
-        {candidates.map(({ value, rejected }) => {
-          return (
-            <Candidate
-              key={`candidate-${cell.id}-${value}`}
-              cell={cell}
-              value={value}
-              rejected={rejected}
-              canSolve={highlightSolve === value}
-            />
-          );
-        })}
-      </div>
-    );
-  };
-
-  const renderCell = () => {
-    if (hasValue) return renderValue();
-    if (isSolveable && isSolveable.type === 'scanning') return renderScanType();
-    if (isSolveable && isSolveable.type === 'single')
-      return renderSingleSolveable();
-    if (showCandidates) return renderCandidates();
-    renderBlank();
   };
 
   return (

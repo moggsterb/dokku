@@ -8,22 +8,33 @@ interface Props {
   value: number;
   rejected?: IRejected;
   canSolve: boolean;
+  clickHandler: (cellID: number, value: number) => void;
 }
 
-const Candidate = ({ cell, value, rejected, canSolve }: Props) => {
-  const clickHandler = () => {
+const Candidate = ({
+  cell,
+  value,
+  rejected,
+  canSolve,
+  clickHandler,
+}: Props) => {
+  const handleClick = () => {
+    if (!rejected) {
+      clickHandler(cell.id, value);
+    }
     // updateCell(id, value, { stage: 0, value, reason: 'man' });
   };
 
   const candidateStyle = () => {
     return buildStyle([
       { style: styles.candidate, condition: true },
-      { style: styles.singleSolve, condition: canSolve },
+      { style: styles.solveable, condition: canSolve },
+      { style: styles.active, condition: !rejected },
     ]);
   };
 
   return (
-    <div className={candidateStyle()} onClick={clickHandler}>
+    <div className={candidateStyle()} onClick={handleClick}>
       {rejected ? '' : value}
     </div>
   );

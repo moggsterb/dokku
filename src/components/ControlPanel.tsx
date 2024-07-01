@@ -1,6 +1,4 @@
-import { CellAction } from '@/utils/cell';
 import { GridActions } from '@/utils/grid';
-import { doScanning, setSuspects } from '@/utils/solving/scanning';
 import { ICell, IEnneads } from '@/utils/types';
 import { Dispatch, SetStateAction } from 'react';
 

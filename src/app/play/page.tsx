@@ -1,17 +1,11 @@
 import Puzzle from '@/components/Puzzle';
-import { loadCells } from '@/utils/cell';
+import { customCells, loadCells } from '@/utils/cell';
 
 export default function Play({
-  searchParams: { puzzle },
+  searchParams: { puzzle, custom },
 }: {
-  searchParams: { puzzle: string };
+  searchParams: { puzzle: string; custom: string };
 }) {
-  const id = puzzle;
-  return (
-    <Puzzle
-      initialCells={loadCells(Number(id))}
-      initialStatus='ready'
-      showCandidates
-    />
-  );
+  const cells = custom ? customCells(custom) : loadCells(Number(puzzle));
+  return <Puzzle initialCells={cells} initialStatus='auto' showCandidates />;
 }

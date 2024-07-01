@@ -2,16 +2,25 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: calc(((var(--cell-size) - 8px) / 3));
-  height: calc(((var(--cell-size) - 8px) / 3));
+  width: calc(((var(--cell-size) - 8px) / 3) - 4px);
+  height: calc(((var(--cell-size) - 8px) / 3) - 4px);
   font-size: 12px;
-  background: rgba(255, 255, 255, 0.1);
+
   color: rgba(yellow, 0.25);
   margin: 1px;
 }
 
-.singleSolve {
-  background: var(--cell-solve-single-bg);
-  color: var(--cell-solve-single-fg);
-  border: var(--cell-solve-single-fg) 1px solid;
+.active {
+  background: rgba(255, 255, 255, 0.05);
+  &:hover {
+    cursor: pointer;
+    background: orange;
+    color: white;
+  }
+}
+
+.solveable {
+  background: #666;
+  color: white;
+  // border: rgba(255, 255, 255, 0.75) 3px solid;
 }

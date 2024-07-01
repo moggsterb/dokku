@@ -2,5 +2,11 @@ import Puzzle from '@/components/Puzzle';
 import { initialCells, loadCells } from '@/utils/cell';
 
 export default function Builder() {
-  return <Puzzle initialCells={initialCells()} initialStatus={'builder'} />;
+  return (
+    <Puzzle
+      initialCells={initialCells()}
+      initialStatus={'builder'}
+      showCandidates={true}
+    />
+  );
 }

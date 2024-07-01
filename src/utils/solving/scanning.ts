@@ -1,7 +1,6 @@
 import { cellsInEnnead } from "../cell";
-import { updateEnneadsCounts } from "../ennead";
-import { EnneadType, ICell, IEnnead, IEnneads, IScanningSolve } from "../types";
-import { updateCellCandidates } from "./analysis";
+import { EnneadType, ICell, IEnnead, IEnneads, IScanningSolveCell } from "../types";
+
 
 // cell display types
 
@@ -22,31 +21,36 @@ import { updateCellCandidates } from "./analysis";
 // - if these es contain a solved v ... mark 1) the cells as influencers, 2) the celll containing v) as a blocker
 
 
-export const doScanning = (incomingCells: ICell[], incomingEnneads: IEnneads) => {
-  const cells = updateCellCandidates(incomingCells, 1);
-  const enneads = updateEnneadsCounts(incomingEnneads, cells);
-  const scanningSolves = (findScanningSolves(cells, enneads))
+// export const doScanning = (incomingCells: ICell[], incomingEnneads: IEnneads) => {
+//   const cells = updateCellCandidates(incomingCells, 1);
+//   const enneads = updateEnneadsCounts(incomingEnneads, cells);
+//   const scanningSolves = (findScanningSolves(cells, enneads))
 
-  if (scanningSolves.length === 0) return false;
+//   if (scanningSolves.length === 0) return false;
 
-  scanningSolves.forEach(solveable => {
-    const cellIndex = cells.findIndex(cell => cell.id === solveable.cellID)
-    cells[cellIndex].solveable = solveable;
-  })
+//   scanningSolves.forEach(solveable => {
+//     const cellIndex = cells.findIndex(cell => cell.id === solveable.cellID)
+//     cells[cellIndex].solveable = solveable;
+//   })
 
-  return cells;
-}
+//   return cells;
+// }
 
-export const findScanningSolves = (cells: ICell[], enneads: IEnneads): IScanningSolve[] => {
+export const findScanningSolves = (cells: ICell[], enneads: IEnneads): IScanningSolveCell[] => {
   const types: EnneadType[] = ['block', 'column', 'row'];
-  const solveables: IScanningSolve[] = []
+  const solveables: IScanningSolveCell[] = []
   types.forEach((type) => {
     enneads[type].forEach(ennead => {
       ennead.values.forEach(value => {
         if (value.count === 1) {
           const cell = findCellWithOptionInEnnead(cells, ennead, value.option)
           if (cell) {
-            solveables.push({ type, enneadId: ennead.id, option: value.option, cellID: cell.id })
+            solveables.push({
+              method: type,
+              enneadID: ennead.id,
+              cellID: cell.id,
+              solution: value.option,
+            })
           }
         }
       });
@@ -60,21 +64,33 @@ const findCellWithOptionInEnnead = (cells: ICell[], ennead: IEnnead, option: num
   return enneadCells.filter(cell => cell.status === 'unsolved').find(cell => cell.candidates.filter(candidate => candidate.value === option && !candidate.rejected).length === 1)
 }
 
-export const setSuspects = (cells: ICell[]) => {
+// export const setSuspects = (cells: ICell[]) => {
+//   cells.forEach(cell => {
+//     if (cell.solveable) {
+//       cell.value = cell.solveable.option;
+//       cell.solveable = undefined;
+//       cell.status = 'solved';
+//     }
+//   })
+//   return cells;
+// }
+
+
+export const setCells = (cells: ICell[], cellIDs: number[], value: number | undefined, status: 'solved' | 'preset' | 'unsolved') => {
   cells.forEach(cell => {
-    if (cell.solveable) {
-      cell.value = cell.solveable.option;
-      cell.solveable = undefined;
-      cell.status = 'solved';
+    if (cellIDs.includes(cell.id)) {
+      cell.value = value;
+      cell.status = status;
     }
   })
   return cells;
 }
 
-export const solveCells = (cells: ICell[], cellIDs: number[], value: number) => {
+export const batchSolveCells = (cells: ICell[], items: { cellID: number, solution: number }[]) => {
   cells.forEach(cell => {
-    if (cellIDs.includes(cell.id)) {
-      cell.value = value;
+    const findItem = items.find(item => item.cellID === cell.id)
+    if (findItem) {
+      cell.value = findItem.solution;
       cell.status = 'solved';
     }
   })
