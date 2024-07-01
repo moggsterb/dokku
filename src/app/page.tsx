@@ -10,11 +10,11 @@ export default function Home() {
   const header = <h1 style={{ textAlign: 'center' }}>Dokku</h1>;
 
   const items = [
-    { label: 'Easy', url: '/selector/easy' },
-    { label: 'Normal', url: '/selector/normal' },
-    { label: 'Difficult', url: '/selector/difficult' },
-    { label: 'Expert', url: '/selector/expert' },
-    { label: 'Create your own', url: '/builder' },
+    { label: 'Easy', url: '/selector/easy', initX: -400 },
+    { label: 'Normal', url: '/selector/normal', initX: 400 },
+    { label: 'Difficult', url: '/selector/difficult', initX: -400 },
+    { label: 'Expert', url: '/selector/expert', initX: 400 },
+    { label: 'Create your own', url: '/builder', initX: 0 },
   ];
   return (
     <MainContainer header={header}>
@@ -22,9 +22,14 @@ export default function Home() {
         <AnimReveal
           items={items.map((item) => {
             return {
-              initX: -200,
+              initX: item.initX,
               initOpacity: 0,
-              component: <Link href={item.url}>{item.label}</Link>,
+              component: (
+                <Link href={item.url}>
+                  <div>{item.label}</div>
+                  <span>{item.label}</span>
+                </Link>
+              ),
             };
           })}
         />
