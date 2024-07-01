@@ -31,7 +31,7 @@ const ControlPanel = ({
       >
         Update Candidates
       </button>
-      <button
+      {/* <button
         onClick={() => {
           const x = doScanning(cells, enneads);
           if (x) {
@@ -62,7 +62,7 @@ const ControlPanel = ({
         }}
       >
         Solve Suspects
-      </button>
+      </button> */}
     </div>
   );
 };

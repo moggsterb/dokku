@@ -4,6 +4,7 @@ import { EnneadType, ICell, IEnneads, IsSolveable, SolveableCells } from "./type
 
 
 export interface IDisplayCellProps {
+  id?: number,
   cell: ICell,
   hasValue: boolean;
   isActive: boolean;

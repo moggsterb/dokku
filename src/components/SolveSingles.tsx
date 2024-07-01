@@ -12,8 +12,9 @@ interface Props {
 
 const SolveSingles = ({ grid, gridDispatch }: Props) => {
   const countSolvesForValue = (value: number) => {
-    return grid.singleSolves
-      .filter((item) => item.option === value)
+    return grid.solveableCells
+      .filter((item) => item.method === 'single')
+      .filter((item) => item.solution === value)
       .map((item) => item.cellID)
       .filter(onlyUnique)
       .sort();
