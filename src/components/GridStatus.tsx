@@ -1,9 +1,10 @@
 import { IGrid } from '@/utils/types';
 import styles from './GridStatus.module.scss';
-import { onlyUnique } from '@/utils/helpers';
 import LabelCounter from './LabelCounter';
 import { Dispatch } from 'react';
 import { filterSolveableCells, GridActions } from '@/utils/grid';
+
+import { isBrowser } from 'react-device-detect';
 
 interface Props {
   grid: IGrid;
@@ -127,6 +128,7 @@ const GridStatus = ({
         )}
       </div>
       <div className={styles.bottom}>
+        <Setting label='Is Browser' value={isBrowser ? 'True' : 'False'} />
         <Setting label='Unsolved' value={unsolvedCells.length} />
         {gridStatus !== 'selector' && (
           <>

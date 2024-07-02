@@ -1,36 +1,26 @@
 'use client';
 
-import { ICell } from '@/utils/types';
-import Candidate from './Candidate';
+import { isBrowser } from 'react-device-detect';
 
-import styles from './Cell.module.scss';
-import { IDisplayCellProps } from '@/utils/display';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHouse } from '@fortawesome/free-solid-svg-icons/faHouse';
-import { faSquare, faSquareFull } from '@fortawesome/free-regular-svg-icons';
+import { faSquareFull } from '@fortawesome/free-regular-svg-icons';
 import {
   faArrowsLeftRight,
   faArrowsUpDown,
-  faTableCells,
 } from '@fortawesome/free-solid-svg-icons';
-import { buildStyle } from '@/utils/helpers';
 
-// npm i --save @awesome.me/kit-ffd1643db8
+import Candidate from './Candidate';
+import styles from './Cell.module.scss';
+import { IDisplayCellProps } from '@/utils/display';
+import { buildStyle } from '@/utils/helpers';
 
 interface Props {
   displayCell: IDisplayCellProps;
-  // mode: string;
-
-  // activeCell: number | undefined;
-  // focusCellID: number | undefined;
-  // gridStatus: string;
-  // isLit: boolean;
 
   clickHandler?: (value: number) => void;
-  focusHandler: (value: number, canFocus: boolean) => void;
-  blurHandler: (value: number) => void;
+  // focusHandler: (value: number, canFocus: boolean) => void;
+  // blurHandler: (value: number) => void;
   setHandler: (cellID: number, value: number) => void;
-  // canActivate: boolean;
   showCandidates: boolean;
 }
 
@@ -38,7 +28,6 @@ const Cell = ({
   displayCell: {
     cell,
     gridStatus,
-
     hasValue,
     isActive,
     inActiveBlock,
@@ -52,8 +41,6 @@ const Cell = ({
     canActivate,
   },
   clickHandler,
-  focusHandler,
-  blurHandler,
   setHandler,
   showCandidates,
 }: Props) => {
@@ -70,6 +57,7 @@ const Cell = ({
               value={value}
               rejected={rejected}
               canSolve={highlightSolve === value}
+              canSet={isActive}
               clickHandler={setHandler}
             />
           );
@@ -95,22 +83,6 @@ const Cell = ({
   const renderValue = () => {
     return <div className={styles.value}>{value}</div>;
   };
-
-  // const renderScanEnneadType = () => {
-  //   const type = isSolveable && isSolveable.type;
-  //   const solveableValue = isSolveable && isSolveable.value;
-  //   return (
-  //     <div className={styles.solveWrapper}>
-  //       <div className={styles.solveIcon}>
-  //         {type === 'block' && <FontAwesomeIcon icon={faSquareFull} />}
-  //         {type === 'column' && <FontAwesomeIcon icon={faArrowsUpDown} />}
-  //         {type === 'row' && <FontAwesomeIcon icon={faArrowsLeftRight} />}
-  //       </div>
-
-  //       <div className={styles.solveableValue}>{solveableValue}</div>
-  //     </div>
-  //   );
-  // };
 
   const renderScanSolveable = () => {
     const type = isSolveable && isSolveable.type;
@@ -154,7 +126,7 @@ const Cell = ({
       { style: styles.connectedBlock, condition: inActiveBlock },
       { style: styles.connectedColumn, condition: inActiveColumn },
       { style: styles.connectedRow, condition: inActiveRow },
-      { style: styles.canActivate, condition: canActivate },
+      // { style: styles.canActivate, condition: canActivate },
       { style: styles.focusedValue, condition: hasFocusedValue },
       { style: styles.barredBlock, condition: inBarredBlock },
       { style: styles.barredColumn, condition: inBarredColumn },
@@ -169,6 +141,10 @@ const Cell = ({
         condition: isSolveable && isSolveable.type === 'single',
       },
       { style: styles.preset, condition: status === 'preset' },
+      {
+        style: styles.hoverable,
+        condition: isBrowser && canActivate && !isActive,
+      },
     ]);
   };
 
@@ -178,21 +154,21 @@ const Cell = ({
     }
   };
 
-  const handleFocus = () => {
-    focusHandler(id, true);
-  };
+  // const handleFocus = () => {
+  //   focusHandler(id, true);
+  // };
 
-  const handleBlur = () => {
-    blurHandler(id);
-  };
+  // const handleBlur = () => {
+  //   blurHandler(id);
+  // };
 
   return (
     <div className={cellStyle()}>
       <div
         className={innerStyle()}
-        onClick={canActivate ? handleClick : undefined}
-        onMouseEnter={handleFocus}
-        onMouseLeave={handleBlur}
+        onClick={canActivate && !isActive ? handleClick : undefined}
+        // onMouseEnter={handleFocus}
+        // onMouseLeave={handleBlur}
       >
         {renderCell()}
       </div>

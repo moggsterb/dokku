@@ -7,14 +7,14 @@ import styles from './page.module.scss';
 import AnimReveal from '@/components/AnimReveal';
 
 export default function Home() {
-  const header = <h1 style={{ textAlign: 'center' }}>Dokku</h1>;
+  const header = <h1 className={styles.header}>Dokku</h1>;
 
   const items = [
     { label: 'Easy', url: '/selector/easy', initX: -400 },
     { label: 'Normal', url: '/selector/normal', initX: 400 },
     { label: 'Difficult', url: '/selector/difficult', initX: -400 },
     { label: 'Expert', url: '/selector/expert', initX: 400 },
-    { label: 'Create your own', url: '/builder', initX: 0 },
+    { label: 'Create your own', url: '/builder', initX: -400, marginTop: 50 },
   ];
   return (
     <MainContainer header={header}>
@@ -25,7 +25,10 @@ export default function Home() {
               initX: item.initX,
               initOpacity: 0,
               component: (
-                <Link href={item.url}>
+                <Link
+                  href={item.url}
+                  style={{ marginTop: item.marginTop || 0 }}
+                >
                   <div>{item.label}</div>
                   <span>{item.label}</span>
                 </Link>

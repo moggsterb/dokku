@@ -10,8 +10,11 @@
   margin: 1px;
 }
 
-.active {
+.notRejected {
   background: rgba(255, 255, 255, 0.05);
+}
+
+.hoverable {
   &:hover {
     cursor: pointer;
     background: orange;

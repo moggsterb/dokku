@@ -29,7 +29,9 @@ const Grid = ({ grid, showCandidates, gridDispatch }: Props) => {
     if (!gridDispatch || gridStatus === 'preview') return;
 
     if (gridStatus === 'builder') {
-      if (cells[cellID].value) {
+      if (!cells[cellID].value) {
+        gridDispatch({ type: 'FOCUS_CELL', payload: { cellID } });
+      } else {
         gridDispatch({
           type: 'RESET_CELL',
           payload: {
@@ -39,7 +41,6 @@ const Grid = ({ grid, showCandidates, gridDispatch }: Props) => {
       }
     } else {
       const solveable = isCellSolveable(solveableCells, cellID, 'any', 'any');
-
       if (solveable) {
         gridDispatch({
           type: 'SOLVE_CELLS',
@@ -52,15 +53,15 @@ const Grid = ({ grid, showCandidates, gridDispatch }: Props) => {
     }
   };
 
-  const handleCellFocus = (cellID: number, canFocus: boolean) => {
-    if (!gridDispatch || gridStatus === 'preview') return;
-    gridDispatch({ type: 'FOCUS_CELL', payload: { cellID } });
-  };
+  // const handleCellFocus = (cellID: number, canFocus: boolean) => {
+  //   if (!gridDispatch || gridStatus === 'preview') return;
+  //   gridDispatch({ type: 'FOCUS_CELL', payload: { cellID } });
+  // };
 
-  const handleCellBlur = (value: number) => {
-    if (!gridDispatch || gridStatus === 'preview') return;
-    gridDispatch({ type: 'BLUR_CELL' });
-  };
+  // const handleCellBlur = (value: number) => {
+  //   if (!gridDispatch || gridStatus === 'preview') return;
+  //   gridDispatch({ type: 'BLUR_CELL' });
+  // };
 
   const handleCandidateClick = (cellID: number, value: number) => {
     if (!gridDispatch || gridStatus === 'preview') return;
@@ -87,8 +88,8 @@ const Grid = ({ grid, showCandidates, gridDispatch }: Props) => {
             focusSolveable
           )}
           clickHandler={handleCellClick}
-          focusHandler={handleCellFocus}
-          blurHandler={handleCellBlur}
+          // focusHandler={handleCellFocus}
+          // blurHandler={handleCellBlur}
           setHandler={handleCandidateClick}
           showCandidates={showCandidates || false}
         />

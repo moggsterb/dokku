@@ -9,9 +9,9 @@ interface Props {
 
 const MainContainer = ({ header, children }: Props) => {
   return (
-    <div>
+    <div className={styles.wrapper}>
       {header && <header className={styles.header}>{header}</header>}
-      {children}
+      <main className={styles.content}>{children}</main>
     </div>
   );
 };

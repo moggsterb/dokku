@@ -54,7 +54,11 @@ export const gridReducer = (state: IGrid, action: GridActions) => {
     case 'PRESET_CELL':
       return scanGrid({
         ...state,
-        cells: setCells([...state.cells], [action.payload.cellID], action.payload.value, 'preset')
+        cells: setCells([...state.cells], [action.payload.cellID], action.payload.value, 'preset'),
+        focusValue: undefined,
+        focusCellID: undefined,
+        focusSolveable: false as IsSolveable,
+        displayMode: 'ready'
       });
 
     case 'RESET_CELL':
@@ -67,7 +71,11 @@ export const gridReducer = (state: IGrid, action: GridActions) => {
               return { value };
             }),
           }
-        })
+        }),
+        focusValue: undefined,
+        focusCellID: undefined,
+        focusSolveable: false as IsSolveable,
+        displayMode: 'ready'
       })
 
     case 'FOCUS_CELL':
