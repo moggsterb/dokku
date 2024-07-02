@@ -24,7 +24,7 @@ export type GridActions =
   | { type: 'RESET_GRID' }
   | { type: 'UPDATE_MODE', payload: { mode: string; } }
   | { type: 'UPDATE_STATUS', payload: { status: string; } }
-  | { type: 'PRESET_CELL', payload: { cellID: number, value: number } }
+  | { type: 'SET_CELL', payload: { cellID: number, value: number, type: 'solved' | 'preset' } }
   | { type: 'RESET_CELL', payload: { cellID: number } }
   | { type: 'FOCUS_CELL', payload: { cellID: number } }
   | { type: 'BLUR_CELL' }
@@ -51,15 +51,16 @@ export const gridReducer = (state: IGrid, action: GridActions) => {
         ...state,
         gridStatus: action.payload.status
       }
-    case 'PRESET_CELL':
+    case 'SET_CELL':
       return scanGrid({
         ...state,
-        cells: setCells([...state.cells], [action.payload.cellID], action.payload.value, 'preset'),
+        cells: setCells([...state.cells], [action.payload.cellID], action.payload.value, action.payload.type),
         focusValue: undefined,
         focusCellID: undefined,
         focusSolveable: false as IsSolveable,
         displayMode: 'ready'
       });
+
 
     case 'RESET_CELL':
       return scanGrid({
@@ -148,7 +149,7 @@ const scanGrid = (grid: IGrid): IGrid => {
     ...grid,
     cells,
     enneads,
-    solveableCells,
+    // solveableCells,
   }
 }
 

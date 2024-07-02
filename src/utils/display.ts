@@ -46,7 +46,7 @@ export const displayCell = (
     inBarredColumn: false,
     inBarredRow: false,
     isSolveable: false,
-    canActivate: gridStatus !== 'preview', //&& cell.status !== 'preset',
+    canActivate: (gridStatus !== 'preview' && cell.status !== 'preset') || gridStatus === 'builder',
     gridStatus,
     cell,
   }

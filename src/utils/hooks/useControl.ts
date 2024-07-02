@@ -23,10 +23,11 @@ const useControl = (initialStatus: string, gridCells: ICell[]) => {
       if (grid.gridStatus === 'auto') {
         if (outstanding.length > 0) {
           gridDispatch({
-            type: 'PRESET_CELL',
+            type: 'SET_CELL',
             payload: {
               cellID: outstanding[0].cellID,
               value: outstanding[0].value,
+              type: 'preset'
             },
           });
           setOutstanding(outstanding.slice(1))

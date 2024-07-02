@@ -28,7 +28,7 @@ const Grid = ({ grid, showCandidates, gridDispatch }: Props) => {
   const handleCellClick = (cellID: number) => {
     if (!gridDispatch || gridStatus === 'preview') return;
 
-    if (gridStatus === 'builder') {
+    if (gridStatus === 'builder' || gridStatus === 'ready') {
       if (!cells[cellID].value) {
         gridDispatch({ type: 'FOCUS_CELL', payload: { cellID } });
       } else {
@@ -65,7 +65,8 @@ const Grid = ({ grid, showCandidates, gridDispatch }: Props) => {
 
   const handleCandidateClick = (cellID: number, value: number) => {
     if (!gridDispatch || gridStatus === 'preview') return;
-    gridDispatch({ type: 'PRESET_CELL', payload: { cellID, value } });
+    const type = gridStatus === 'builder' ? 'preset' : 'solved';
+    gridDispatch({ type: 'SET_CELL', payload: { cellID, value, type } });
   };
 
   const RenderCells = () => {
