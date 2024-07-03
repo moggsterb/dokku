@@ -17,10 +17,15 @@ const useControl = (initialStatus: string, gridCells: ICell[]) => {
   );
 
   useEffect(() => {
+    console.log(`Ticker: ${count}`)
+
+
 
     const interval = setInterval(() => {
-      setCount(count + 1);
+
+
       if (grid.gridStatus === 'auto') {
+        setCount(count + 1);
         if (outstanding.length > 0) {
           gridDispatch({
             type: 'SET_CELL',
@@ -30,7 +35,8 @@ const useControl = (initialStatus: string, gridCells: ICell[]) => {
               type: 'preset'
             },
           });
-          setOutstanding(outstanding.slice(1))
+          setOutstanding(outstanding.slice(1));
+
         } else {
           gridDispatch({
             type: 'UPDATE_STATUS',
@@ -38,9 +44,10 @@ const useControl = (initialStatus: string, gridCells: ICell[]) => {
               status: 'ready',
             },
           });
-        }
 
+        }
       }
+
     }, 100);
 
     return () => clearInterval(interval);

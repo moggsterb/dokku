@@ -4,7 +4,7 @@ import { initialEnneads, updateEnneadsCounts } from "./ennead";
 import { updateCellCandidates } from "./solving/analysis";
 import { batchSolveCells, findScanningSolves, setCells } from "./solving/scanning";
 import { findSingleSolves } from "./solving/single";
-import { ICell, IEnneads, IGrid, IScanningSolveCell, ISingleSolveCell, IsSolveable, SolveableCells } from "./types"
+import { ICell, IEnneads, IGrid, IScanningSolveCell, ISingleSolveCell, IsSolveable, SolveableByType, SolveableCells, SolveType } from "./types"
 
 export const initialGrid = (startStatus: string, startCells: ICell[]): IGrid => {
   return scanGrid({
@@ -13,6 +13,13 @@ export const initialGrid = (startStatus: string, startCells: ICell[]): IGrid => 
     cells: startCells,
     enneads: initialEnneads(),
     solveableCells: [] as SolveableCells,
+    solveableByType: {
+      all: [],
+      block: [],
+      row: [],
+      column: [],
+      single: []
+    },
     focusCellID: undefined,
     activeCellID: undefined,
     focusValue: undefined,
@@ -34,6 +41,9 @@ export type GridActions =
   | { type: 'BATCH_SOLVE', payload: { items: { cellID: number, solution: number }[] } }
 
 export const gridReducer = (state: IGrid, action: GridActions) => {
+
+  // console.log('Processing Reducer')
+
   switch (action.type) {
     case 'RESET_GRID': {
       return scanGrid({
@@ -143,24 +153,51 @@ export const gridReducer = (state: IGrid, action: GridActions) => {
 const scanGrid = (grid: IGrid): IGrid => {
   const cells = updateCellCandidates(grid.cells, 1);
   const enneads = updateEnneadsCounts(grid.enneads, cells);
-  const solveableCells = findSolveableCells(cells, enneads);
+  const solveableCells = findSolves(cells, enneads);
+  const solveableByType = summariseSolves(solveableCells)
+
+  // console.log({ solveableCells })
 
   return {
     ...grid,
     cells,
     enneads,
-    // solveableCells,
+    solveableCells,
+    solveableByType
   }
 }
 
-const findSolveableCells = (cells: ICell[], enneads: IEnneads): SolveableCells => {
-  const scanningSolves: IScanningSolveCell[] = findScanningSolves(cells, enneads);
-  const singleSolves: ISingleSolveCell[] = findSingleSolves(cells);
-
-  return [
-    ...scanningSolves,
-    ...singleSolves
+const findSolves = (cells: ICell[], enneads: IEnneads): SolveableCells => {
+  const x = findScanningSolves(cells, enneads);
+  const y = findSingleSolves(cells);
+  const solves = [
+    ...findScanningSolves(cells, enneads),
+    ...findSingleSolves(cells)
   ];
+
+  // console.log({ solves, x, y })
+  return solves;
+}
+
+const summariseSolves = (solveableCells: SolveableCells) => {
+  let byType: SolveableByType = {
+    all: [],
+    block: [],
+    row: [],
+    column: [],
+    single: []
+  };
+  solveableCells.forEach(({ method, cellID, solution }) => {
+    byType[method].push({ cellID, solution });
+    if (!byType['all'].find(solve => solve.cellID === cellID)) {
+      byType['all'].push({ cellID, solution });
+    }
+  })
+
+  // console.log({ count: solveableCells.length, byType })
+  // console.log('hello')
+
+  return byType;
 }
 
 export const filterSolveableCells = (solveableCells: SolveableCells, method: string) => {

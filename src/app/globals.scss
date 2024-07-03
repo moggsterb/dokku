@@ -69,7 +69,7 @@ body {
 :root {
   --grid-unit: calc(var(--grid-size) / 100);
   --grid-padding: calc(var(--grid-unit) * 2);
-  --grid-gutter: calc(var(--grid-unit) * 0.75);
+  --grid-gutter: calc(var(--grid-unit) * 1.5);
   --cell-size: calc(
     (
         var(--grid-size) - calc(var(--grid-padding) * 2) -

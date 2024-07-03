@@ -64,7 +64,12 @@ export interface ITrio {
   candidates: ICandidate[];
 }
 
-export type IsSolveable = false | { type: 'block' | 'column' | 'row' | 'single', value: number, scanEnneadType?: EnneadType };
+export type SolveType = EnneadType | 'single' | 'all';
+export type SolveableByType = {
+  [key in SolveType]: { cellID: number, solution: number }[]
+}
+
+export type IsSolveable = false | { type: SolveType, value: number, scanEnneadType?: EnneadType };
 
 export interface IGrid {
   gridStatus: string;
@@ -72,6 +77,7 @@ export interface IGrid {
   cells: ICell[],
   enneads: IEnneads;
   solveableCells: SolveableCells;
+  solveableByType: SolveableByType;
   focusCellID: number | undefined;
   focusValue: number | undefined;
   focusSolveable: IsSolveable;
