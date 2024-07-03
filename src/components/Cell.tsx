@@ -97,10 +97,13 @@ const Cell = ({
       return (
         <div className={styles.solveWrapper}>
           <div className={styles.solveIconWrapper}>
-            {allSolveMethods.map((method) => {
+            {allSolveMethods.map((method, index) => {
               const icon = ICONS[method].icon;
               return (
-                <div className={`${styles.solveIcon} ${styles[method]}`}>
+                <div
+                  key={`${cell.id}-${method}-${index}`}
+                  className={`${styles.solveIcon} ${styles[method]}`}
+                >
                   {/* <FontAwesomeIcon icon={icon} /> */}
                 </div>
               );
