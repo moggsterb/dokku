@@ -23,6 +23,7 @@
     transition: background 0.25s ease-in, transform 0.25s ease-in;
     border-radius: var(--cell-radius);
     position: relative;
+
     &.preset {
       background-color: var(--cell-preset-bg);
       color: var(--cell-preset-fg);
@@ -65,18 +66,6 @@
     &.scanSolveable {
       background: var(--cell-solve-scan-bg);
 
-      .solveIcon {
-        background: darkgreen;
-        font-size: calc(var(--cell-value-size) * 0.35);
-        color: rgb(45, 145, 34);
-        color: white;
-        padding: 5px;
-        position: absolute;
-        top: -10px;
-        left: -10px;
-        border-radius: 5px;
-      }
-
       .solveableValue {
         font-size: var(--cell-value-size);
         color: var(--cell-solve-scan-fg);
@@ -89,6 +78,45 @@
         font-size: var(--cell-value-size);
         color: var(--cell-solve-single-fg);
       }
+    }
+  }
+
+  .solveIconWrapper {
+    position: absolute;
+    top: calc(var(--cell-value-size) * -0.1);
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+  }
+
+  .solveIcon {
+    height: calc(var(--cell-value-size) * 0.35);
+    width: calc(var(--cell-value-size) * 0.35);
+    border-radius: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1px;
+
+    &.all {
+      background: var(--solve-all-bg);
+    }
+
+    &.block {
+      background: var(--solve-block-bg);
+    }
+
+    &.column {
+      background: var(--solve-column-bg);
+    }
+
+    &.row {
+      background: var(--solve-row-bg);
+    }
+
+    &.single {
+      background: var(--solve-single-bg);
     }
   }
 

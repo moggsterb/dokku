@@ -7,6 +7,7 @@ import { faSquareFull } from '@fortawesome/free-regular-svg-icons';
 import {
   faArrowsLeftRight,
   faArrowsUpDown,
+  fa1,
 } from '@fortawesome/free-solid-svg-icons';
 
 import Candidate from './Candidate';
@@ -24,6 +25,14 @@ interface Props {
   showCandidates: boolean;
 }
 
+const ICONS = {
+  all: { icon: fa1 },
+  single: { icon: fa1 },
+  block: { icon: faSquareFull },
+  column: { icon: faArrowsUpDown },
+  row: { icon: faArrowsLeftRight },
+};
+
 const Cell = ({
   displayCell: {
     cell,
@@ -38,6 +47,7 @@ const Cell = ({
     inBarredColumn,
     inBarredRow,
     isSolveable,
+    allSolveMethods,
     canActivate,
   },
   clickHandler,
@@ -68,10 +78,7 @@ const Cell = ({
 
   const renderCell = () => {
     if (hasValue) return renderValue();
-    if (isSolveable)
-      return isSolveable.type === 'single'
-        ? renderSingleSolveable()
-        : renderScanSolveable(); // renderScanEnneadType();
+    if (isSolveable) return renderSolveable();
     if (showCandidates) return renderCandidates();
     renderBlank();
   };
@@ -84,27 +91,22 @@ const Cell = ({
     return <div className={styles.value}>{value}</div>;
   };
 
-  const renderScanSolveable = () => {
-    const type = isSolveable && isSolveable.type;
+  const renderSolveable = () => {
     const solveableValue = isSolveable && isSolveable.value;
     if (solveableValue)
       return (
         <div className={styles.solveWrapper}>
-          <div className={styles.solveIcon}>
-            {type === 'block' && <FontAwesomeIcon icon={faSquareFull} />}
-            {type === 'column' && <FontAwesomeIcon icon={faArrowsUpDown} />}
-            {type === 'row' && <FontAwesomeIcon icon={faArrowsLeftRight} />}
+          <div className={styles.solveIconWrapper}>
+            {allSolveMethods.map((method) => {
+              const icon = ICONS[method].icon;
+              return (
+                <div className={`${styles.solveIcon} ${styles[method]}`}>
+                  {/* <FontAwesomeIcon icon={icon} /> */}
+                </div>
+              );
+            })}
           </div>
-          {renderCandidates(solveableValue)}
-        </div>
-      );
-  };
 
-  const renderSingleSolveable = () => {
-    const solveableValue = isSolveable && isSolveable.value;
-    if (solveableValue)
-      return (
-        <div className={styles.solveWrapper}>
           {renderCandidates(solveableValue)}
         </div>
       );

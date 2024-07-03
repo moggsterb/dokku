@@ -1,10 +1,11 @@
-import { IGrid } from '@/utils/types';
+import { IGrid, SolveType } from '@/utils/types';
 import styles from './GridStatus.module.scss';
 import LabelCounter from './LabelCounter';
-import { Dispatch } from 'react';
+import { Dispatch, useState } from 'react';
 import { filterSolveableCells, GridActions } from '@/utils/grid';
 
 import { isBrowser } from 'react-device-detect';
+import SolveController from './SolveController';
 
 interface Props {
   grid: IGrid;
@@ -32,17 +33,13 @@ const GridStatus = ({
     focusCellID,
     focusValue,
     cells,
-    solveableCells,
     solveableByType,
   },
   gridDispatch,
 }: Props) => {
-  const unsolvedCells = cells.filter((item) => item.status === 'unsolved');
+  const [solveState, setSolveState] = useState<SolveType | undefined>();
 
-  // const scanBlock = filterSolveableCells(solveableCells, 'block');
-  // const scanColumn = filterSolveableCells(solveableCells, 'column');
-  // const scanRow = filterSolveableCells(solveableCells, 'row');
-  // const singles = filterSolveableCells(solveableCells, 'single');
+  const unsolvedCells = cells.filter((item) => item.status === 'unsolved');
 
   const scanAll = solveableByType['all'];
   const scanBlock = solveableByType['block'];
@@ -61,92 +58,42 @@ const GridStatus = ({
   return (
     <>
       <div className={styles.top}>
-        {gridStatus === 'ready' && (
+        {gridDispatch && (gridStatus === 'ready' || gridStatus === 'auto') && (
           <div className={styles.solvers}>
-            <LabelCounter
-              text='All Solves'
-              count={scanAll.length}
-              theme={'scanning'}
-              enterHandler={(state: boolean) => {
-                updateStatus('scanning_blocks', state);
-              }}
-              clickHandler={() => {
-                if (!gridDispatch) return;
-                gridDispatch({
-                  type: 'BATCH_SOLVE',
-                  payload: {
-                    items: scanAll,
-                  },
-                });
-              }}
+            <SolveController
+              type={'all'}
+              gridDispatch={gridDispatch}
+              cellIDs={scanAll}
+              solveState={solveState}
+              setSolveState={setSolveState}
             />
-            <LabelCounter
-              text='Block'
-              count={scanBlock.length}
-              theme={'scanning'}
-              enterHandler={(state: boolean) => {
-                updateStatus('scanning_blocks', state);
-              }}
-              clickHandler={() => {
-                if (!gridDispatch) return;
-                gridDispatch({
-                  type: 'BATCH_SOLVE',
-                  payload: {
-                    items: scanBlock,
-                  },
-                });
-              }}
+            <SolveController
+              type={'block'}
+              gridDispatch={gridDispatch}
+              cellIDs={scanBlock}
+              solveState={solveState}
+              setSolveState={setSolveState}
             />
-            <LabelCounter
-              text='Column'
-              count={scanColumn.length}
-              theme={'scanning'}
-              enterHandler={(state: boolean) => {
-                updateStatus('scanning_columns', state);
-              }}
-              clickHandler={() => {
-                if (!gridDispatch) return;
-                gridDispatch({
-                  type: 'BATCH_SOLVE',
-                  payload: {
-                    items: scanColumn,
-                  },
-                });
-              }}
+            <SolveController
+              type={'column'}
+              gridDispatch={gridDispatch}
+              cellIDs={scanColumn}
+              solveState={solveState}
+              setSolveState={setSolveState}
             />
-            <LabelCounter
-              text='Row'
-              count={scanRow.length}
-              theme={'scanning'}
-              enterHandler={(state: boolean) => {
-                updateStatus('scanning_rows', state);
-              }}
-              clickHandler={() => {
-                if (!gridDispatch) return;
-                gridDispatch({
-                  type: 'BATCH_SOLVE',
-                  payload: {
-                    items: scanRow,
-                  },
-                });
-              }}
+            <SolveController
+              type={'row'}
+              gridDispatch={gridDispatch}
+              cellIDs={scanRow}
+              solveState={solveState}
+              setSolveState={setSolveState}
             />
-            <LabelCounter
-              text='Singles'
-              count={singles.length}
-              theme={'single'}
-              enterHandler={(state: boolean) => {
-                updateStatus('singles_all', state);
-              }}
-              clickHandler={() => {
-                if (!gridDispatch) return;
-                gridDispatch({
-                  type: 'BATCH_SOLVE',
-                  payload: {
-                    items: singles,
-                  },
-                });
-              }}
+            <SolveController
+              type={'single'}
+              gridDispatch={gridDispatch}
+              cellIDs={singles}
+              solveState={solveState}
+              setSolveState={setSolveState}
             />
           </div>
         )}

@@ -1,0 +1,80 @@
+.wrapper {
+  background: #333;
+  color: #999;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  height: 30px;
+  border-radius: 15px;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding-right: 40px;
+
+  transition: all 0.2s ease-in-out;
+
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  &.hoverable:hover {
+    background: #555;
+    cursor: pointer;
+  }
+
+  &.active {
+    background: #555;
+    color: white;
+  }
+
+  &.disabled .roundel {
+    opacity: 0.2;
+  }
+
+  .roundel {
+    color: white;
+    border: 5px solid #333;
+    width: 40px;
+    height: 30px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 0px;
+    top: -15px;
+    font-size: 16px;
+  }
+
+  &.all .roundel {
+    background: var(--solve-all-bg);
+  }
+
+  &.block .roundel {
+    background: var(--solve-block-bg);
+  }
+
+  &.column .roundel {
+    background: var(--solve-column-bg);
+  }
+
+  &.row .roundel {
+    background: var(--solve-row-bg);
+  }
+
+  &.single .roundel {
+    background: var(--solve-single-bg);
+  }
+}
+
+.label {
+  text-transform: uppercase;
+  font-weight: bold;
+  padding-left: 15px;
+  padding-right: 10px;
+  font-size: 12px;
+  min-width: 70px;
+}
+
+.roundelHolder {
+  position: relative;
+}

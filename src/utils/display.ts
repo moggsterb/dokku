@@ -1,6 +1,6 @@
 import { cellsInEnnead } from "./cell";
 import { takenCellValues, takenInEnnead } from "./solving/analysis";
-import { EnneadType, ICell, IEnneads, IsSolveable, SolveableCells } from "./types";
+import { EnneadType, ICell, IEnneads, IsSolveable, SolveableCells, SolveType } from "./types";
 
 
 export interface IDisplayCellProps {
@@ -18,6 +18,7 @@ export interface IDisplayCellProps {
   inBarredRow: boolean;
   inBarredColumn: boolean;
   isSolveable: IsSolveable;
+  allSolveMethods: SolveType[];
   // scanEnneadTypes: EnneadType[];
 
   gridStatus: string;
@@ -46,6 +47,7 @@ export const displayCell = (
     inBarredColumn: false,
     inBarredRow: false,
     isSolveable: false,
+    allSolveMethods: allSolveTypes(solveableCells, cell.id),
     canActivate: (gridStatus !== 'preview' && gridStatus !== 'selector' && cell.status !== 'preset') || gridStatus === 'builder',
     gridStatus,
     cell,
@@ -53,6 +55,9 @@ export const displayCell = (
 
   const modeState = () => {
     switch (displayMode) {
+      // when a cell without a value is clicked
+      // - the cell and candidate grid is scaled up 
+      // - influencing enneads are displayed
       case 'manual':
         return {
           ...state,
@@ -62,10 +67,35 @@ export const displayCell = (
           inActiveRow: cell.row === focusCellObj?.row,
           hasFocusedValue: cell.value !== undefined && cell.value === focusValue,
         }
-      case 'singles_all':
+      // highlight all cells that are solveable (any method)
+      case 'all_solves':
+        return {
+          ...state,
+          isSolveable: isCellSolveable(solveableCells, cell.id, 'any', 'any'),
+        }
+      // highlight all cells that are solveable by SINGLE method
+      case 'all_singles':
         return {
           ...state,
           isSolveable: isCellSolveable(solveableCells, cell.id, 'single', 'any')
+        }
+      // highlight all cells that are solveable by BLOCK SCANNING method
+      case 'all_blocks':
+        return {
+          ...state,
+          isSolveable: isCellSolveable(solveableCells, cell.id, 'block', 'any')
+        }
+      // highlight all cells that are solveable by COLUMN SCANNING method
+      case 'all_columns':
+        return {
+          ...state,
+          isSolveable: isCellSolveable(solveableCells, cell.id, 'column', 'any')
+        }
+      // highlight all cells that are solveable by ROW SCANNING method
+      case 'all_rows':
+        return {
+          ...state,
+          isSolveable: isCellSolveable(solveableCells, cell.id, 'row', 'any')
         }
 
       case 'singles_solve_cell':
@@ -76,21 +106,7 @@ export const displayCell = (
           inActiveRow: cell.row === focusCellObj?.row,
           isSolveable: cell.id === focusCellObj?.id && isCellSolveable(solveableCells, cell.id, 'single', 'any')
         }
-      case 'scanning_blocks':
-        return {
-          ...state,
-          isSolveable: isCellSolveable(solveableCells, cell.id, 'block', 'any')
-        }
-      case 'scanning_columns':
-        return {
-          ...state,
-          isSolveable: isCellSolveable(solveableCells, cell.id, 'column', 'any')
-        }
-      case 'scanning_rows':
-        return {
-          ...state,
-          isSolveable: isCellSolveable(solveableCells, cell.id, 'row', 'any')
-        }
+
 
       case 'scanning_value':
         return {
@@ -152,14 +168,20 @@ export const isCellSolveable = (
   value: number | 'any' = 'any'
 ): IsSolveable => {
   const solves = solveableCells
-    .filter(cell => cell.method === method || method === 'any')
-    .filter(cell => cell.cellID === cellID && (value === 'any' || cell.solution === value));
+    .filter(solve => solve.method === method || method === 'any')
+    .filter(solve => solve.cellID === cellID && (value === 'any' || solve.solution === value));
 
   if (solves.length === 0) return false;
 
   const scanEnneadType = solves[0].method !== 'single' ? solves[0].method : undefined;
 
   return { type: solves[0].method, value: solves[0].solution, scanEnneadType }
+}
+
+export const allSolveTypes = (solveableCells: SolveableCells, cellID: number) => {
+  return solveableCells
+    .filter(solve => solve.cellID === cellID)
+    .map(solve => solve.method)
 }
 
 const getBarringEnneads = (
