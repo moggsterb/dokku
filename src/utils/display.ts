@@ -22,6 +22,7 @@ export interface IDisplayCellProps {
   // scanEnneadTypes: EnneadType[];
 
   gridStatus: string;
+  displayMode: string;
 }
 
 export const displayCell = (
@@ -50,6 +51,7 @@ export const displayCell = (
     allSolveMethods: allSolveTypes(solveableCells, cell.id),
     canActivate: (gridStatus !== 'preview' && gridStatus !== 'selector' && cell.status !== 'preset') || gridStatus === 'builder',
     gridStatus,
+    displayMode,
     cell,
   }
 

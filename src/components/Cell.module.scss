@@ -63,22 +63,41 @@
       color: rgb(223, 181, 169);
     }
 
-    &.scanSolveable {
-      background: var(--cell-solve-scan-bg);
-
-      .solveableValue {
-        font-size: var(--cell-value-size);
-        color: var(--cell-solve-scan-fg);
-      }
+    &.solveableAll {
+      background: var(--solve-all-bga);
     }
 
-    &.singleSolveable {
-      background: var(--cell-solve-single-bg);
-      .solveableValue {
-        font-size: var(--cell-value-size);
-        color: var(--cell-solve-single-fg);
-      }
+    &.solveableBlock {
+      background: var(--solve-block-bga);
     }
+
+    &.solveableColumn {
+      background: var(--solve-column-bga);
+    }
+
+    &.solveableRow {
+      background: var(--solve-row-bga);
+    }
+
+    &.solveableSingle {
+      background: var(--solve-single-bga);
+    }
+
+    // &.scanSolveable {
+    //   background: var(--cell-solve-scan-bg);
+    //   .solveableValue {
+    //     font-size: var(--cell-value-size);
+    //     color: var(--cell-solve-scan-fg);
+    //   }
+    // }
+
+    // &.singleSolveable {
+    //   background: var(--cell-solve-single-bg);
+    //   .solveableValue {
+    //     font-size: var(--cell-value-size);
+    //     color: var(--cell-solve-single-fg);
+    //   }
+    // }
   }
 
   .solveIconWrapper {
@@ -91,7 +110,7 @@
   }
 
   .solveIcon {
-    height: calc(var(--cell-value-size) * 0.35);
+    height: calc(var(--cell-value-size) * 0.18);
     width: calc(var(--cell-value-size) * 0.35);
     border-radius: 15%;
     display: flex;

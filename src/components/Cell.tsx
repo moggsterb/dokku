@@ -37,6 +37,7 @@ const Cell = ({
   displayCell: {
     cell,
     gridStatus,
+    displayMode,
     hasValue,
     isActive,
     inActiveBlock,
@@ -137,14 +138,29 @@ const Cell = ({
       { style: styles.barredColumn, condition: inBarredColumn },
       { style: styles.barredRow, condition: inBarredRow },
       {
-        style: styles.scanSolveable,
-        condition:
-          isSolveable && ['block', 'column', 'row'].includes(isSolveable.type),
+        style: styles.solveableAll,
+        condition: displayMode === 'all_solves' && isSolveable !== false,
       },
       {
-        style: styles.singleSolveable,
-        condition: isSolveable && isSolveable.type === 'single',
+        style: styles.solveableBlock,
+        condition: displayMode === 'all_blocks' && isSolveable !== false,
       },
+      {
+        style: styles.solveableColumn,
+        condition: displayMode === 'all_columns' && isSolveable !== false,
+      },
+      {
+        style: styles.solveableRow,
+        condition: displayMode === 'all_rows' && isSolveable !== false,
+      },
+      {
+        style: styles.solveableSingle,
+        condition: displayMode === 'all_singles' && isSolveable !== false,
+      },
+      // {
+      //   style: styles.singleSolveable,
+      //   condition: isSolveable && isSolveable.type === 'single',
+      // },
       { style: styles.preset, condition: status === 'preset' },
       {
         style: styles.hoverable,
