@@ -79,8 +79,15 @@ const Cell = ({
 
   const renderCell = () => {
     if (hasValue) return renderValue();
+
     if (isSolveable) return renderSolveable();
-    if (showCandidates) return renderCandidates();
+    if (showCandidates)
+      return (
+        <>
+          {renderSolveHints()}
+          {renderCandidates()}
+        </>
+      );
     renderBlank();
   };
 
@@ -97,23 +104,28 @@ const Cell = ({
     if (solveableValue)
       return (
         <div className={styles.solveWrapper}>
-          <div className={styles.solveIconWrapper}>
-            {allSolveMethods.map((method, index) => {
-              const icon = ICONS[method].icon;
-              return (
-                <div
-                  key={`${cell.id}-${method}-${index}`}
-                  className={`${styles.solveIcon} ${styles[method]}`}
-                >
-                  {/* <FontAwesomeIcon icon={icon} /> */}
-                </div>
-              );
-            })}
-          </div>
-
+          {renderSolveHints()}
           {renderCandidates(solveableValue)}
         </div>
       );
+  };
+
+  const renderSolveHints = () => {
+    return (
+      <div className={styles.solveIconWrapper}>
+        {allSolveMethods.map((method, index) => {
+          const icon = ICONS[method].icon;
+          return (
+            <div
+              key={`${cell.id}-${method}-${index}`}
+              className={`${styles.solveIcon} ${styles[method]}`}
+            >
+              {/* <FontAwesomeIcon icon={icon} /> */}
+            </div>
+          );
+        })}
+      </div>
+    );
   };
 
   const cellStyle = () => {

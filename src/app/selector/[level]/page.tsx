@@ -8,24 +8,20 @@ import { useRouter } from 'next/navigation';
 import Grid from '@/components/Grid';
 import { initialGrid } from '@/utils/grid';
 import AnimReveal from '@/components/AnimReveal';
+import ControlSelector from '@/components/ControlSelector';
 
 export default function Selector({
   params: { level },
 }: {
   params: { level: string };
 }) {
-  const levelID = ['easy', 'normal', 'difficult', 'expert'].indexOf(level);
-  const grids = examples.filter((item) => item.level === levelID);
   const router = useRouter();
 
+  const levelID = ['easy', 'normal', 'difficult', 'expert'].indexOf(level);
+  const grids = examples.filter((item) => item.level === levelID);
   const capLevel = level.charAt(0).toUpperCase() + level.slice(1);
 
-  const header = (
-    <div>
-      <h1>{capLevel} Puzzles</h1>
-      <p>Choose any grid to preview</p>
-    </div>
-  );
+  const header = <ControlSelector title={`${capLevel} Puzzles`} />;
 
   return (
     <MainContainer header={header}>

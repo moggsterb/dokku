@@ -100,27 +100,21 @@ export const displayCell = (
           isSolveable: isCellSolveable(solveableCells, cell.id, 'row', 'any')
         }
 
-      case 'singles_solve_cell':
+      // highlight a cell where solve method is single - and its influencing cells
+      case 'cell_single':
         return {
           ...state,
+          isActive: cell.id === focusCellObj?.id,
           inActiveBlock: cell.block === focusCellObj?.block,
           inActiveColumn: cell.column === focusCellObj?.column,
           inActiveRow: cell.row === focusCellObj?.row,
           isSolveable: cell.id === focusCellObj?.id && isCellSolveable(solveableCells, cell.id, 'single', 'any')
         }
 
-
-      case 'scanning_value':
-        return {
-          ...state,
-          inBarredBlock: (state.hasValue && focusValue !== undefined) || takenInEnnead(cells, 'block', cell.block, focusValue),
-          inBarredColumn: takenInEnnead(cells, 'column', cell.column, focusValue),
-          inBarredRow: takenInEnnead(cells, 'row', cell.row, focusValue),
-          isSolveable: isCellSolveable(solveableCells, cell.id, 'any', focusValue),
-          hasFocusedValue: cell.value === focusValue,
-        }
-
-      case 'scanning_solve_cell':
+      // highlight a cell where solve method is block/column/row - and its barring cells
+      case 'cell_block':
+      case 'cell_column':
+      case 'cell_row':
 
         if (focusSolveable && focusCellObj && focusSolveable.scanEnneadType && cell.id !== focusCellObj?.id) {
           const { scanEnneadType, value } = focusSolveable;
@@ -139,6 +133,7 @@ export const displayCell = (
             inBarredBlock,
             inBarredColumn,
             inBarredRow,
+            isActive: cell.id === focusCellObj?.id,
             inActiveBlock: scanEnneadType === 'block' && cell.block === focusCellObj?.block && cell.value !== undefined,
             inActiveColumn: scanEnneadType === 'column' && cell.column === focusCellObj?.column && cell.value !== undefined,
             inActiveRow: scanEnneadType === 'row' && cell.row === focusCellObj?.row && cell.value !== undefined,
@@ -148,7 +143,18 @@ export const displayCell = (
         }
         return {
           ...state,
+          isActive: cell.id === focusCellObj?.id,
           isSolveable: cell.id === focusCellObj?.id && isCellSolveable(solveableCells, cell.id, 'any', focusValue)
+        }
+
+      case 'scanning_value':
+        return {
+          ...state,
+          inBarredBlock: (state.hasValue && focusValue !== undefined) || takenInEnnead(cells, 'block', cell.block, focusValue),
+          inBarredColumn: takenInEnnead(cells, 'column', cell.column, focusValue),
+          inBarredRow: takenInEnnead(cells, 'row', cell.row, focusValue),
+          isSolveable: isCellSolveable(solveableCells, cell.id, 'any', focusValue),
+          hasFocusedValue: cell.value === focusValue,
         }
 
       default:

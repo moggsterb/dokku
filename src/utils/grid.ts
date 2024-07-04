@@ -104,9 +104,10 @@ export const gridReducer = (state: IGrid, action: GridActions) => {
 
       const displayMode = !solveable
         ? 'manual'
-        : solveable.type === 'single'
-          ? 'singles_solve_cell'
-          : 'scanning_solve_cell'
+        : `cell_${solveable.type}`
+      // : solveable.type === 'cell_single'
+      //   ? 'cell_singles'
+      //   : 'scanning_solve_cell'
 
       return {
         ...state,
