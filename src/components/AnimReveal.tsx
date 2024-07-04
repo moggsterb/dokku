@@ -17,7 +17,7 @@ const AnimReveal = ({ items }: Props) => {
           animate={{ x: 0, opacity: 1 }}
           transition={{ delay: index * 0.2 }}
           exit={{ opacity: 0 }}
-          key={1}
+          key={index}
         >
           {item.component}
         </motion.div>

@@ -17,7 +17,7 @@ const useControl = (initialStatus: string, gridCells: ICell[]) => {
   );
 
   useEffect(() => {
-    console.log(`Ticker: ${count}`)
+    // console.log(`Ticker: ${count}`)
 
 
 

@@ -50,8 +50,9 @@ export const initialCells = (): ICell[] => {
 
 export const loadCells = (id: number): ICell[] => {
   const data = examples.find(item => item.id === id);
-  const str = data?.grid.join('');
-  return customCells(str);
+  const grid = data?.grid.join('');
+  // console.log({ grid })
+  return customCells(grid);
 }
 
 export const customCells = (str: string | undefined) => {
