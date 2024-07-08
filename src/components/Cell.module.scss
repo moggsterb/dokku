@@ -160,29 +160,29 @@
         background: var(--solve-single-bg);
       }
     }
+  }
 
-    & .value {
-      font-size: var(--cell-value-size);
-      //  -webkit-user-select: none;
-      //     -ms-user-select: none;
-      //     user-select: none;
-    }
+  & .value {
+    font-size: var(--cell-value-size);
+    //  -webkit-user-select: none;
+    //     -ms-user-select: none;
+    //     user-select: none;
+  }
 
-    .candidates {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      padding: 8px;
-      height: 100%;
-      // background: rgba(white, 0.05);
-      border-radius: var(--cell-radius);
-    }
+  .candidates {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 8px;
+    height: 100%;
+    // background: rgba(white, 0.05);
+    border-radius: var(--cell-radius);
+  }
 
-    .hoverable {
-      &:hover {
-        background: black;
-        cursor: pointer;
-      }
+  .hoverable {
+    &:hover {
+      background: black;
+      cursor: pointer;
     }
   }
 }
