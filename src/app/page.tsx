@@ -5,33 +5,38 @@ import Link from 'next/link';
 
 import styles from './page.module.scss';
 import AnimReveal from '@/components/AnimReveal';
+import { LEVELS } from '@/utils/examples';
 
 export default function Home() {
   const header = <h1 className={styles.header}>Dokku</h1>;
 
-  const items = [
-    { label: 'Easy', url: '/selector/easy', initX: -400 },
-    { label: 'Normal', url: '/selector/normal', initX: 400 },
-    { label: 'Difficult', url: '/selector/difficult', initX: -400 },
-    { label: 'Expert', url: '/selector/expert', initX: 400 },
-    { label: 'Impossible', url: '/selector/impossible', initX: -400 },
-    { label: 'Create your own', url: '/builder', initX: 400, marginTop: 50 },
-  ];
+  const levels = LEVELS.map(({ title, slug }, index) => {
+    return {
+      title,
+      url: `/selector/${slug}`,
+      initX: index % 2 ? -400 : 400,
+      marginTop: 0,
+    };
+  });
+  levels.push({
+    title: 'Create your own',
+    url: '/builder',
+    initX: 400,
+    marginTop: 20,
+  });
+
   return (
     <MainContainer header={header}>
       <div className={styles.levels}>
         <AnimReveal
-          items={items.map((item) => {
+          items={levels.map(({ title, url, initX, marginTop }) => {
             return {
-              initX: item.initX,
+              initX,
               initOpacity: 0,
               component: (
-                <Link
-                  href={item.url}
-                  style={{ marginTop: item.marginTop || 0 }}
-                >
-                  <div>{item.label}</div>
-                  <span>{item.label}</span>
+                <Link href={url} style={{ marginTop }}>
+                  <div>{title}</div>
+                  <span>{title}</span>
                 </Link>
               ),
             };

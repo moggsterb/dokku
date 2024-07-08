@@ -100,9 +100,10 @@ const GridStatus = ({
       </div>
       <div className={styles.bottom}>
         <Setting label='Unsolved' value={unsolvedCells.length} />
-        <Setting label='Status' value={gridStatus} />
+
         {gridStatus !== 'selector' && (
           <>
+            <Setting label='Status' value={gridStatus} />
             <Setting label='Is Browser' value={isBrowser ? 'True' : 'False'} />
             <Setting label='Mode' value={displayMode} />
             <Setting label='Cell' value={focusCellID} />

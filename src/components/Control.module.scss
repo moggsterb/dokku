@@ -2,7 +2,8 @@
   padding: 20px;
   display: flex;
   flex: 1;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
 
   button {
@@ -26,6 +27,16 @@
   }
 
   h1 {
-    margin: 0 50px;
+    margin-bottom: 5px;
   }
+  p {
+    font-size: 14px;
+    color: #666;
+  }
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
