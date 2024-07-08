@@ -17,7 +17,13 @@ export default function Selector({
 }) {
   const router = useRouter();
 
-  const levelID = ['easy', 'normal', 'difficult', 'expert'].indexOf(level);
+  const levelID = [
+    'easy',
+    'normal',
+    'difficult',
+    'expert',
+    'impossible',
+  ].indexOf(level);
   const grids = examples.filter((item) => item.level === levelID);
   const capLevel = level.charAt(0).toUpperCase() + level.slice(1);
 

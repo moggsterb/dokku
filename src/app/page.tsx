@@ -14,7 +14,8 @@ export default function Home() {
     { label: 'Normal', url: '/selector/normal', initX: 400 },
     { label: 'Difficult', url: '/selector/difficult', initX: -400 },
     { label: 'Expert', url: '/selector/expert', initX: 400 },
-    { label: 'Create your own', url: '/builder', initX: -400, marginTop: 50 },
+    { label: 'Impossible', url: '/selector/impossible', initX: -400 },
+    { label: 'Create your own', url: '/builder', initX: 400, marginTop: 50 },
   ];
   return (
     <MainContainer header={header}>

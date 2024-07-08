@@ -35,7 +35,7 @@ const Candidate = ({
       { style: styles.settable, condition: canSet },
       {
         style: styles.hoverable,
-        condition: isBrowser && (canSet || canSolve),
+        condition: isBrowser && !rejected && canSet,
       },
     ]);
   };

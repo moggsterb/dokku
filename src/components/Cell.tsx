@@ -144,7 +144,6 @@ const Cell = ({
       { style: styles.connectedBlock, condition: inActiveBlock },
       { style: styles.connectedColumn, condition: inActiveColumn },
       { style: styles.connectedRow, condition: inActiveRow },
-      // { style: styles.canActivate, condition: canActivate },
       { style: styles.focusedValue, condition: hasFocusedValue },
       { style: styles.barredBlock, condition: inBarredBlock },
       { style: styles.barredColumn, condition: inBarredColumn },
@@ -169,15 +168,16 @@ const Cell = ({
         style: styles.solveableSingle,
         condition: displayMode === 'all_singles' && isSolveable !== false,
       },
-      // {
-      //   style: styles.singleSolveable,
-      //   condition: isSolveable && isSolveable.type === 'single',
-      // },
       { style: styles.preset, condition: status === 'preset' },
       {
         style: styles.hoverable,
         condition: isBrowser && canActivate && !isActive,
       },
+      {
+        style: styles.singleAnim,
+        condition: value !== undefined && displayMode === 'cell_single',
+      },
+      { style: styles[`sequence-${value}`], condition: value !== undefined },
     ]);
   };
 

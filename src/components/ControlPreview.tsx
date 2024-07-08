@@ -10,7 +10,9 @@ interface Props {
 
 const ControlPreview = ({ id }: Props) => {
   const example = examples.find((item) => item.id === id);
-  const level = ['easy', 'normal', 'difficult', 'expert'][example?.level || 0];
+  const level = ['easy', 'normal', 'difficult', 'expert', 'impossible'][
+    example?.level || 0
+  ];
 
   const router = useRouter();
 
