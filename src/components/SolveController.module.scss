@@ -46,23 +46,23 @@
   }
 
   &.all .roundel {
-    background: var(--solve-all-bg);
+    background: var(--cell-all);
   }
 
   &.block .roundel {
-    background: var(--solve-block-bg);
+    background: var(--cell-block);
   }
 
   &.column .roundel {
-    background: var(--solve-column-bg);
+    background: var(--cell-column);
   }
 
   &.row .roundel {
-    background: var(--solve-row-bg);
+    background: var(--cell-row);
   }
 
   &.single .roundel {
-    background: var(--solve-single-bg);
+    background: var(--cell-single);
   }
 }
 

@@ -1,8 +1,7 @@
 import { IGrid, SolveType } from '@/utils/types';
 import styles from './GridStatus.module.scss';
-import LabelCounter from './LabelCounter';
 import { Dispatch, useState } from 'react';
-import { filterSolveableCells, GridActions } from '@/utils/grid';
+import { GridActions } from '@/utils/grid';
 
 import { isBrowser } from 'react-device-detect';
 import SolveController from './SolveController';

@@ -74,20 +74,21 @@ const Grid = ({ grid, showCandidates, gridDispatch }: Props) => {
       focusCellID !== undefined ? cells[focusCellID] : undefined;
 
     return cells.map((cell, index) => {
+      const dc = displayCell(
+        cells,
+        enneads,
+        cell,
+        gridStatus,
+        displayMode,
+        focusCellObj,
+        focusValue,
+        solveableCells,
+        focusSolveable
+      );
       return (
         <Cell
           key={index}
-          displayCell={displayCell(
-            cells,
-            enneads,
-            cell,
-            gridStatus,
-            displayMode,
-            focusCellObj,
-            focusValue,
-            solveableCells,
-            focusSolveable
-          )}
+          displayCell={dc}
           clickHandler={handleCellClick}
           // focusHandler={handleCellFocus}
           // blurHandler={handleCellBlur}

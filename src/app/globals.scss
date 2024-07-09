@@ -7,47 +7,40 @@ body {
 }
 
 :root {
-  --main-fg: rgb(255, 255, 255);
-  --main-bg: rgb(37, 33, 29);
-  /* --background-rgb: 80, 0, 0; */
+  --main-fg: #6e6f6c;
+  --main-bg: #0d0c09;
 
   --grid-size: 360px;
   --cell-value-size: 40px;
 
-  --grid-bg: rgb(255, 255, 255, 0.05);
-  --cell-bg: rgb(255, 255, 255, 0.05);
-  --cell-fg: rgb(181, 108, 39);
-  --cell-preset-bg: rgb(255, 255, 255, 0.1);
-  --cell-preset-fg: rgb(144, 144, 144);
-  --cell-active-bg: rgb(228, 129, 30);
-  --cell-active-fg: rgb(255, 229, 202);
+  --grid-bg: #ffffff06; // grid background
 
-  --solve-all-bg: rgb(103, 200, 29);
-  --solve-block-bg: rgb(200, 75, 29);
-  --solve-column-bg: rgb(200, 126, 29);
-  --solve-row-bg: rgb(191, 200, 29);
-  --solve-single-bg: rgb(29, 183, 200);
+  --cell-bg: #ffffff09; // cell background
+  --cell-fg: #d2d2d2;
 
-  --solve-all-bga: rgba(103, 200, 29, 0.5);
-  --solve-block-bga: rgba(200, 75, 29, 0.5);
-  --solve-column-bga: rgba(200, 126, 29, 0.5);
-  --solve-row-bga: rgba(191, 200, 29, 0.5);
-  --solve-single-bga: rgba(29, 183, 200, 0.5);
+  --cell-preset-bg: #ffffff1a;
+  --cell-preset-fg: #424242;
 
-  --cell-solve-scan-bg: rgba(10, 125, 33, 0.595);
-  --cell-solve-scan-fg: rgb(101, 254, 96);
+  --cell-active-bg: #1d1c1c27;
+  --cell-active-fg: #ffe5ca;
 
-  --cell-solve-single-bg: rgba(104, 107, 188, 0.395);
-  --cell-solve-single-fg: rgb(51, 137, 203);
+  --cell-all: #67c81d;
+  --cell-block: #c84b1d;
+  --cell-column: #b4711a;
+  --cell-row: #bfc81d;
+  --cell-single: #1db7c8;
 
-  --cell-connected-block-bg: rgb(228, 129, 30, 0.3);
-  --cell-connected-block-fg: rgb(255, 229, 202, 0.4);
-  --cell-connected-bg: rgb(228, 129, 30, 0.2);
-  --cell-connected-fg: rgb(255, 229, 202, 0.3);
-  --cell-lit-bg: rgba(0, 96, 96, 0.2);
-  --cell-lit-fg: rgba(0, 96, 96, 1);
-  --cell-lit-preset-bg: rgb(0, 96, 96, 0.5);
-  --cell-lit-preset-fg: rgba(92, 232, 232);
+  --cell-all-off: #67c81d6d;
+  --cell-block-off: #c84b1d6d;
+  --cell-column-off: #c87e1d6d;
+  --cell-row-off: #bfc81d6d;
+  --cell-single-off: #1db7c86d;
+
+  --cell-barred-bg: #430808;
+  --cell-barred-fg: #c33a10;
+
+  --cell-barred-bg: #130303;
+  --cell-barred-fg: #2f2f2f;
 }
 
 /* Medium devices (tablets, 640px and up) */
@@ -144,147 +137,6 @@ body {
   padding: 20px;
 }
 
-// .grid {
-//   background-color: var(--grid-bg);
-//   width: var(--grid-size);
-//   height: var(--grid-size);
-//   display: flex;
-//   flex-direction: row;
-//   flex-wrap: wrap;
-//   padding: var(--grid-padding);
-//   border-radius: var(--grid-padding);
-// }
-
-.cell {
-  // width: var(--cell-size);
-  // height: var(--cell-size);
-  // padding: 1px;
-  // display: flex;
-
-  // &.row-3,
-  // &.row-6 {
-  //   margin-top: var(--grid-gutter);
-  // }
-
-  // &.col-3,
-  // &.col-6 {
-  //   margin-left: var(--grid-gutter);
-  // }
-
-  &__inner {
-    // display: flex;
-    // flex: 1;
-    // height: 100%;
-    // justify-content: center;
-    // align-items: center;
-    // background: var(--cell-bg);
-    // transition: background 0.25s ease-in;
-    // border-radius: var(--cell-radius);
-
-    &.lit {
-      background-color: var(--cell-lit-bg);
-      color: var(--cell-lit-fg);
-
-      &.preset {
-        background-color: var(--cell-lit-preset-bg);
-        color: var(--cell-lit-preset-fg);
-      }
-    }
-
-    // &.active {
-    //   background-color: var(--cell-active-bg);
-    // }
-
-    &.focus {
-      background-color: yellow;
-    }
-
-    &.preset {
-      background-color: var(--cell-preset-bg);
-      color: var(--cell-preset-fg);
-    }
-
-    // &.can-activate {
-    //   cursor: pointer;
-    // }
-  }
-
-  // &__value,
-  // &__solveable {
-  //   font-size: var(--cell-value-size);
-  //   -webkit-user-select: none;
-  //   -ms-user-select: none;
-  //   user-select: none;
-  // }
-
-  &__solveable {
-    // background-color: rgb(31, 86, 31);
-    // color: rgb(178, 224, 178);
-    // width: 80%;
-    // height: 80%;
-    // border-radius: 25%;
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
-  }
-}
-
-// .grid-controls {
-//   width: var(--grid-size);
-//   margin-top: 10px;
-//   height: 100px;
-// }
-
-// .value-selector {
-// height: 100%;
-// display: flex;
-// flex-direction: column;
-// align-items: stretch;
-// flex: 1;
-
-// &__row {
-// display: flex;
-// flex: 1;
-// flex-direction: row;
-// flex-wrap: wrap;
-// }
-
-// &__value {
-//   flex: 1;
-//   background: #333;
-//   margin: 2px;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   border-radius: 5px;
-
-//   &.available {
-//     background-color: var(--cell-active-bg);
-//     color: var(--cell-active-fg);
-//     &:hover {
-//       cursor: pointer;
-//     }
-//   }
-
-//   &.taken {
-//     background-color: var(--cell-lit-preset-bg);
-//     color: var(--cell-lit-preset-fg);
-//   }
-// }
-// }
-
-// .candidate {
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   width: calc(((var(--cell-size) - 8px) / 3));
-//   height: calc(((var(--cell-size) - 8px) / 3));
-//   font-size: 12px;
-//   background: rgba(255, 255, 255, 0.1);
-//   color: rgba(yellow, 0.25);
-//   margin: 1px;
-// }
-
 .selector {
   background-color: var(--grid-bg);
   width: var(--grid-size);
@@ -313,41 +165,6 @@ body {
     &.block-7,
     &.block-8 {
       margin-bottom: 0;
-    }
-  }
-
-  // .grid {
-  //   width: var(--selector-grid-size);
-  //   height: var(--selector-grid-size);
-  //   padding: var(--selector-grid-padding);
-  //   border-radius: var(--selector-grid-padding);
-  //   transition: background 0.25s ease-in;
-  //   &:hover {
-  //     background: rgba(80, 0, 0, 0.6);
-  //     cursor: pointer;
-  //   }
-  // }
-
-  .cell {
-    // width: var(--selector-cell-size);
-    // height: var(--selector-cell-size);
-
-    // &.row-3,
-    // &.row-6 {
-    //   margin-top: var(--selector-grid-gutter);
-    // }
-
-    // &.col-3,
-    // &.col-6 {
-    //   margin-left: var(--selector-grid-gutter);
-    // }
-
-    // &__inner {
-    //   border-radius: var(--selector-cell-radius);
-    // }
-
-    &__value {
-      font-size: calc(var(--cell-value-size) / 3);
     }
   }
 }

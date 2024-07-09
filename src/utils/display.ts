@@ -8,9 +8,9 @@ export interface IDisplayCellProps {
   cell: ICell,
   hasValue: boolean;
   isActive: boolean;
-  inActiveBlock: boolean;
-  inActiveColumn: boolean;
-  inActiveRow: boolean;
+  inConnectedBlock: boolean;
+  inConnectedColumn: boolean;
+  inConnectedRow: boolean;
   canActivate: boolean;
 
   hasFocusedValue: boolean;
@@ -40,9 +40,9 @@ export const displayCell = (
   const state: IDisplayCellProps = {
     hasValue: cell.value !== undefined,
     isActive: false,
-    inActiveBlock: false,
-    inActiveColumn: false,
-    inActiveRow: false,
+    inConnectedBlock: false,
+    inConnectedColumn: false,
+    inConnectedRow: false,
     hasFocusedValue: false,
     inBarredBlock: false,
     inBarredColumn: false,
@@ -64,9 +64,9 @@ export const displayCell = (
         return {
           ...state,
           isActive: cell.id === focusCellObj?.id,
-          inActiveBlock: cell.block === focusCellObj?.block,
-          inActiveColumn: cell.column === focusCellObj?.column,
-          inActiveRow: cell.row === focusCellObj?.row,
+          inConnectedBlock: cell.block === focusCellObj?.block,
+          inConnectedColumn: cell.column === focusCellObj?.column,
+          inConnectedRow: cell.row === focusCellObj?.row,
           hasFocusedValue: cell.value !== undefined && cell.value === focusValue,
         }
       // highlight all cells that are solveable (any method)
@@ -105,9 +105,9 @@ export const displayCell = (
         return {
           ...state,
           isActive: cell.id === focusCellObj?.id,
-          inActiveBlock: cell.block === focusCellObj?.block,
-          inActiveColumn: cell.column === focusCellObj?.column,
-          inActiveRow: cell.row === focusCellObj?.row,
+          inConnectedBlock: cell.block === focusCellObj?.block,
+          inConnectedColumn: cell.column === focusCellObj?.column,
+          inConnectedRow: cell.row === focusCellObj?.row,
           isSolveable: cell.id === focusCellObj?.id && isCellSolveable(solveableCells, cell.id, 'single', 'any')
         }
 
@@ -116,7 +116,8 @@ export const displayCell = (
       case 'cell_column':
       case 'cell_row':
 
-        if (focusSolveable && focusCellObj && focusSolveable.scanEnneadType && cell.id !== focusCellObj?.id) {
+        // && cell.id !== focusCellObj?.id
+        if (focusSolveable && focusCellObj && focusSolveable.scanEnneadType) {
           const { scanEnneadType, value } = focusSolveable;
           const scanEnneadID = focusCellObj[scanEnneadType]
 
@@ -128,16 +129,23 @@ export const displayCell = (
             scanEnneadType,
             scanEnneadID)
 
+          const inConnectedBlock = scanEnneadType === 'block' && cell.block === focusCellObj?.block; // && cell.value !== undefined;
+          const inConnectedColumn = scanEnneadType === 'column' && cell.column === focusCellObj?.column; //  && cell.value !== undefined;
+          const inConnectedRow = scanEnneadType === 'row' && cell.row === focusCellObj?.row; //  && cell.value !== undefined;
+          const hasFocusedValue = (inBarredBlock || inBarredColumn || inBarredRow) && cell.value === focusSolveable.value
+
+          console.log({ id: cell.id, inConnectedRow })
+
           return {
             ...state,
             inBarredBlock,
             inBarredColumn,
             inBarredRow,
             isActive: cell.id === focusCellObj?.id,
-            inActiveBlock: scanEnneadType === 'block' && cell.block === focusCellObj?.block && cell.value !== undefined,
-            inActiveColumn: scanEnneadType === 'column' && cell.column === focusCellObj?.column && cell.value !== undefined,
-            inActiveRow: scanEnneadType === 'row' && cell.row === focusCellObj?.row && cell.value !== undefined,
-            hasFocusedValue: (inBarredBlock || inBarredColumn || inBarredRow) && cell.value === focusSolveable.value,
+            inConnectedBlock,
+            inConnectedColumn,
+            inConnectedRow,
+            hasFocusedValue,
             isSolveable: cell.id === focusCellObj?.id && isCellSolveable(solveableCells, cell.id, 'any', focusValue)
           }
         }

@@ -40,9 +40,9 @@ const Cell = ({
     displayMode,
     hasValue,
     isActive,
-    inActiveBlock,
-    inActiveColumn,
-    inActiveRow,
+    inConnectedBlock,
+    inConnectedColumn,
+    inConnectedRow,
     hasFocusedValue,
     inBarredBlock,
     inBarredColumn,
@@ -79,7 +79,6 @@ const Cell = ({
 
   const renderCell = () => {
     if (hasValue) return renderValue();
-
     if (isSolveable) return renderSolveable();
     if (showCandidates)
       return (
@@ -141,9 +140,9 @@ const Cell = ({
     return buildStyle([
       { style: styles.inner, condition: true },
       { style: styles.active, condition: isActive },
-      { style: styles.connectedBlock, condition: inActiveBlock },
-      { style: styles.connectedColumn, condition: inActiveColumn },
-      { style: styles.connectedRow, condition: inActiveRow },
+      { style: styles.connectedBlock, condition: inConnectedBlock },
+      { style: styles.connectedColumn, condition: inConnectedColumn },
+      { style: styles.connectedRow, condition: inConnectedRow },
       { style: styles.focusedValue, condition: hasFocusedValue },
       { style: styles.barredBlock, condition: inBarredBlock },
       { style: styles.barredColumn, condition: inBarredColumn },
@@ -175,9 +174,16 @@ const Cell = ({
       },
       {
         style: styles.singleAnim,
-        condition: value !== undefined && displayMode === 'cell_single',
+        condition:
+          value !== undefined &&
+          displayMode === 'cell_single' &&
+          (inConnectedBlock || inConnectedColumn || inConnectedRow),
       },
       { style: styles[`sequence-${value}`], condition: value !== undefined },
+      {
+        style: styles.singleSolve,
+        condition: displayMode === 'cell_single' && isActive,
+      },
     ]);
   };
 
