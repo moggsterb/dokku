@@ -172,3 +172,35 @@ body {
 .extra-container {
   flex: 1;
 }
+
+@keyframes pulse {
+  5% {
+    transform: scale(1);
+  }
+  10% {
+    transform: scale(0.75);
+    // color: white;
+  }
+  12% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes pulseBig {
+  5% {
+    transform: scale(1);
+  }
+  10% {
+    transform: scale(1.5);
+    // color: white;
+  }
+  12% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

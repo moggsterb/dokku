@@ -11,6 +11,7 @@ interface Props {
   canSolve: boolean;
   canSet: boolean;
   clickHandler: (cellID: number, value: number) => void;
+  animStyle: Object;
 }
 
 const Candidate = ({
@@ -20,6 +21,7 @@ const Candidate = ({
   canSolve,
   canSet,
   clickHandler,
+  animStyle,
 }: Props) => {
   const handleClick = () => {
     if (!rejected) {
@@ -44,6 +46,7 @@ const Candidate = ({
     <div
       className={candidateStyle()}
       onClick={canSet && !rejected ? handleClick : undefined}
+      style={animStyle}
     >
       {rejected ? '' : value}
     </div>

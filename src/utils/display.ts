@@ -21,6 +21,7 @@ export interface IDisplayCellProps {
   allSolveMethods: SolveType[];
   // scanEnneadTypes: EnneadType[];
 
+  focusCellID: number | undefined;
   gridStatus: string;
   displayMode: string;
 }
@@ -50,6 +51,7 @@ export const displayCell = (
     isSolveable: false,
     allSolveMethods: allSolveTypes(solveableCells, cell.id),
     canActivate: (gridStatus !== 'preview' && gridStatus !== 'selector' && cell.status !== 'preset') || gridStatus === 'builder',
+    focusCellID: focusCellObj?.id,
     gridStatus,
     displayMode,
     cell,
@@ -133,8 +135,6 @@ export const displayCell = (
           const inConnectedColumn = scanEnneadType === 'column' && cell.column === focusCellObj?.column; //  && cell.value !== undefined;
           const inConnectedRow = scanEnneadType === 'row' && cell.row === focusCellObj?.row; //  && cell.value !== undefined;
           const hasFocusedValue = (inBarredBlock || inBarredColumn || inBarredRow) && cell.value === focusSolveable.value
-
-          console.log({ id: cell.id, inConnectedRow })
 
           return {
             ...state,

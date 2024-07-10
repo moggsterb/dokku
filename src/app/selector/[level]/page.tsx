@@ -45,7 +45,10 @@ export default function Selector({
                     router.push(`/selector/preview/${grid.id}`);
                   }}
                 >
-                  <Grid grid={initialGrid('selector', loadCells(grid.id))} />
+                  <Grid
+                    grid={initialGrid('selector', loadCells(grid.id))}
+                    showHints={false}
+                  />
                 </div>
               ),
             };

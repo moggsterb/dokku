@@ -7,5 +7,12 @@ export default function Play({
   searchParams: { puzzle: string; custom: string };
 }) {
   const cells = custom ? customCells(custom) : loadCells(Number(puzzle));
-  return <Puzzle initialCells={cells} initialStatus='auto' showCandidates />;
+  return (
+    <Puzzle
+      initialCells={cells}
+      initialStatus='auto'
+      showCandidates={false}
+      showHints={true}
+    />
+  );
 }

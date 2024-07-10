@@ -11,12 +11,14 @@ interface Props {
   initialCells: ICell[];
   initialStatus: string; // builder, preview, play
   showCandidates?: boolean;
+  showHints?: boolean;
 }
 
 const Puzzle = ({
   initialCells,
   initialStatus,
   showCandidates = false,
+  showHints = false,
 }: Props) => {
   const { grid, gridDispatch } = useControl(initialStatus, initialCells);
   const { gridStatus, cells, enneads, focusCellID, focusValue } = grid;
@@ -32,9 +34,6 @@ const Puzzle = ({
             ? 'preset'
             : 'solved'
           : 'unsolved';
-
-      // gridDispatch({ type: 'UPDATE_CELL', payload: { cell } });
-      // setActiveCell(undefined);
     }
   };
 
@@ -51,6 +50,7 @@ const Puzzle = ({
         <Grid
           grid={grid}
           showCandidates={showCandidates}
+          showHints={showHints}
           gridDispatch={gridDispatch}
         />
       </MainContainer>

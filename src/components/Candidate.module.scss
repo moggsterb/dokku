@@ -5,25 +5,26 @@
   width: calc(((var(--cell-size) - 10px) / 3) - 5px);
   height: calc(((var(--cell-size) - 10px) / 3) - 5px);
   font-size: 12px;
+  transition: background 0.25s ease-in, transform 0.25s ease-in;
 
-  color: rgba(yellow, 0.25);
+  color: rgba(255, 255, 255, 0.1);
   margin: 1px;
 }
 
 .notRejected {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.15);
 }
 
 .hoverable {
   &:hover {
     cursor: pointer;
-    background: orange;
+    background: #333;
     color: white;
   }
 }
 
 .solveable {
-  background: #666;
+  background: rgba(0, 0, 0, 0.5);
   color: white;
   // border: rgba(255, 255, 255, 0.75) 3px solid;
 }

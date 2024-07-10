@@ -10,10 +10,11 @@ import { GridActions } from '@/utils/grid';
 interface Props {
   grid: IGrid;
   showCandidates?: boolean;
+  showHints?: boolean;
   gridDispatch?: Dispatch<GridActions>;
 }
 
-const Grid = ({ grid, showCandidates, gridDispatch }: Props) => {
+const Grid = ({ grid, showCandidates, showHints, gridDispatch }: Props) => {
   const {
     cells,
     enneads,
@@ -53,16 +54,6 @@ const Grid = ({ grid, showCandidates, gridDispatch }: Props) => {
     }
   };
 
-  // const handleCellFocus = (cellID: number, canFocus: boolean) => {
-  //   if (!gridDispatch || gridStatus === 'preview') return;
-  //   gridDispatch({ type: 'FOCUS_CELL', payload: { cellID } });
-  // };
-
-  // const handleCellBlur = (value: number) => {
-  //   if (!gridDispatch || gridStatus === 'preview') return;
-  //   gridDispatch({ type: 'BLUR_CELL' });
-  // };
-
   const handleCandidateClick = (cellID: number, value: number) => {
     if (!gridDispatch || gridStatus === 'preview') return;
     const type = gridStatus === 'builder' ? 'preset' : 'solved';
@@ -90,10 +81,9 @@ const Grid = ({ grid, showCandidates, gridDispatch }: Props) => {
           key={index}
           displayCell={dc}
           clickHandler={handleCellClick}
-          // focusHandler={handleCellFocus}
-          // blurHandler={handleCellBlur}
           setHandler={handleCandidateClick}
           showCandidates={showCandidates || false}
+          showHints={showHints || false}
         />
       );
     });

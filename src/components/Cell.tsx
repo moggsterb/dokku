@@ -14,6 +14,7 @@ import Candidate from './Candidate';
 import styles from './Cell.module.scss';
 import { IDisplayCellProps } from '@/utils/display';
 import { buildStyle } from '@/utils/helpers';
+import { useEffect, useState } from 'react';
 
 interface Props {
   displayCell: IDisplayCellProps;
@@ -23,6 +24,7 @@ interface Props {
   // blurHandler: (value: number) => void;
   setHandler: (cellID: number, value: number) => void;
   showCandidates: boolean;
+  showHints?: boolean;
 }
 
 const ICONS = {
@@ -36,6 +38,7 @@ const ICONS = {
 const Cell = ({
   displayCell: {
     cell,
+    focusCellID,
     gridStatus,
     displayMode,
     hasValue,
@@ -54,8 +57,21 @@ const Cell = ({
   clickHandler,
   setHandler,
   showCandidates,
+  showHints = false,
 }: Props) => {
   const { id, status, value, row, column, candidates } = cell;
+  const [animID, setAnimID] = useState<number | undefined>(undefined);
+
+  useEffect(() => {
+    const animRequired =
+      (value !== undefined || id === focusCellID) &&
+      displayMode === 'cell_single' &&
+      (inConnectedBlock || inConnectedColumn || inConnectedRow);
+
+    if (animID !== focusCellID) {
+      setAnimID(animRequired ? focusCellID : undefined);
+    }
+  }, [focusCellID, animID]);
 
   const renderCandidates = (highlightSolve: number = 0) => {
     return (
@@ -68,6 +84,10 @@ const Cell = ({
               value={value}
               rejected={rejected}
               canSolve={highlightSolve === value}
+              animStyle={getAnimStyle(
+                id === animID && value === highlightSolve ? highlightSolve : 0,
+                'pulseBig'
+              )}
               canSet={isActive}
               clickHandler={setHandler}
             />
@@ -80,14 +100,13 @@ const Cell = ({
   const renderCell = () => {
     if (hasValue) return renderValue();
     if (isSolveable) return renderSolveable();
-    if (showCandidates)
-      return (
-        <>
-          {renderSolveHints()}
-          {renderCandidates()}
-        </>
-      );
-    renderBlank();
+    if (!true) return renderBlank();
+    return (
+      <>
+        {showHints && renderSolveHints()}
+        {(isActive || showCandidates) && renderCandidates()}
+      </>
+    );
   };
 
   const renderBlank = () => {
@@ -118,9 +137,7 @@ const Cell = ({
             <div
               key={`${cell.id}-${method}-${index}`}
               className={`${styles.solveIcon} ${styles[method]}`}
-            >
-              {/* <FontAwesomeIcon icon={icon} /> */}
-            </div>
+            />
           );
         })}
       </div>
@@ -173,14 +190,6 @@ const Cell = ({
         condition: isBrowser && canActivate && !isActive,
       },
       {
-        style: styles.singleAnim,
-        condition:
-          value !== undefined &&
-          displayMode === 'cell_single' &&
-          (inConnectedBlock || inConnectedColumn || inConnectedRow),
-      },
-      { style: styles[`sequence-${value}`], condition: value !== undefined },
-      {
         style: styles.singleSolve,
         condition: displayMode === 'cell_single' && isActive,
       },
@@ -193,19 +202,25 @@ const Cell = ({
     }
   };
 
-  // const handleFocus = () => {
-  //   focusHandler(id, true);
-  // };
-
-  // const handleBlur = () => {
-  //   blurHandler(id);
-  // };
+  const getAnimStyle = (delay: number, name: string) => {
+    if (animID && animID === focusCellID && delay) {
+      return {
+        animationName: name,
+        animationDuration: '5s',
+        animationIterationCount: 'infinite',
+        animationDelay: `${Number(delay) / 2}s`,
+      };
+    } else {
+      return {};
+    }
+  };
 
   return (
     <div className={cellStyle()}>
       <div
         className={innerStyle()}
         onClick={canActivate && !isActive ? handleClick : undefined}
+        style={getAnimStyle(Number(value), 'pulse')}
         // onMouseEnter={handleFocus}
         // onMouseLeave={handleBlur}
       >

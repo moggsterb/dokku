@@ -54,7 +54,9 @@ export const gridReducer = (state: IGrid, action: GridActions) => {
     case 'UPDATE_MODE':
       return {
         ...state,
-        displayMode: action.payload.mode
+        displayMode: action.payload.mode,
+        focusValue: undefined,
+        focusCellID: undefined,
       }
     case 'UPDATE_STATUS':
       return {
@@ -175,8 +177,6 @@ const findSolves = (cells: ICell[], enneads: IEnneads): SolveableCells => {
     ...findScanningSolves(cells, enneads),
     ...findSingleSolves(cells)
   ];
-
-  // console.log({ solves, x, y })
   return solves;
 }
 
@@ -194,9 +194,6 @@ const summariseSolves = (solveableCells: SolveableCells) => {
       byType['all'].push({ cellID, solution });
     }
   })
-
-  // console.log({ count: solveableCells.length, byType })
-  // console.log('hello')
 
   return byType;
 }
