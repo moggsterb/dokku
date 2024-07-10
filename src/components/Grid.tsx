@@ -1,4 +1,4 @@
-import { ICell, IEnneads, IGrid } from '@/utils/types';
+import { ICell, IEnneads, IGrid, SolveType } from '@/utils/types';
 import Cell from './Cell';
 import { Dispatch, SetStateAction } from 'react';
 import GridStatus from './GridStatus';
@@ -28,10 +28,13 @@ const Grid = ({ grid, showCandidates, showHints, gridDispatch }: Props) => {
 
   const handleCellClick = (cellID: number) => {
     if (!gridDispatch || gridStatus === 'preview') return;
-
     if (gridStatus === 'builder' || gridStatus === 'ready') {
       if (!cells[cellID].value) {
-        gridDispatch({ type: 'FOCUS_CELL', payload: { cellID } });
+        if (cellID !== focusCellID) {
+          gridDispatch({ type: 'FOCUS_CELL', payload: { cellID } });
+        } else {
+          gridDispatch({ type: 'BLUR_CELL' });
+        }
       } else {
         gridDispatch({
           type: 'RESET_CELL',
@@ -52,6 +55,11 @@ const Grid = ({ grid, showCandidates, showHints, gridDispatch }: Props) => {
         });
       }
     }
+  };
+
+  const handleMethodClick = (cellID: number, method: SolveType) => {
+    if (!gridDispatch || gridStatus === 'preview') return;
+    gridDispatch({ type: 'FOCUS_CELL', payload: { cellID, method } });
   };
 
   const handleCandidateClick = (cellID: number, value: number) => {
@@ -82,6 +90,7 @@ const Grid = ({ grid, showCandidates, showHints, gridDispatch }: Props) => {
           displayCell={dc}
           clickHandler={handleCellClick}
           setHandler={handleCandidateClick}
+          methodHandler={handleMethodClick}
           showCandidates={showCandidates || false}
           showHints={showHints || false}
         />

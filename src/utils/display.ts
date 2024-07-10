@@ -180,7 +180,7 @@ interface ISolveList {
 export const isCellSolveable = (
   solveableCells: SolveableCells,
   cellID: number,
-  method: 'block' | 'column' | 'row' | 'single' | 'any',
+  method: SolveType | 'any',
   value: number | 'any' = 'any'
 ): IsSolveable => {
   const solves = solveableCells

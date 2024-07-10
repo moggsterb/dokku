@@ -15,6 +15,7 @@ import styles from './Cell.module.scss';
 import { IDisplayCellProps } from '@/utils/display';
 import { buildStyle } from '@/utils/helpers';
 import { useEffect, useState } from 'react';
+import { SolveType } from '@/utils/types';
 
 interface Props {
   displayCell: IDisplayCellProps;
@@ -23,6 +24,7 @@ interface Props {
   // focusHandler: (value: number, canFocus: boolean) => void;
   // blurHandler: (value: number) => void;
   setHandler: (cellID: number, value: number) => void;
+  methodHandler: (cellID: number, method: SolveType) => void;
   showCandidates: boolean;
   showHints?: boolean;
 }
@@ -56,6 +58,7 @@ const Cell = ({
   },
   clickHandler,
   setHandler,
+  methodHandler,
   showCandidates,
   showHints = false,
 }: Props) => {
@@ -137,6 +140,10 @@ const Cell = ({
             <div
               key={`${cell.id}-${method}-${index}`}
               className={`${styles.solveIcon} ${styles[method]}`}
+              onClick={(e) => {
+                methodHandler(id, method);
+                e.stopPropagation();
+              }}
             />
           );
         })}
@@ -187,7 +194,7 @@ const Cell = ({
       { style: styles.preset, condition: status === 'preset' },
       {
         style: styles.hoverable,
-        condition: isBrowser && canActivate && !isActive,
+        condition: isBrowser && cell.status !== 'preset', // && canActivate && !isActive,
       },
       {
         style: styles.singleSolve,
@@ -219,10 +226,9 @@ const Cell = ({
     <div className={cellStyle()}>
       <div
         className={innerStyle()}
-        onClick={canActivate && !isActive ? handleClick : undefined}
+        // onClick={canActivate && !isActive ? handleClick : undefined}
+        onClick={handleClick}
         style={getAnimStyle(Number(value), 'pulse')}
-        // onMouseEnter={handleFocus}
-        // onMouseLeave={handleBlur}
       >
         {renderCell()}
       </div>
