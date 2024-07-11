@@ -1,6 +1,5 @@
 'use client';
 
-import Puzzle from '@/components/Puzzle';
 import MainContainer from '@/components/MainContainer';
 import { loadCells } from '@/utils/cell';
 import { EXAMPLES, LEVELS } from '@/utils/examples';

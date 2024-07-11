@@ -3,8 +3,6 @@
 import Puzzle from '@/components/Puzzle';
 import MainContainer from '@/components/MainContainer';
 import { loadCells } from '@/utils/cell';
-import ControlPreview from '@/components/ControlPreview';
-import { useRouter } from 'next/navigation';
 import { EXAMPLES, LEVELS } from '@/utils/examples';
 import Control from '@/components/Control';
 
