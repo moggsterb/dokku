@@ -15,7 +15,7 @@ const ControlPreview = ({ id }: Props) => {
   const router = useRouter();
 
   const backHandler = () => {
-    router.push(`/selector/${level?.slug}`);
+    router.push(level?.url || '');
   };
 
   const playHandler = () => {

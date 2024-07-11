@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import Grid from '@/components/Grid';
 import { initialGrid } from '@/utils/grid';
 import AnimReveal from '@/components/AnimReveal';
-import ControlSelector from '@/components/ControlSelector';
+import Control from '@/components/Control';
 
 export default function Selector({
   params: { level },
@@ -17,15 +17,21 @@ export default function Selector({
 }) {
   const router = useRouter();
 
-  const levelObj = LEVELS.find((item) => item.slug === level);
+  const levelObj = LEVELS.find((item) => item.url === `/selector/${level}`);
   if (!levelObj) return <>Level Not found</>;
 
   const grids = EXAMPLES.filter((item) => item.level === levelObj?.id || 0);
 
+  const backHandler = () => {
+    router.push('/');
+  };
+
   const header = (
-    <ControlSelector
+    <Control
       title={`${levelObj.title} Puzzles`}
       description={levelObj.description}
+      beforeActions={[{ title: 'cancel', url: '/' }]}
+      afterActions={[]}
     />
   );
 

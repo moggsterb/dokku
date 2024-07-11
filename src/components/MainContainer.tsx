@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 import styles from './MainContainer.module.scss';
 
 interface Props {
-  header: ReactNode;
+  header?: ReactNode;
   children: ReactNode;
 }
 

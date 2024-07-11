@@ -1,14 +1,32 @@
+'use client';
+
 import Puzzle from '@/components/Puzzle';
 import MainContainer from '@/components/MainContainer';
 import { loadCells } from '@/utils/cell';
 import ControlPreview from '@/components/ControlPreview';
+import { useRouter } from 'next/navigation';
+import { EXAMPLES, LEVELS } from '@/utils/examples';
+import Control from '@/components/Control';
 
 export default function Preview({
   params: { id },
 }: {
   params: { id: string };
 }) {
-  const header = <ControlPreview id={Number(id)} />;
+  const example = EXAMPLES.find((item) => item.id === Number(id));
+  const level = LEVELS.find((item) => item.id === example?.level);
+
+  const header = (
+    <Control
+      title={example?.title || ''}
+      description={`${example?.unsolvedAtStart} cells to solve - (${
+        example?.completes ? 'solves in' : 'stalls at'
+      } ${example?.cycles} cycles)`}
+      beforeActions={[{ title: 'cancel', url: level?.url || '/' }]}
+      afterActions={[{ title: 'solve', url: `/play?puzzle=${id}` }]}
+    />
+  );
+
   return (
     <MainContainer header={header}>
       <Puzzle initialCells={loadCells(Number(id))} initialStatus='preview' />

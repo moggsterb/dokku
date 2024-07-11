@@ -31,9 +31,9 @@ const ControlBuilder = ({ grid, gridDispatch }: Props) => {
 
   return (
     <div className={styles.wrapper}>
-      <button onClick={backHandler}>back</button>
+      <button onClick={backHandler}>cancel</button>
       <button onClick={resetHandler}>reset</button>
-      <button onClick={outputHandler}>output</button>
+      {/* <button onClick={outputHandler}>output</button> */}
       <button onClick={startHandler}>start</button>
     </div>
   );

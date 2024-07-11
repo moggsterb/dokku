@@ -6,6 +6,26 @@
   justify-content: space-between;
   align-items: center;
 
+  .before,
+  .after,
+  .center {
+    display: flex;
+    flex: 2;
+  }
+
+  .before {
+    justify-content: flex-start;
+  }
+
+  .after {
+    justify-content: flex-end;
+  }
+
+  .center {
+    flex-direction: column;
+    flex-grow: 4;
+  }
+
   button {
     border-radius: 5px;
     width: 150px;
@@ -30,12 +50,6 @@
     margin-bottom: 5px;
   }
   p {
-    font-size: 14px;
+    font-size: 16px;
   }
-}
-
-.center {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
 }

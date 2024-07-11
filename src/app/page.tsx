@@ -10,26 +10,11 @@ import { LEVELS } from '@/utils/examples';
 export default function Home() {
   const header = <h1 className={styles.header}>Dokku</h1>;
 
-  const levels = LEVELS.map(({ title, slug }, index) => {
-    return {
-      title,
-      url: `/selector/${slug}`,
-      initX: index % 2 ? -400 : 400,
-      marginTop: 0,
-    };
-  });
-  levels.push({
-    title: 'Create your own',
-    url: '/builder',
-    initX: 400,
-    marginTop: 20,
-  });
-
   return (
     <MainContainer header={header}>
       <div className={styles.levels}>
         <AnimReveal
-          items={levels.map(({ title, url, initX, marginTop }) => {
+          items={LEVELS.map(({ title, url, initX, marginTop }) => {
             return {
               initX,
               initOpacity: 0,

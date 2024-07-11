@@ -1,12 +1,14 @@
 export const LEVELS = [
-  { id: 1, title: 'Easy', slug: 'easy', description: 'Solveable with just BLOCK scanning' },
-  { id: 2, title: 'Normal', slug: 'normal', description: 'Solveable with BLOCK and occasional SINGLE scanning' },
+  { id: 1, marginTop: 0, initX: -400, title: 'Easy', url: '/selector/easy', description: 'Solveable with just BLOCK scanning' },
+  { id: 2, marginTop: 0, initX: 400, title: 'Normal', url: '/selector/normal', description: 'Solveable with BLOCK and occasional SINGLE scanning' },
   {
-    id: 3, title: 'Difficult', slug: 'difficult', description: 'Solveable with BLOCK and occasional SINGLE, COLUMN and ROW scanning'
+    id: 3, marginTop: 0, initX: -400, title: 'Difficult', url: '/selector/difficult', description: 'Solveable with BLOCK and occasional SINGLE, COLUMN and ROW scanning'
   },
-  { id: 4, title: 'Expert', slug: 'expert', description: 'Solveable using combinations of BLOCK, SINGLE, COLUMN and ROW scanning' },
-  { id: 5, title: 'Impossible', slug: 'impossible', description: 'Not fully solveable yet - will require more advanced solving techniques' },
+  { id: 4, marginTop: 0, initX: 400, title: 'Expert', url: '/selector/expert', description: 'Solveable using combinations of BLOCK, SINGLE, COLUMN and ROW scanning' },
+  { id: 5, marginTop: 0, initX: -400, title: 'Impossible', url: '/selector/impossible', description: 'Not fully solveable yet - will require more advanced solving techniques' },
+  { id: 99, marginTop: 20, initX: 400, title: 'Create your own', url: '/builder', description: 'Solve your own Puzzle' }
 ]
+
 
 export const EXAMPLES = [
 

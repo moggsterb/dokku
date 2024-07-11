@@ -194,7 +194,8 @@ const Cell = ({
       { style: styles.preset, condition: status === 'preset' },
       {
         style: styles.hoverable,
-        condition: isBrowser && cell.status !== 'preset', // && canActivate && !isActive,
+        condition:
+          isBrowser && cell.status !== 'preset' && gridStatus === 'ready', // && canActivate && !isActive,
       },
       {
         style: styles.singleSolve,

@@ -1,5 +1,6 @@
 'use client';
 
+import { ReactNode } from 'react';
 import styles from './Control.module.scss';
 
 interface Props {
