@@ -17,8 +17,6 @@ const useControl = (initialStatus: string, gridCells: ICell[]) => {
   );
 
   useEffect(() => {
-    // console.log(`Ticker: ${count}`)
-
 
 
     const interval = setInterval(() => {
@@ -51,7 +49,7 @@ const useControl = (initialStatus: string, gridCells: ICell[]) => {
     }, 100);
 
     return () => clearInterval(interval);
-  }, [count]);
+  }, [count, outstanding, grid.gridStatus]);
 
   return { grid, gridDispatch }
 }

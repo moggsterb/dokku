@@ -65,16 +65,16 @@ const Cell = ({
   const { id, status, value, row, column, candidates } = cell;
   const [animID, setAnimID] = useState<number | undefined>(undefined);
 
-  useEffect(() => {
-    const animRequired =
-      (value !== undefined || id === focusCellID) &&
-      displayMode === 'cell_single' &&
-      (inConnectedBlock || inConnectedColumn || inConnectedRow);
+  const animRequired =
+    (value !== undefined || id === focusCellID) &&
+    displayMode === 'cell_single' &&
+    (inConnectedBlock || inConnectedColumn || inConnectedRow);
 
+  useEffect(() => {
     if (animID !== focusCellID) {
       setAnimID(animRequired ? focusCellID : undefined);
     }
-  }, [focusCellID, animID]);
+  }, [focusCellID, animID, animRequired]);
 
   const renderCandidates = (highlightSolve: number = 0) => {
     return (

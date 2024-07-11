@@ -14,7 +14,7 @@ const Footer = () => {
       <div>
         {LEVELS.map(({ url, title }, index) => {
           return (
-            <Link href={url} className={styles.item}>
+            <Link key={index} href={url} className={styles.item}>
               {title}
             </Link>
           );
