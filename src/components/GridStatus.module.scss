@@ -1,9 +1,10 @@
 .bottom {
   position: absolute;
-  bottom: -10px;
-  left: 10px;
+  bottom: -25px;
   display: flex;
-  display: none;
+  width: 100%;
+  justify-content: center;
+  // display: none;
 }
 
 .top {
@@ -14,6 +15,7 @@
   width: 100%;
   padding-right: 20px;
   justify-content: center;
+  display: none;
 }
 
 .setting {
@@ -31,4 +33,5 @@
 
 .solvers {
   display: flex;
+  flex-wrap: wrap;
 }

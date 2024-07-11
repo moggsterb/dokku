@@ -3,7 +3,7 @@ import styles from './SolveController.module.scss';
 import { SolveType } from '@/utils/types';
 import { Dispatch, SetStateAction } from 'react';
 import { GridActions } from '@/utils/grid';
-import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
+import { faCircleCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface Props {
@@ -54,6 +54,12 @@ const SolveController = ({
       setSolveState(type);
     } else {
       gridDispatch({
+        type: 'BATCH_SOLVE',
+        payload: {
+          items: cellIDs,
+        },
+      });
+      gridDispatch({
         type: 'UPDATE_MODE',
         payload: { mode: 'ready' },
       });
@@ -61,13 +67,13 @@ const SolveController = ({
     }
   };
 
-  const handleSolve = () => {
+  const handleCancel = (e: any) => {
+    e.stopPropagation();
     gridDispatch({
-      type: 'BATCH_SOLVE',
-      payload: {
-        items: cellIDs,
-      },
+      type: 'UPDATE_MODE',
+      payload: { mode: 'ready' },
     });
+    setSolveState(undefined);
   };
 
   const renderRoundel = () => {
@@ -76,9 +82,9 @@ const SolveController = ({
         {isActive ? (
           <div
             className={styles.roundel}
-            onClick={isActive ? handleSolve : undefined}
+            onClick={isActive ? handleCancel : undefined}
           >
-            <FontAwesomeIcon icon={faCircleCheck} />
+            <FontAwesomeIcon icon={faXmark} size='1x' />
           </div>
         ) : (
           <div className={styles.roundel}>{cellIDs.length}</div>
@@ -92,7 +98,16 @@ const SolveController = ({
       className={wrapperStyle()}
       onClick={!isDisabled ? handleClick : undefined}
     >
-      <div className={styles.label}>{type}</div>
+      <div className={styles.label}>
+        {isActive ? (
+          <>
+            <FontAwesomeIcon icon={faCircleCheck} size='lg' />
+            {'  '}Solve
+          </>
+        ) : (
+          type
+        )}
+      </div>
       {renderRoundel()}
     </div>
   );

@@ -9,6 +9,8 @@
   margin-left: 5px;
   margin-right: 5px;
   padding-right: 40px;
+  width: 130px;
+  justify-content: space-between;
 
   transition: all 0.2s ease-in-out;
 
@@ -22,8 +24,43 @@
   }
 
   &.active {
-    background: #555;
     color: white;
+
+    &.all,
+    &.block,
+    &.column,
+    &.row,
+    &.single {
+      .roundel {
+        background: rgba(255, 255, 255, 0.3);
+        color: rgba(0, 0, 0, 0.4);
+        transition: all 0.2s ease-in-out;
+        &:hover {
+          background: rgba(255, 255, 255, 0.6);
+          color: rgba(0, 0, 0, 0.6);
+        }
+      }
+    }
+
+    &.all {
+      background: var(--cell-all);
+    }
+
+    &.block {
+      background: var(--cell-block);
+    }
+
+    &.column {
+      background: var(--cell-column);
+    }
+
+    &.row {
+      background: var(--cell-row);
+    }
+
+    &.single {
+      background: var(--cell-single);
+    }
   }
 
   &.disabled .roundel {
@@ -32,16 +69,15 @@
 
   .roundel {
     color: white;
-    border: 5px solid #333;
-    width: 40px;
-    height: 30px;
+    width: 30px;
+    height: 20px;
     border-radius: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
     position: absolute;
-    left: 0px;
-    top: -15px;
+    left: 5px;
+    top: -10px;
     font-size: 16px;
   }
 

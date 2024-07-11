@@ -57,6 +57,20 @@ const GridStatus = ({
   return (
     <>
       <div className={styles.top}>
+        <Setting label='Unsolved' value={unsolvedCells.length} />
+
+        {gridStatus !== 'selector' && (
+          <>
+            <Setting label='Status' value={gridStatus} />
+            <Setting label='Is Browser' value={isBrowser ? 'True' : 'False'} />
+            <Setting label='Mode' value={displayMode} />
+            <Setting label='Cell' value={focusCellID} />
+            <Setting label='Value' value={focusValue} />
+          </>
+        )}
+      </div>
+
+      <div className={styles.bottom}>
         {gridDispatch && (gridStatus === 'ready' || gridStatus === 'auto') && (
           <div className={styles.solvers}>
             <SolveController
@@ -95,19 +109,6 @@ const GridStatus = ({
               setSolveState={setSolveState}
             />
           </div>
-        )}
-      </div>
-      <div className={styles.bottom}>
-        <Setting label='Unsolved' value={unsolvedCells.length} />
-
-        {gridStatus !== 'selector' && (
-          <>
-            <Setting label='Status' value={gridStatus} />
-            <Setting label='Is Browser' value={isBrowser ? 'True' : 'False'} />
-            <Setting label='Mode' value={displayMode} />
-            <Setting label='Cell' value={focusCellID} />
-            <Setting label='Value' value={focusValue} />
-          </>
         )}
       </div>
     </>
