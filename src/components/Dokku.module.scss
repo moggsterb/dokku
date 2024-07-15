@@ -1,0 +1,52 @@
+.dokku {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.row {
+  display: flex;
+}
+
+.block {
+  display: flex;
+  margin: 0 calc(var(--pixel-size) / 2);
+}
+
+.off,
+.on {
+  height: var(--pixel-size);
+  width: var(--pixel-size);
+  background: black;
+  display: flex;
+  margin: calc(var(--pixel-size) / 10);
+  border-radius: calc(var(--pixel-size) / 5);
+}
+
+.vGutter {
+  margin-bottom: calc(var(--pixel-size) / 5);
+}
+
+.hGutter {
+  margin-right: calc(var(--pixel-size) / 5);
+}
+
+.on {
+  animation: 12s dpulse infinite;
+}
+
+@keyframes dpulse {
+  5% {
+    transform: scale(1);
+  }
+  25% {
+    background: rgb(225, 47, 11);
+  }
+  85% {
+    background: rgb(233, 211, 17);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

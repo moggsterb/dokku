@@ -6,9 +6,14 @@ import Link from 'next/link';
 import styles from './page.module.scss';
 import AnimReveal from '@/components/AnimReveal';
 import { LEVELS } from '@/utils/examples';
+import Dokku from '@/components/Dokku';
 
 export default function Home() {
-  const header = <h1 className={styles.header}>Dokku</h1>;
+  const header = (
+    <h1 className={styles.header}>
+      <Dokku />
+    </h1>
+  );
 
   return (
     <MainContainer header={header}>

@@ -6,17 +6,18 @@
 .levels {
   div {
     padding: 0;
-    margin: calc(var(--grid-unit) * 2) 0;
+    margin: calc(var(--grid-unit) * 2) 10px;
   }
 
   a {
     color: #666;
+    color: rgb(109, 109, 81);
     display: flex;
-    padding: calc(var(--grid-unit) * 3) calc(var(--grid-unit) * 20);
+    padding: calc(var(--grid-unit) * 3) calc(var(--grid-unit) * 12);
     text-decoration: none;
     border-radius: 10px;
     justify-content: center;
-    font-size: calc(var(--grid-unit) * 4.5);
+    font-size: calc(var(--grid-unit) * 3.5);
     text-transform: uppercase;
     box-shadow: 0 10px 10px #111;
     position: relative;

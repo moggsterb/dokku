@@ -4,16 +4,16 @@ body {
   font-family: 'Tenor Sans', sans-serif;
   font-weight: 400;
   font-style: normal;
+  font-size: 1em;
 }
 
 :root {
-  --main-fg: #6e6f6c;
-  --main-bg: #0d0c09;
-  --main-bg: #1b1913;
+  --pixel-size: 4px;
 
   --grid-size: 360px;
   --cell-value-size: 40px;
 
+  --main-bg: #1b1913;
   --grid-bg: #ffffff06; // grid background
 
   --cell-bg: #ffffff09; // cell background
@@ -44,6 +44,7 @@ body {
 /* Medium devices (tablets, 640px and up) */
 @media only screen and (min-width: 640px) {
   :root {
+    --pixel-size: 15px;
     --grid-size: 540px;
   }
 }
@@ -126,6 +127,7 @@ body {
   justify-content: center;
   align-items: stretch;
 }
+
 .grid-container {
   background: rgb(27, 31, 51);
   flex: 2;
