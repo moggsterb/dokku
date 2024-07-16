@@ -149,6 +149,7 @@ body {
   align-content: flex-start;
   padding: var(--grid-padding);
   border-radius: var(--grid-padding);
+  margin-top: 30px;
 
   &-block {
     width: var(--selector-grid-size);
