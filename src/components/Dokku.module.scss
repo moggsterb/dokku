@@ -33,20 +33,17 @@
 }
 
 .on {
-  animation: 12s dpulse infinite;
+  // animation: 3s dpulse infinite forwards;
 }
 
 @keyframes dpulse {
-  5% {
-    transform: scale(1);
+  20% {
+    background: rgb(64, 20, 11);
   }
-  25% {
-    background: rgb(225, 47, 11);
+  40% {
+    background: rgb(22, 22, 18);
   }
-  85% {
-    background: rgb(233, 211, 17);
-  }
-  100% {
-    transform: scale(1);
+  90% {
+    background: rgb(96, 90, 31);
   }
 }
