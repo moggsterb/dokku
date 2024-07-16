@@ -25,15 +25,15 @@
 }
 
 .vGutter {
-  margin-bottom: calc(var(--pixel-size) / 5);
+  margin-bottom: calc(var(--pixel-size) / 3);
 }
 
 .hGutter {
-  margin-right: calc(var(--pixel-size) / 5);
+  margin-right: calc(var(--pixel-size) / 3);
 }
 
 .on {
-  // animation: 3s dpulse infinite forwards;
+  animation: 3s dpulse infinite forwards;
 }
 
 @keyframes dpulse {

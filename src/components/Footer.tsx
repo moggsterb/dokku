@@ -39,12 +39,8 @@ const Footer = () => {
       <div className={styles.menuItems}>
         {navItems.map(({ url, title }, index) => {
           return (
-            <div className={styles.menuItem}>
-              <button
-                key={index}
-                onClick={() => navHandler(url)}
-                className={styles.item}
-              >
+            <div key={index} className={styles.menuItem}>
+              <button onClick={() => navHandler(url)} className={styles.item}>
                 {title}
               </button>
             </div>
@@ -53,27 +49,6 @@ const Footer = () => {
       </div>
     </footer>
   );
-
-  // : (
-  //   <footer className={styles.footer}>
-  //     <div className={styles.title}>
-  //       <Link href={'/'} className={styles.title}>
-  //         Dokku
-  //       </Link>
-  //     </div>
-
-  //     <div className={styles.levels}>
-  //       {LEVELS.map(({ url, title }, index) => {
-  //         return (
-  //           <Link key={index} href={url} className={styles.item}>
-  //             {title}
-  //           </Link>
-  //         );
-  //       })}
-  //     </div>
-  //     <div className={styles.copy}>&copy; MB 2024</div>
-  //   </footer>
-  // );
 };
 
 export default Footer;
