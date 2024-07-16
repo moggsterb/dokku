@@ -1,10 +1,9 @@
-import { IGrid, SolveType } from '@/utils/types';
+import { IGrid } from '@/utils/types';
 import styles from './GridStatus.module.scss';
-import { Dispatch, useState } from 'react';
+import { Dispatch } from 'react';
 import { GridActions } from '@/utils/grid';
 
 import { isBrowser } from 'react-device-detect';
-import SolveController from './SolveController';
 
 interface Props {
   grid: IGrid;
@@ -26,33 +25,10 @@ const Setting = ({ label, value }: SettingProps) => {
 };
 
 const GridStatus = ({
-  grid: {
-    gridStatus,
-    displayMode,
-    focusCellID,
-    focusValue,
-    cells,
-    solveableByType,
-  },
+  grid: { gridStatus, displayMode, focusCellID, focusValue, cells },
   gridDispatch,
 }: Props) => {
-  const [solveState, setSolveState] = useState<SolveType | undefined>();
-
   const unsolvedCells = cells.filter((item) => item.status === 'unsolved');
-
-  const scanAll = solveableByType['all'];
-  const scanBlock = solveableByType['block'];
-  const scanColumn = solveableByType['column'];
-  const scanRow = solveableByType['row'];
-  const singles = solveableByType['single'];
-
-  const updateStatus = (newMode: string, state: boolean) => {
-    if (!gridDispatch) return;
-    gridDispatch({
-      type: 'UPDATE_MODE',
-      payload: { mode: state ? newMode : 'ready' },
-    });
-  };
 
   return (
     <>
@@ -67,48 +43,6 @@ const GridStatus = ({
             <Setting label='Cell' value={focusCellID} />
             <Setting label='Value' value={focusValue} />
           </>
-        )}
-      </div>
-
-      <div className={styles.bottom}>
-        {gridDispatch && (gridStatus === 'ready' || gridStatus === 'auto') && (
-          <div className={styles.solvers}>
-            <SolveController
-              type={'all'}
-              gridDispatch={gridDispatch}
-              cellIDs={scanAll}
-              solveState={solveState}
-              setSolveState={setSolveState}
-            />
-            <SolveController
-              type={'block'}
-              gridDispatch={gridDispatch}
-              cellIDs={scanBlock}
-              solveState={solveState}
-              setSolveState={setSolveState}
-            />
-            <SolveController
-              type={'column'}
-              gridDispatch={gridDispatch}
-              cellIDs={scanColumn}
-              solveState={solveState}
-              setSolveState={setSolveState}
-            />
-            <SolveController
-              type={'row'}
-              gridDispatch={gridDispatch}
-              cellIDs={scanRow}
-              solveState={solveState}
-              setSolveState={setSolveState}
-            />
-            <SolveController
-              type={'single'}
-              gridDispatch={gridDispatch}
-              cellIDs={singles}
-              solveState={solveState}
-              setSolveState={setSolveState}
-            />
-          </div>
         )}
       </div>
     </>

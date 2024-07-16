@@ -6,6 +6,9 @@ import Grid from './Grid';
 
 import useControl from '@/utils/hooks/useControl';
 import ControlBuilder from './ControlBuilder';
+import SolveControls from './SolveControls';
+
+import styles from './Puzzle.module.scss';
 
 interface Props {
   initialCells: ICell[];
@@ -37,24 +40,21 @@ const Puzzle = ({
     }
   };
 
-  const header =
-    gridStatus === 'builder' ? (
-      <ControlBuilder grid={grid} gridDispatch={gridDispatch} />
-    ) : gridStatus !== 'preview' ? (
-      <></>
-    ) : undefined;
-
   return (
-    <>
-      <MainContainer header={header}>
-        <Grid
-          grid={grid}
-          showCandidates={showCandidates}
-          showHints={showHints}
-          gridDispatch={gridDispatch}
-        />
-      </MainContainer>
-    </>
+    <div className={styles.wrapper}>
+      <Grid
+        grid={grid}
+        showCandidates={showCandidates}
+        showHints={showHints}
+        gridDispatch={gridDispatch}
+      />
+      {gridStatus === 'builder' && (
+        <ControlBuilder grid={grid} gridDispatch={gridDispatch} />
+      )}
+      {(gridStatus === 'ready' || gridStatus === 'auto') && (
+        <SolveControls grid={grid} gridDispatch={gridDispatch} />
+      )}
+    </div>
   );
 };
 

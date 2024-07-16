@@ -105,7 +105,6 @@ const Grid = ({ grid, showCandidates, showHints, gridDispatch }: Props) => {
   return (
     <div className={styles.wrapper}>
       <div className={gridStyle}>{RenderCells()}</div>
-      <GridStatus grid={grid} gridDispatch={gridDispatch} />
     </div>
   );
 };

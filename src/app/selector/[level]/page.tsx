@@ -25,7 +25,7 @@ export default function Selector({
     router.push('/');
   };
 
-  const header = (
+  const footer = (
     <Control
       title={`${levelObj.title} Puzzles`}
       description={levelObj.description}
@@ -35,7 +35,7 @@ export default function Selector({
   );
 
   return (
-    <MainContainer header={header}>
+    <MainContainer footer={footer}>
       <div className='selector'>
         <AnimReveal
           items={grids.map((grid, index) => {

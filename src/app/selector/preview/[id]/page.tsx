@@ -14,7 +14,7 @@ export default function Preview({
   const example = EXAMPLES.find((item) => item.id === Number(id));
   const level = LEVELS.find((item) => item.id === example?.level);
 
-  const header = (
+  const footer = (
     <Control
       title={example?.title || ''}
       description={`${example?.unsolvedAtStart} cells to solve - (${
@@ -26,7 +26,7 @@ export default function Preview({
   );
 
   return (
-    <MainContainer header={header}>
+    <MainContainer footer={footer}>
       <Puzzle initialCells={loadCells(Number(id))} initialStatus='preview' />
     </MainContainer>
   );
