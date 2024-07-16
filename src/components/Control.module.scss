@@ -1,19 +1,22 @@
 .wrapper {
-  padding: 20px;
-  // background: yellow;
+  padding: 20px 20px 10px;
+  display: flex;
+  justify-content: space-between;
 
-  .before {
-    float: left;
+  .before,
+  .after,
+  .center {
+    flex: 1;
   }
 
   .after {
-    float: right;
+    display: flex;
+    justify-content: flex-end;
   }
 
   .center {
-    clear: both;
+    color: white;
     @media only screen and (min-width: 640px) {
-      clear: none;
     }
 
     text-align: center;

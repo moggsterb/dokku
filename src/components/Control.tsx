@@ -38,11 +38,12 @@ const Control = ({
   return (
     <div className={styles.wrapper}>
       <div className={styles.before}>{renderButtons(beforeActions)}</div>
-      <div className={styles.after}>{renderButtons(afterActions)}</div>
       <div className={styles.center}>
         <h1>{title}</h1>
         <p>{description}</p>
       </div>
+
+      <div className={styles.after}>{renderButtons(afterActions)}</div>
     </div>
   );
 };
