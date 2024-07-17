@@ -6,7 +6,7 @@ export const LEVELS = [
   },
   { id: 4, marginTop: 0, initX: 400, title: 'Expert', url: '/selector/expert', description: 'Solveable using combinations of BLOCK, SINGLE, COLUMN and ROW scanning' },
   { id: 5, marginTop: 0, initX: -400, title: 'Impossible', url: '/selector/impossible', description: 'Not fully solveable yet - will require more advanced solving techniques' },
-  { id: 99, marginTop: 20, initX: 400, title: 'Create your own Grid', url: '/builder', description: 'Solve your own Puzzle' }
+  { id: 99, marginTop: 20, initX: 400, title: 'Create your own Grid', url: '/builder', description: 'Solve your own Puzzle', style: 'create' }
 ]
 
 

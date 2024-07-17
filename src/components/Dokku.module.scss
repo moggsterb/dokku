@@ -18,7 +18,7 @@
 .on {
   height: var(--pixel-size);
   width: var(--pixel-size);
-  background: black;
+  background: #252323;
   display: flex;
   margin: calc(var(--pixel-size) / 10);
   border-radius: calc(var(--pixel-size) / 5);
@@ -38,12 +38,12 @@
 
 @keyframes dpulse {
   20% {
-    background: rgb(64, 20, 11);
+    background: rgb(127, 36, 18);
   }
   40% {
     background: rgb(22, 22, 18);
   }
   90% {
-    background: rgb(96, 90, 31);
+    background: rgb(179, 165, 45);
   }
 }

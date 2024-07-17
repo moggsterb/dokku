@@ -7,12 +7,12 @@ const LevelSelector = () => {
   return (
     <div className={styles.levels}>
       <AnimReveal
-        items={LEVELS.map(({ title, url, initX, marginTop }) => {
+        items={LEVELS.map(({ title, url, initX, marginTop, style = 'std' }) => {
           return {
             initX,
             initOpacity: 0,
             component: (
-              <Link href={url} style={{ marginTop }}>
+              <Link href={url} style={{ marginTop }} className={styles[style]}>
                 <div>{title}</div>
                 <span>{title}</span>
               </Link>

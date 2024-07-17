@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 
 import './globals.scss';
 import Footer from '@/components/Footer';
+import Header from '@/components/Header';
 
 export const metadata: Metadata = {
   title: 'Dokku',
@@ -16,7 +17,11 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body>
-        <main className='main'>{children}</main>
+        <div className='content'>
+          <Header />
+          <main className='main'>{children}</main>
+        </div>
+
         <Footer />
       </body>
     </html>
