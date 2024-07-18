@@ -21,8 +21,6 @@ interface Props {
   displayCell: IDisplayCellProps;
 
   clickHandler?: (value: number) => void;
-  // focusHandler: (value: number, canFocus: boolean) => void;
-  // blurHandler: (value: number) => void;
   setHandler: (cellID: number, value: number) => void;
   methodHandler: (cellID: number, method: SolveType) => void;
   showCandidates: boolean;
@@ -53,6 +51,7 @@ const Cell = ({
     inBarredColumn,
     inBarredRow,
     isSolveable,
+    isComplete,
     allSolveMethods,
     canActivate,
   },
@@ -64,6 +63,8 @@ const Cell = ({
 }: Props) => {
   const { id, status, value, row, column, candidates } = cell;
   const [animID, setAnimID] = useState<number | undefined>(undefined);
+
+  // console.log({ isComplete });
 
   const animRequired =
     (value !== undefined || id === focusCellID) &&
@@ -201,6 +202,7 @@ const Cell = ({
         style: styles.singleSolve,
         condition: displayMode === 'cell_single' && isActive,
       },
+      { style: styles.complete, condition: isComplete },
     ]);
   };
 
@@ -210,13 +212,17 @@ const Cell = ({
     }
   };
 
-  const getAnimStyle = (delay: number, name: string) => {
-    if (animID && animID === focusCellID && delay) {
+  const getAnimStyle = (value: number, name: string) => {
+    if (isComplete) {
+      return {
+        animationDelay: `${Number(value - 1)}s`,
+      };
+    } else if (animID && animID === focusCellID && value) {
       return {
         animationName: name,
         animationDuration: '5s',
         animationIterationCount: 'infinite',
-        animationDelay: `${Number(delay) / 2}s`,
+        animationDelay: `${Number(value) / 2}s`,
       };
     } else {
       return {};
@@ -227,7 +233,6 @@ const Cell = ({
     <div className={cellStyle()}>
       <div
         className={innerStyle()}
-        // onClick={canActivate && !isActive ? handleClick : undefined}
         onClick={handleClick}
         style={getAnimStyle(Number(value), 'pulse')}
       >

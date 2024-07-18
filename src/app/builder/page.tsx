@@ -8,7 +8,7 @@ export default function Builder() {
       <Puzzle
         initialCells={initialCells()}
         initialStatus={'builder'}
-        showCandidates={true}
+        showCandidates={false}
       />
     </MainContainer>
   );

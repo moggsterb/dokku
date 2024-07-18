@@ -6,7 +6,7 @@ import LevelSelector from '@/components/LevelSelector';
 
 export default function Home() {
   return (
-    <MainContainer header={<Dokku />}>
+    <MainContainer footer={<Dokku />}>
       <LevelSelector />
     </MainContainer>
   );

@@ -1,25 +1,6 @@
 import { EXAMPLES } from "./examples";
 import { EnneadType, ICell, IEnneads, ICandidate, ITrio } from "./types";
 
-// REMOVE
-// export type CellAction = { type: 'UPDATE_CELL', payload: { cell: ICell } } | { type: 'UPDATE_CELLS', payload: { cells: ICell[] } };
-
-// export const cellReducer = (state: ICell[], action: CellAction) => {
-//   switch (action.type) {
-//     case 'UPDATE_CELL':
-//       const updateCell = action.payload.cell;
-//       return [
-//         ...state.slice(0, updateCell.id),
-//         updateCell,
-//         ...state.slice(updateCell.id + 1),
-//       ]
-//     case 'UPDATE_CELLS':
-//       return [...action.payload.cells];
-//     default:
-//       return state;
-//   }
-// }
-
 export const initialCells = (): ICell[] => {
   const cells: ICell[] = [];
   [0, 1, 2, 3, 4, 5, 6, 7, 8].forEach((row) => {

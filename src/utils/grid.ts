@@ -157,12 +157,15 @@ const scanGrid = (grid: IGrid): IGrid => {
   const cells = updateCellCandidates(grid.cells, 1);
   const enneads = updateEnneadsCounts(grid.enneads, cells);
   const solveableCells = findSolves(cells, enneads);
-  const solveableByType = summariseSolves(solveableCells)
+  const solveableByType = summariseSolves(solveableCells);
 
-  // console.log({ solveableCells })
+  const complete = cells.filter((item) => item.status === 'unsolved').length === 0;
+
+  console.log({ complete })
 
   return {
     ...grid,
+    ...(complete && { gridStatus: 'complete', displayMode: 'complete' }),
     cells,
     enneads,
     solveableCells,

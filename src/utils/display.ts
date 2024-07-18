@@ -13,6 +13,8 @@ export interface IDisplayCellProps {
   inConnectedRow: boolean;
   canActivate: boolean;
 
+  isComplete: boolean;
+
   hasFocusedValue: boolean;
   inBarredBlock: boolean;
   inBarredRow: boolean;
@@ -49,6 +51,7 @@ export const displayCell = (
     inBarredColumn: false,
     inBarredRow: false,
     isSolveable: false,
+    isComplete: gridStatus === 'complete',
     allSolveMethods: allSolveTypes(solveableCells, cell.id),
     canActivate: (gridStatus !== 'preview' && gridStatus !== 'selector' && cell.status !== 'preset') || gridStatus === 'builder',
     focusCellID: focusCellObj?.id,
@@ -58,6 +61,7 @@ export const displayCell = (
   }
 
   const modeState = () => {
+
     switch (displayMode) {
       // when a cell without a value is clicked
       // - the cell and candidate grid is scaled up 

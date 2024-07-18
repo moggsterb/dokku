@@ -1,9 +1,9 @@
 .wrapper {
   display: flex;
-  width: 100%;
-  margin-top: 20px;
+  width: var(--grid-size);
   justify-content: center;
-  // display: none;
+  position: absolute;
+  bottom: -45px;
 }
 
 .solvers {

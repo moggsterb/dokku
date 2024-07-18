@@ -19,23 +19,29 @@ export default function Selector({
   const levelObj = LEVELS.find((item) => item.url === `/selector/${level}`);
   if (!levelObj) return <>Level Not found</>;
 
-  const grids = EXAMPLES.filter((item) => item.level === levelObj?.id || 0);
+  const levelID = levelObj?.id || 0;
 
-  const backHandler = () => {
-    router.push('/');
-  };
+  const grids = EXAMPLES.filter((item) => item.level === levelID);
 
-  const footer = (
+  const prevOBJ = LEVELS.find(
+    (item) => item.id === (levelID === 1 ? 5 : levelID - 1)
+  );
+
+  const nextOBJ = LEVELS.find(
+    (item) => item.id === (levelID === 5 ? 1 : levelID + 1)
+  );
+
+  const header = (
     <Control
       title={`${levelObj.title} Puzzles`}
       description={levelObj.description}
-      beforeActions={[{ title: 'cancel', url: '/' }]}
-      afterActions={[]}
+      beforeActions={[{ title: `${prevOBJ?.title}`, url: `${prevOBJ?.url}` }]}
+      afterActions={[{ title: `${nextOBJ?.title}`, url: `${nextOBJ?.url}` }]}
     />
   );
 
   return (
-    <MainContainer footer={footer}>
+    <MainContainer header={header}>
       <div className='selector'>
         <AnimReveal
           items={grids.map((grid, index) => {

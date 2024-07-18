@@ -129,6 +129,10 @@
       display: flex;
       justify-content: center;
     }
+
+    &.complete {
+      animation: 10s completed infinite forwards;
+    }
   }
 
   .solveIcon {
@@ -197,5 +201,27 @@
 
   & .value {
     font-size: calc(var(--cell-value-size) / 3);
+  }
+}
+
+@keyframes completed {
+  5% {
+    transform: scale(1);
+  }
+  10% {
+    transform: scale(1.75);
+    color: rgb(228, 131, 21);
+  }
+  12% {
+    transform: scale(1);
+
+    // background: inherit;
+  }
+  20% {
+    color: rgb(98, 255, 0);
+  }
+  100% {
+    // background: inherit;
+    transform: scale(1);
   }
 }

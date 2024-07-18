@@ -1,5 +1,5 @@
 .wrapper {
-  padding: 20px 20px 10px;
+  padding: 10px;
   display: flex;
   justify-content: space-between;
 
@@ -16,9 +16,7 @@
 
   .center {
     color: white;
-    @media only screen and (min-width: 640px) {
-    }
-
+    flex-grow: 2;
     text-align: center;
   }
 
@@ -44,6 +42,7 @@
 
   h1 {
     margin-bottom: 5px;
+    font-size: 24px;
   }
   p {
     font-size: 16px;
