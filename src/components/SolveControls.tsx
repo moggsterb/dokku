@@ -1,6 +1,6 @@
 import { GridActions } from '@/utils/grid';
-import { IGrid, SolveType } from '@/utils/types';
-import { Dispatch, useState } from 'react';
+import { IGrid } from '@/utils/types';
+import { Dispatch } from 'react';
 import SolveController from './SolveController';
 
 import styles from './SolveControls.module.scss';
@@ -11,17 +11,10 @@ interface Props {
 }
 
 const SolveControls = ({
-  grid: {
-    gridStatus,
-    displayMode,
-    focusCellID,
-    focusValue,
-    cells,
-    solveableByType,
-  },
+  grid: { gridStatus, displayMode, solveableByType },
   gridDispatch,
 }: Props) => {
-  const [solveState, setSolveState] = useState<SolveType | undefined>();
+  // const [solveState, setSolveState] = useState<SolveType | undefined>();
 
   const scanAll = solveableByType['all'];
   const scanBlock = solveableByType['block'];
@@ -37,36 +30,31 @@ const SolveControls = ({
             type={'all'}
             gridDispatch={gridDispatch}
             cellIDs={scanAll}
-            solveState={solveState}
-            setSolveState={setSolveState}
+            displayMode={displayMode}
           />
           <SolveController
             type={'block'}
             gridDispatch={gridDispatch}
             cellIDs={scanBlock}
-            solveState={solveState}
-            setSolveState={setSolveState}
+            displayMode={displayMode}
           />
           <SolveController
             type={'column'}
             gridDispatch={gridDispatch}
             cellIDs={scanColumn}
-            solveState={solveState}
-            setSolveState={setSolveState}
+            displayMode={displayMode}
           />
           <SolveController
             type={'row'}
             gridDispatch={gridDispatch}
             cellIDs={scanRow}
-            solveState={solveState}
-            setSolveState={setSolveState}
+            displayMode={displayMode}
           />
           <SolveController
             type={'single'}
             gridDispatch={gridDispatch}
             cellIDs={singles}
-            solveState={solveState}
-            setSolveState={setSolveState}
+            displayMode={displayMode}
           />
         </div>
       )}

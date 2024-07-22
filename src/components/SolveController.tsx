@@ -12,8 +12,9 @@ interface Props {
     cellID: number;
     solution: number;
   }[];
-  solveState: SolveType | undefined;
-  setSolveState: Dispatch<SetStateAction<SolveType | undefined>>;
+  // solveState: SolveType | undefined;
+  // setSolveState: Dispatch<SetStateAction<SolveType | undefined>>;
+  displayMode: string;
   gridDispatch: Dispatch<GridActions>;
 }
 
@@ -28,11 +29,10 @@ const TYPES = {
 const SolveController = ({
   type,
   cellIDs,
-  solveState,
-  setSolveState,
+  displayMode,
   gridDispatch,
 }: Props) => {
-  const isActive = type === solveState;
+  const isActive = displayMode === TYPES[type].displayMode;
   const isDisabled = cellIDs.length === 0;
 
   const wrapperStyle = () => {
@@ -51,7 +51,7 @@ const SolveController = ({
         type: 'UPDATE_MODE',
         payload: { mode: TYPES[type].displayMode },
       });
-      setSolveState(type);
+      // setSolveState(type);
     } else {
       gridDispatch({
         type: 'BATCH_SOLVE',
@@ -63,7 +63,7 @@ const SolveController = ({
         type: 'UPDATE_MODE',
         payload: { mode: 'ready' },
       });
-      setSolveState(undefined);
+      // setSolveState(undefined);
     }
   };
 
@@ -73,7 +73,7 @@ const SolveController = ({
       type: 'UPDATE_MODE',
       payload: { mode: 'ready' },
     });
-    setSolveState(undefined);
+    // setSolveState(undefined);
   };
 
   const renderRoundel = () => {
