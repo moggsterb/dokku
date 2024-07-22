@@ -1,9 +1,13 @@
 .wrapper {
   display: flex;
-  width: var(--grid-size);
+  width: 100%;
   justify-content: center;
   position: absolute;
-  bottom: -45px;
+
+  bottom: -60px;
+  @media only screen and (min-width: 640px) {
+    bottom: -45px;
+  }
 }
 
 .solvers {
