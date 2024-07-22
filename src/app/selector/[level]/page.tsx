@@ -35,13 +35,22 @@ export default function Selector({
     <Control
       title={`${levelObj.title} Puzzles`}
       description={levelObj.description}
+      // beforeActions={[{ title: `${prevOBJ?.title}`, url: `${prevOBJ?.url}` }]}
+      // afterActions={[{ title: `${nextOBJ?.title}`, url: `${nextOBJ?.url}` }]}
+    />
+  );
+
+  const footer = (
+    <Control
+      title=''
+      description=''
       beforeActions={[{ title: `${prevOBJ?.title}`, url: `${prevOBJ?.url}` }]}
       afterActions={[{ title: `${nextOBJ?.title}`, url: `${nextOBJ?.url}` }]}
     />
   );
 
   return (
-    <MainContainer header={header}>
+    <MainContainer header={header} footer={footer}>
       <div className='selector'>
         <AnimReveal
           items={grids.map((grid, index) => {

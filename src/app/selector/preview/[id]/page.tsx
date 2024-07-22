@@ -20,13 +20,22 @@ export default function Preview({
       description={`${example?.unsolvedAtStart} cells to solve - (${
         example?.completes ? 'solves in' : 'stalls at'
       } ${example?.cycles} cycles)`}
+      // beforeActions={[{ title: 'cancel', url: level?.url || '/' }]}
+      // afterActions={[{ title: 'solve', url: `/play?puzzle=${id}` }]}
+    />
+  );
+
+  const footer = (
+    <Control
+      title=''
+      description=''
       beforeActions={[{ title: 'cancel', url: level?.url || '/' }]}
       afterActions={[{ title: 'solve', url: `/play?puzzle=${id}` }]}
     />
   );
 
   return (
-    <MainContainer header={header}>
+    <MainContainer header={header} footer={footer}>
       <Puzzle initialCells={loadCells(Number(id))} initialStatus='preview' />
     </MainContainer>
   );

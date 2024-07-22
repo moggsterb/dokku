@@ -16,7 +16,7 @@
 
   .center {
     color: white;
-    flex-grow: 2;
+    flex-grow: 12;
     text-align: center;
   }
 
@@ -41,10 +41,20 @@
   }
 
   h1 {
-    margin-bottom: 5px;
-    font-size: 24px;
+    margin-bottom: 2px;
+    font-size: 16px;
   }
   p {
-    font-size: 16px;
+    font-size: 14px;
+  }
+
+  @media only screen and (min-width: 640px) {
+    h1 {
+      margin-bottom: 5px;
+      font-size: 24px;
+    }
+    p {
+      font-size: 16px;
+    }
   }
 }
