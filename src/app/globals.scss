@@ -11,7 +11,7 @@ body {
   --pixel-size: 5px;
 
   --grid-size: 360px;
-  --cell-value-size: 40px;
+  --cell-value-size: 20px;
 
   --main-bg: #1c1715;
 
@@ -23,7 +23,7 @@ body {
   --cell-fg: #d2d2d2;
 
   --cell-preset-bg: #ffffff1a;
-  --cell-preset-fg: #424242;
+  --cell-preset-fg: #6c6767;
 
   --cell-active-bg: #1d1c1c27;
   --cell-active-fg: #ffe5ca;
@@ -49,6 +49,7 @@ body {
   :root {
     --pixel-size: 10px;
     --grid-size: 540px;
+    --cell-value-size: 40px;
   }
 }
 
