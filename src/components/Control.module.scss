@@ -1,23 +1,33 @@
 .wrapper {
-  padding: 10px;
+  // padding: 10px;
   display: flex;
   justify-content: space-between;
 
   .before,
   .after,
-  .center {
+  .banner {
     flex: 1;
   }
 
+  .before,
   .after {
-    display: flex;
-    justify-content: flex-end;
+    position: fixed;
+    bottom: 50px;
   }
 
-  .center {
+  .before {
+    left: 20px;
+  }
+
+  .after {
+    right: 20px;
+  }
+
+  .banner {
     color: white;
     flex-grow: 12;
     text-align: center;
+    padding: 10px;
   }
 
   button {
@@ -25,17 +35,25 @@
     width: 140px;
     height: 40px;
     border: none;
-    background: rgba(0, 0, 0, 0.3);
+    outline: none;
+    background: #111;
     color: #666;
     text-transform: uppercase;
     font-size: 14px;
     transition: all 0.3s ease-in-out;
-    margin: 10px 0;
+    margin: 10px;
+
+    @media only screen and (min-width: 640px) {
+      width: 200px;
+      height: 60px;
+      font-size: 20px;
+    }
 
     &:hover {
-      background: rgba(0, 0, 0, 0.6);
+      background: #333;
       color: white;
       font-size: 18px;
+      color: yellow;
       cursor: pointer;
     }
   }

@@ -4,21 +4,15 @@ import { ReactNode } from 'react';
 import styles from './Control.module.scss';
 import { useRouter } from 'next/navigation';
 
-type ControlAction = { title: string; url: string };
+type ControlAction = { title: string; url?: string; handler?: () => void };
 
 interface Props {
-  title: string;
-  description: string;
+  banner?: { title: string; description: string };
   beforeActions?: ControlAction[];
   afterActions?: ControlAction[];
 }
 
-const Control = ({
-  title,
-  description,
-  beforeActions = [],
-  afterActions = [],
-}: Props) => {
+const Control = ({ banner, beforeActions = [], afterActions = [] }: Props) => {
   const router = useRouter();
 
   const navHandler = (url: string) => {
@@ -26,9 +20,18 @@ const Control = ({
   };
 
   const renderButtons = (actions: ControlAction[]) => {
-    return actions.map(({ url, title }, index) => {
+    return actions.map(({ url, title, handler }, index) => {
       return (
-        <button key={index} onClick={() => navHandler(url)}>
+        <button
+          key={index}
+          onClick={() => {
+            if (url) {
+              navHandler(url);
+            } else if (handler) {
+              handler();
+            }
+          }}
+        >
           {title}
         </button>
       );
@@ -40,10 +43,12 @@ const Control = ({
       {beforeActions.length > 0 && (
         <div className={styles.before}>{renderButtons(beforeActions)}</div>
       )}
-      <div className={styles.center}>
-        <h1>{title}</h1>
-        <p>{description}</p>
-      </div>
+      {banner && (
+        <div className={styles.banner}>
+          <h1>{banner.title}</h1>
+          <p>{banner.description}</p>
+        </div>
+      )}
 
       {afterActions.length > 0 && (
         <div className={styles.after}>{renderButtons(afterActions)}</div>

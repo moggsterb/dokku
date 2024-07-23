@@ -16,19 +16,17 @@ export default function Preview({
 
   const header = (
     <Control
-      title={example?.title || ''}
-      description={`${example?.unsolvedAtStart} cells to solve - (${
-        example?.completes ? 'solves in' : 'stalls at'
-      } ${example?.cycles} cycles)`}
-      // beforeActions={[{ title: 'cancel', url: level?.url || '/' }]}
-      // afterActions={[{ title: 'solve', url: `/play?puzzle=${id}` }]}
+      banner={{
+        title: example?.title || '',
+        description: `${example?.unsolvedAtStart} cells to solve - (${
+          example?.completes ? 'solves in' : 'stalls at'
+        } ${example?.cycles} cycles)`,
+      }}
     />
   );
 
   const footer = (
     <Control
-      title=''
-      description=''
       beforeActions={[{ title: 'cancel', url: level?.url || '/' }]}
       afterActions={[{ title: 'solve', url: `/play?puzzle=${id}` }]}
     />

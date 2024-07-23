@@ -33,17 +33,15 @@ export default function Selector({
 
   const header = (
     <Control
-      title={`${levelObj.title} Puzzles`}
-      description={levelObj.description}
-      // beforeActions={[{ title: `${prevOBJ?.title}`, url: `${prevOBJ?.url}` }]}
-      // afterActions={[{ title: `${nextOBJ?.title}`, url: `${nextOBJ?.url}` }]}
+      banner={{
+        title: `${levelObj.title} Puzzles`,
+        description: levelObj.description,
+      }}
     />
   );
 
   const footer = (
     <Control
-      title=''
-      description=''
       beforeActions={[{ title: `${prevOBJ?.title}`, url: `${prevOBJ?.url}` }]}
       afterActions={[{ title: `${nextOBJ?.title}`, url: `${nextOBJ?.url}` }]}
     />

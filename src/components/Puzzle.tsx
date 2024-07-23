@@ -5,7 +5,7 @@ import MainContainer from './MainContainer';
 import Grid from './Grid';
 
 import useControl from '@/utils/hooks/useControl';
-import ControlBuilder from './ControlBuilder';
+import BuildControls from './BuildControls';
 import SolveControls from './SolveControls';
 
 import styles from './Puzzle.module.scss';
@@ -49,7 +49,7 @@ const Puzzle = ({
         gridDispatch={gridDispatch}
       />
       {gridStatus === 'builder' && (
-        <ControlBuilder grid={grid} gridDispatch={gridDispatch} />
+        <BuildControls grid={grid} gridDispatch={gridDispatch} />
       )}
       {(gridStatus === 'ready' || gridStatus === 'auto') && (
         <SolveControls grid={grid} gridDispatch={gridDispatch} />
