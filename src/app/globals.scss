@@ -10,7 +10,7 @@ body {
 :root {
   --pixel-size: 5px;
 
-  --grid-size: 320px;
+  --grid-size: 300px;
   --cell-value-size: 20px;
 
   --main-bg: #1c1715;
@@ -57,17 +57,18 @@ body {
 @media only screen and (min-width: 1024px) {
   :root {
     --pixel-size: 15px;
-    --grid-size: 540px;
+    --grid-size: 640px;
+    --cell-value-size: 30px;
   }
 }
 
 /* Extra large devices (large desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {
-  :root {
-    // --main-bg: rgb(138, 51, 16);
-    --grid-size: 720px;
-  }
-}
+// @media only screen and (min-width: 1200px) {
+//   :root {
+//     // --main-bg: rgb(138, 51, 16);
+//     --grid-size: 720px;
+//   }
+// }
 
 /* XXLarge devices (larger desktops, 1440px and up) */
 @media only screen and (min-width: 1440px) {

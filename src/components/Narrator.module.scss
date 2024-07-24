@@ -5,11 +5,19 @@
   position: absolute;
   top: -60px;
   @media only screen and (min-width: 640px) {
-    top: -45px;
+    top: -50px;
+    br {
+      display: none;
+    }
   }
 
   p {
     color: white;
+    background: #111;
+    padding: 10px 25px;
+    border-radius: 10px;
+    text-align: center;
+    margin-top: 0;
   }
 
   em {

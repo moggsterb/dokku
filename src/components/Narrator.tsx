@@ -56,7 +56,9 @@ const Narrator = ({
         ).length;
         return (
           <span>
-            This cell cannot be solved yet but we do know there are{' '}
+            This cell cannot be solved yet
+            <br />
+            but we do know there are{' '}
             <em>{`${pluralize(options, 'option')}`}</em>
           </span>
         );
@@ -75,8 +77,8 @@ const Narrator = ({
               solves.length,
               'cell'
             )}`}</em>{' '}
-            which can be solved using{' '}
-            <em className={styles[type]}>{getMethod(type)}</em>
+            which can be solved
+            <br /> using <em className={styles[type]}>{getMethod(type)}</em>
           </span>
         );
 
@@ -90,8 +92,8 @@ const Narrator = ({
             Using{' '}
             <em className={styles[focusSolveable.type]}>
               {getMethod(focusSolveable.type)}
-            </em>{' '}
-            we know this cell must be a <em>{focusSolveable.value}</em>
+            </em>
+            <br /> we know this cell must be a <em>{focusSolveable.value}</em>
           </span>
         );
 
