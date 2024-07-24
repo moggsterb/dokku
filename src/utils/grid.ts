@@ -14,7 +14,7 @@ export const initialGrid = (startStatus: string, startCells: ICell[]): IGrid => 
     enneads: initialEnneads(),
     solveableCells: [] as SolveableCells,
     solveableByType: {
-      all: [],
+      any: [],
       block: [],
       row: [],
       column: [],
@@ -185,7 +185,7 @@ const findSolves = (cells: ICell[], enneads: IEnneads): SolveableCells => {
 
 const summariseSolves = (solveableCells: SolveableCells) => {
   let byType: SolveableByType = {
-    all: [],
+    any: [],
     block: [],
     row: [],
     column: [],
@@ -193,8 +193,8 @@ const summariseSolves = (solveableCells: SolveableCells) => {
   };
   solveableCells.forEach(({ method, cellID, solution }) => {
     byType[method].push({ cellID, solution });
-    if (!byType['all'].find(solve => solve.cellID === cellID)) {
-      byType['all'].push({ cellID, solution });
+    if (!byType['any'].find(solve => solve.cellID === cellID)) {
+      byType['any'].push({ cellID, solution });
     }
   })
 

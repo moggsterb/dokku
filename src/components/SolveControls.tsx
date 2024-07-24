@@ -16,7 +16,7 @@ const SolveControls = ({
 }: Props) => {
   // const [solveState, setSolveState] = useState<SolveType | undefined>();
 
-  const scanAll = solveableByType['all'];
+  const scanAll = solveableByType['any'];
   const scanBlock = solveableByType['block'];
   const scanColumn = solveableByType['column'];
   const scanRow = solveableByType['row'];
@@ -27,7 +27,7 @@ const SolveControls = ({
       {gridDispatch && (gridStatus === 'ready' || gridStatus === 'auto') && (
         <div className={styles.solvers}>
           <SolveController
-            type={'all'}
+            type={'any'}
             gridDispatch={gridDispatch}
             cellIDs={scanAll}
             displayMode={displayMode}

@@ -9,6 +9,7 @@ import BuildControls from './BuildControls';
 import SolveControls from './SolveControls';
 
 import styles from './Puzzle.module.scss';
+import Narrator from './Narrator';
 
 interface Props {
   initialCells: ICell[];
@@ -52,7 +53,10 @@ const Puzzle = ({
         <BuildControls grid={grid} gridDispatch={gridDispatch} />
       )}
       {(gridStatus === 'ready' || gridStatus === 'auto') && (
-        <SolveControls grid={grid} gridDispatch={gridDispatch} />
+        <>
+          <SolveControls grid={grid} gridDispatch={gridDispatch} />
+          <Narrator grid={grid} gridDispatch={gridDispatch} />
+        </>
       )}
     </div>
   );

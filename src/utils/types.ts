@@ -64,7 +64,7 @@ export interface ITrio {
   candidates: ICandidate[];
 }
 
-export type SolveType = EnneadType | 'single' | 'all';
+export type SolveType = EnneadType | 'single' | 'any';
 export type SolveableByType = {
   [key in SolveType]: { cellID: number, solution: number }[]
 }

@@ -28,7 +28,7 @@ interface Props {
 }
 
 const ICONS = {
-  all: { icon: fa1 },
+  any: { icon: fa1 },
   single: { icon: fa1 },
   block: { icon: faSquareFull },
   column: { icon: faArrowsUpDown },
@@ -174,23 +174,23 @@ const Cell = ({
       { style: styles.barredRow, condition: inBarredRow },
       {
         style: styles.solveableAll,
-        condition: displayMode === 'all_solves' && isSolveable !== false,
+        condition: displayMode === 'all_any' && isSolveable !== false,
       },
       {
         style: styles.solveableBlock,
-        condition: displayMode === 'all_blocks' && isSolveable !== false,
+        condition: displayMode === 'all_block' && isSolveable !== false,
       },
       {
         style: styles.solveableColumn,
-        condition: displayMode === 'all_columns' && isSolveable !== false,
+        condition: displayMode === 'all_column' && isSolveable !== false,
       },
       {
         style: styles.solveableRow,
-        condition: displayMode === 'all_rows' && isSolveable !== false,
+        condition: displayMode === 'all_row' && isSolveable !== false,
       },
       {
         style: styles.solveableSingle,
-        condition: displayMode === 'all_singles' && isSolveable !== false,
+        condition: displayMode === 'all_single' && isSolveable !== false,
       },
       { style: styles.preset, condition: status === 'preset' },
       {

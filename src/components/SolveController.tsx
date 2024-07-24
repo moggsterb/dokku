@@ -19,11 +19,11 @@ interface Props {
 }
 
 const TYPES = {
-  all: { displayMode: 'all_solves' },
-  single: { displayMode: 'all_singles' },
-  block: { displayMode: 'all_blocks' },
-  column: { displayMode: 'all_columns' },
-  row: { displayMode: 'all_rows' },
+  any: { displayMode: 'all_any' },
+  single: { displayMode: 'all_single' },
+  block: { displayMode: 'all_block' },
+  column: { displayMode: 'all_column' },
+  row: { displayMode: 'all_row' },
 };
 
 const SolveController = ({

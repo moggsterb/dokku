@@ -76,31 +76,31 @@ export const displayCell = (
           hasFocusedValue: cell.value !== undefined && cell.value === focusValue,
         }
       // highlight all cells that are solveable (any method)
-      case 'all_solves':
+      case 'all_any':
         return {
           ...state,
           isSolveable: isCellSolveable(solveableCells, cell.id, 'any', 'any'),
         }
       // highlight all cells that are solveable by SINGLE method
-      case 'all_singles':
+      case 'all_single':
         return {
           ...state,
           isSolveable: isCellSolveable(solveableCells, cell.id, 'single', 'any')
         }
       // highlight all cells that are solveable by BLOCK SCANNING method
-      case 'all_blocks':
+      case 'all_block':
         return {
           ...state,
           isSolveable: isCellSolveable(solveableCells, cell.id, 'block', 'any')
         }
       // highlight all cells that are solveable by COLUMN SCANNING method
-      case 'all_columns':
+      case 'all_column':
         return {
           ...state,
           isSolveable: isCellSolveable(solveableCells, cell.id, 'column', 'any')
         }
       // highlight all cells that are solveable by ROW SCANNING method
-      case 'all_rows':
+      case 'all_row':
         return {
           ...state,
           isSolveable: isCellSolveable(solveableCells, cell.id, 'row', 'any')

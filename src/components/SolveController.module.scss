@@ -36,7 +36,7 @@
   &.active {
     color: white;
 
-    &.all,
+    &.any,
     &.block,
     &.column,
     &.row,
@@ -52,7 +52,7 @@
       }
     }
 
-    &.all {
+    &.any {
       background: var(--cell-all);
     }
 
@@ -105,7 +105,7 @@
     }
   }
 
-  &.all .roundel {
+  &.any .roundel {
     background: var(--cell-all);
   }
 
