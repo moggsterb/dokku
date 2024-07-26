@@ -8,22 +8,49 @@ body {
 }
 
 :root {
+  // sizes
   --pixel-size: 5px;
-
   --grid-size: 300px;
   --cell-value-size: 20px;
 
-  --main-bg: #1c1715;
+  // colours
+  --theme-01: #111;
+  --theme-02: #222;
+  --theme-03: #333;
+  --theme-04: #444;
+  --theme-05: #999;
+  --theme-06: #bbb;
+  --theme-07: #ccc;
+  --theme-08: #ddd;
+  --theme-09: #eee;
 
-  // --main-bg: #e3d9d5;
+  --main-bg-dark: #1c1715; // body
+  --bold-bg-dark: #222; // header / footer
+  --main-fg-dark: #e1d9d6; // copy
 
-  --grid-bg: #ffffff06; // grid background
+  --main-bg-light: #e1d9d6;
+  --bold-bg-light: #ddd;
+  --main-fg-light: #3e3e39;
 
-  --cell-bg: #ffffff09; // cell background
-  --cell-fg: #d2d2d2;
+  --accent1-on: #bfc81d;
+  --accent2-on: #c84b1d;
+  --accent3-on: #b4711a;
 
-  --cell-preset-bg: #ffffff1a;
-  --cell-preset-fg: #6c6767;
+  --accent1-off: #bfc81d6d;
+  --accent2-off: #c84b1d6d;
+  --accent3-off: #c84b1d6d;
+
+  // grid colours
+  --grid-bg-dark: #ffffff05;
+  --grid-bg-light: #00000015;
+
+  --cell-bg: #00000025;
+  --cell-bg-preset: #00000055;
+
+  --cell-fg: #6fac36;
+  --cell-fg-preset: #575754;
+
+  // --cell-bg-preset: #ffffff1a;
 
   --cell-active-bg: #1d1c1c27;
   --cell-active-fg: #ffe5ca;
@@ -116,14 +143,10 @@ body {
 
 html,
 body {
-  // max-width: 100vw;
-  // overflow-x: hidden;
   height: 100%;
 }
 
 body {
-  color: var(--main-fg);
-  background: var(--main-bg);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -155,7 +178,7 @@ body {
 }
 
 .selector {
-  background-color: var(--grid-bg);
+  background: orange;
   width: var(--grid-size);
   height: var(--grid-size);
   display: flex;
@@ -165,7 +188,6 @@ body {
   align-content: flex-start;
   padding: var(--grid-padding);
   border-radius: var(--grid-padding);
-  // margin-top: 30px;
 
   &-block {
     width: var(--selector-grid-size);
