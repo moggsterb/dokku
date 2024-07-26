@@ -1,8 +1,12 @@
 import { DOKKU } from '@/utils/dokku';
 
 import styles from './Dokku.module.scss';
+import { ThemeContext } from './ThemeContext';
+import { useContext } from 'react';
 
 const Dokku = () => {
+  const { theme } = useContext(ThemeContext);
+
   const renderRow = (row: string[], r: number) => {
     return (
       <div
@@ -38,7 +42,7 @@ const Dokku = () => {
   };
 
   return (
-    <div className={styles.dokku}>
+    <div className={`${styles.dokku} ${styles[theme]}`}>
       {DOKKU.map((row, r) => renderRow(row, r))}
     </div>
   );

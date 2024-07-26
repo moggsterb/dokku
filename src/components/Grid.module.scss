@@ -3,7 +3,6 @@
 }
 
 .grid {
-  background-color: var(--grid-bg);
   width: var(--grid-size);
   height: var(--grid-size);
   display: flex;
@@ -11,6 +10,14 @@
   flex-wrap: wrap;
   padding: var(--grid-padding);
   border-radius: var(--grid-padding);
+
+  &.dark {
+    background: var(--grid-bg-dark);
+  }
+
+  &.light {
+    background: var(--grid-bg-light);
+  }
 }
 
 .gridSelector {

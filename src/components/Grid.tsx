@@ -1,11 +1,12 @@
 import { ICell, IEnneads, IGrid, SolveType } from '@/utils/types';
 import Cell from './Cell';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useContext } from 'react';
 import GridStatus from './GridStatus';
 
 import styles from './Grid.module.scss';
 import { displayCell, isCellSolveable } from '@/utils/display';
 import { GridActions } from '@/utils/grid';
+import { ThemeContext } from './ThemeContext';
 
 interface Props {
   grid: IGrid;
@@ -25,6 +26,8 @@ const Grid = ({ grid, showCandidates, showHints, gridDispatch }: Props) => {
     solveableCells,
     focusSolveable,
   } = grid;
+
+  const { theme } = useContext(ThemeContext);
 
   const handleCellClick = (cellID: number) => {
     if (!gridDispatch || gridStatus === 'preview') return;
@@ -98,7 +101,7 @@ const Grid = ({ grid, showCandidates, showHints, gridDispatch }: Props) => {
     });
   };
 
-  const gridStyle = `${styles.grid} ${
+  const gridStyle = `${styles.grid} ${styles[theme]} ${
     gridStatus === 'selector' ? styles.gridSelector : ''
   }`;
 

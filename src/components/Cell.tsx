@@ -14,8 +14,9 @@ import Candidate from './Candidate';
 import styles from './Cell.module.scss';
 import { IDisplayCellProps } from '@/utils/display';
 import { buildStyle } from '@/utils/helpers';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { SolveType } from '@/utils/types';
+import { ThemeContext } from './ThemeContext';
 
 interface Props {
   displayCell: IDisplayCellProps;
@@ -64,7 +65,7 @@ const Cell = ({
   const { id, status, value, row, column, candidates } = cell;
   const [animID, setAnimID] = useState<number | undefined>(undefined);
 
-  // console.log({ isComplete });
+  const { theme } = useContext(ThemeContext);
 
   const animRequired =
     (value !== undefined || id === focusCellID) &&
@@ -155,6 +156,7 @@ const Cell = ({
   const cellStyle = () => {
     return buildStyle([
       { style: styles.cell, condition: true },
+      { style: styles[theme], condition: true },
       { style: styles.inSelector, condition: gridStatus === 'selector' },
       { style: styles.topGutter, condition: row === 3 || row === 6 },
       { style: styles.rightGutter, condition: column === 3 || column === 6 },

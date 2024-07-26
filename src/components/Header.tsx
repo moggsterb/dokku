@@ -1,12 +1,13 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import styles from './Header.module.scss';
 import { LEVELS } from '@/utils/examples';
 import { useRouter } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faX } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
+import { ThemeContext } from './ThemeContext';
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState<boolean | undefined>();
@@ -14,6 +15,8 @@ const Header = () => {
   const navItems = [{ title: 'DOKKU', url: '/' }, ...LEVELS];
 
   const router = useRouter();
+
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     if (menuOpen === undefined) {
@@ -28,7 +31,9 @@ const Header = () => {
 
   return (
     <header
-      className={`${styles.header} ${menuOpen ? styles.open : styles.closed}`}
+      className={`${styles.header} ${styles[theme]} ${
+        menuOpen ? styles.open : styles.closed
+      }`}
     >
       <div className={styles.row}>
         <Link href='/' className={styles.title}>

@@ -1,9 +1,29 @@
 .footer {
-  background: #000;
-
   .copy {
-    color: #333;
     font-size: 14px;
     padding: 15px 20px 15px;
+    color: var(--theme-03);
+  }
+
+  .theme {
+    padding: 5px 20px;
+    margin-left: 20px;
+    background: rgba(0, 0, 0, 0.05);
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    color: var(--theme-03);
+    &:hover {
+      cursor: pointer;
+      background: rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  &.dark {
+    background: var(--theme-01);
+  }
+
+  &.light {
+    background: var(--theme-09);
   }
 }
