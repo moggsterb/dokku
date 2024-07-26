@@ -50,15 +50,18 @@
 
 @keyframes dpulse {
   20% {
-    background: var(--accent2-on);
+    background: var(--cell-block);
   }
   30% {
-    background: var(--accent3-on);
+    background: var(--cell-single);
   }
   40% {
-    background: var(--theme-01);
+    background: var(--cell-row);
+  }
+  50% {
+    background: var(--cell-all);
   }
   90% {
-    background: var(--accent1-on);
+    background: var(--cell-column);
   }
 }

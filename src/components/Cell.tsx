@@ -78,7 +78,38 @@ const Cell = ({
     }
   }, [focusCellID, animID, animRequired]);
 
-  const renderCandidates = (highlightSolve: number = 0) => {
+  const renderCell = () => {
+    if (hasValue) return <span>{value}</span>;
+    return (
+      <>
+        {showHints && renderSolveHints()}
+        {(isActive || showCandidates) && renderCandidates()}
+      </>
+    );
+  };
+
+  const renderSolveHints = () => {
+    return (
+      <div className={styles.solveIconWrapper}>
+        {allSolveMethods.map((method, index) => {
+          const icon = ICONS[method].icon;
+          return (
+            <div
+              key={`${cell.id}-${method}-${index}`}
+              className={`${styles.solveIcon} ${styles[method]}`}
+              onClick={(e) => {
+                methodHandler(id, method);
+                e.stopPropagation();
+              }}
+            />
+          );
+        })}
+      </div>
+    );
+  };
+
+  const renderCandidates = () => {
+    const highlightSolve = isSolveable && isSolveable.value;
     return (
       <div className={styles.candidates}>
         {candidates.map(({ value, rejected }) => {
@@ -102,57 +133,6 @@ const Cell = ({
     );
   };
 
-  const renderCell = () => {
-    if (hasValue) return renderValue();
-    if (isSolveable) return renderSolveable();
-    if (!true) return renderBlank();
-    return (
-      <>
-        {showHints && renderSolveHints()}
-        {(isActive || showCandidates) && renderCandidates()}
-      </>
-    );
-  };
-
-  const renderBlank = () => {
-    return <span className='cell__blank'></span>;
-  };
-
-  const renderValue = () => {
-    return <div className={styles.value}>{value}</div>;
-  };
-
-  const renderSolveable = () => {
-    const solveableValue = isSolveable && isSolveable.value;
-    if (solveableValue)
-      return (
-        <div className={styles.solveWrapper}>
-          {renderSolveHints()}
-          {renderCandidates(solveableValue)}
-        </div>
-      );
-  };
-
-  const renderSolveHints = () => {
-    return (
-      <div className={styles.solveIconWrapper}>
-        {allSolveMethods.map((method, index) => {
-          const icon = ICONS[method].icon;
-          return (
-            <div
-              key={`${cell.id}-${method}-${index}`}
-              className={`${styles.solveIcon} ${styles[method]}`}
-              onClick={(e) => {
-                methodHandler(id, method);
-                e.stopPropagation();
-              }}
-            />
-          );
-        })}
-      </div>
-    );
-  };
-
   const cellStyle = () => {
     return buildStyle([
       { style: styles.cell, condition: true },
@@ -166,6 +146,7 @@ const Cell = ({
   const innerStyle = () => {
     return buildStyle([
       { style: styles.inner, condition: true },
+      { style: styles.hasValue, condition: hasValue },
       { style: styles.active, condition: isActive },
       { style: styles.connectedBlock, condition: inConnectedBlock },
       { style: styles.connectedColumn, condition: inConnectedColumn },

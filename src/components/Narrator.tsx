@@ -44,8 +44,8 @@ const Narrator = ({
 
         return (
           <span>
-            There are still <em>{`${pluralize(unsolvedCells, 'cell')}`}</em> to
-            solve
+            There are <em>{`${pluralize(unsolvedCells, 'unsolved cell')}`}</em>{' '}
+            with <em>{solveableByType.any.length} immediately solveable</em>
           </span>
         );
 
@@ -56,8 +56,7 @@ const Narrator = ({
         ).length;
         return (
           <span>
-            This cell cannot be solved yet
-            <br />
+            This cell cannot be solved yet <br />
             but we do know there are{' '}
             <em>{`${pluralize(options, 'option')}`}</em>
           </span>
@@ -72,12 +71,11 @@ const Narrator = ({
         const solves = solveableByType[type];
         return (
           <span>
-            There are{' '}
             <em className={styles[type]}>{`${pluralize(
               solves.length,
               'cell'
             )}`}</em>{' '}
-            which can be solved
+            can be solved
             <br /> using <em className={styles[type]}>{getMethod(type)}</em>
           </span>
         );

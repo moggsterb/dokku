@@ -16,25 +16,32 @@
     margin-left: var(--grid-gutter);
   }
 
-  & .value {
-    font-size: var(--cell-value-size);
-  }
-
   & .inner {
     display: flex;
+    flex-direction: column;
     flex: 1;
     height: 100%;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     background: var(--cell-bg);
     color: var(--cell-fg);
     transition: background 0.25s ease-in, transform 0.25s ease-in;
     border-radius: var(--cell-radius);
     position: relative;
+    // overflow: hidden;
+
+    &.hasValue {
+      justify-content: center;
+      font-size: var(--cell-value-size);
+    }
 
     &.preset {
       background-color: var(--cell-bg-preset);
       color: var(--cell-fg-preset);
+    }
+
+    &.solved {
+      justify-content: center;
     }
 
     &.active {
@@ -86,14 +93,14 @@
 
     &.active {
       transform: scale(2.2);
+      z-index: 10;
+
       @media only screen and (min-width: 640px) {
         transform: scale(1.6);
       }
 
-      z-index: 10;
-
-      & .solveIcon {
-        border-bottom: 1px solid #22222299;
+      .solveIconWrapper {
+        border-bottom: 1px solid #00000030;
       }
     }
 
@@ -130,13 +137,9 @@
     }
 
     .solveIconWrapper {
-      position: absolute;
-      top: calc(var(--cell-value-size) * 0);
       border-radius: var(--cell-radius) var(--cell-radius) 0 0;
       overflow: hidden;
       width: 100%;
-      // margin-left: 5%;
-
       display: flex;
       justify-content: center;
     }
@@ -148,13 +151,10 @@
 
   .solveIcon {
     height: calc(var(--cell-value-size) * 0.25);
-    // width: calc(var(--cell-value-size) * 0.5);
     flex: 1;
-    // border-radius: calc(var(--cell-value-size) * 0.1);
     display: flex;
     justify-content: center;
     align-items: center;
-    // margin: 1px;
 
     &.any {
       background: var(--cell-all);
@@ -181,10 +181,12 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    padding: 3px 2px 1px;
+    align-content: flex-end;
+
     height: 100%;
     @media only screen and (min-width: 640px) {
       padding: 7px 5px 3px;
+      padding: calc(var(--cell-size) / 16);
     }
   }
 
@@ -210,10 +212,9 @@
 
   & .inner {
     border-radius: var(--selector-cell-radius);
-  }
-
-  & .value {
-    font-size: calc(var(--cell-value-size) / 3);
+    &.hasValue {
+      font-size: calc(var(--cell-value-size) / 3);
+    }
   }
 }
 

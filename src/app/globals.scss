@@ -67,7 +67,7 @@ body {
   --cell-row-off: #bfc81d6d;
   --cell-single-off: #1db7c86d;
 
-  --cell-barred-bg: #0b0101;
+  --cell-barred-bg: #020101;
   --cell-barred-fg: #1b1b1b;
 }
 
@@ -178,7 +178,6 @@ body {
 }
 
 .selector {
-  background: orange;
   width: var(--grid-size);
   height: var(--grid-size);
   display: flex;
