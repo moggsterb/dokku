@@ -12,6 +12,7 @@ export interface IDisplayCellProps {
   inConnectedColumn: boolean;
   inConnectedRow: boolean;
   canActivate: boolean;
+  outstandingCellIDs: number[];
 
   isComplete: boolean;
 
@@ -46,6 +47,7 @@ export const displayCell = (
     inConnectedBlock: false,
     inConnectedColumn: false,
     inConnectedRow: false,
+    outstandingCellIDs: [],
     hasFocusedValue: false,
     inBarredBlock: false,
     inBarredColumn: false,
@@ -127,7 +129,7 @@ export const displayCell = (
           const { scanEnneadType, value } = focusSolveable;
           const scanEnneadID = focusCellObj[scanEnneadType]
 
-          const { inBarredBlock, inBarredColumn, inBarredRow } = getBarringEnneads(
+          const { inBarredBlock, inBarredColumn, inBarredRow, outstandingCellIDs } = getBarringEnneads(
             cells,
             enneads,
             cell,
@@ -149,6 +151,7 @@ export const displayCell = (
             inConnectedBlock,
             inConnectedColumn,
             inConnectedRow,
+            outstandingCellIDs,
             hasFocusedValue,
             isSolveable: cell.id === focusCellObj?.id && isCellSolveable(solveableCells, cell.id, 'any', focusValue)
           }
@@ -219,7 +222,8 @@ const getBarringEnneads = (
   return {
     inBarredBlock: isEnneadBarring('block', outstandingCellIDs, cells, enneads, cell, value),
     inBarredColumn: isEnneadBarring('column', outstandingCellIDs, cells, enneads, cell, value),
-    inBarredRow: isEnneadBarring('row', outstandingCellIDs, cells, enneads, cell, value)
+    inBarredRow: isEnneadBarring('row', outstandingCellIDs, cells, enneads, cell, value),
+    outstandingCellIDs
   }
 }
 

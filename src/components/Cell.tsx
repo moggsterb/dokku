@@ -47,6 +47,7 @@ const Cell = ({
     inConnectedBlock,
     inConnectedColumn,
     inConnectedRow,
+    outstandingCellIDs,
     hasFocusedValue,
     inBarredBlock,
     inBarredColumn,
@@ -133,6 +134,14 @@ const Cell = ({
     );
   };
 
+  const renderBarred = () => {
+    return (
+      <div className={styles.barred}>
+        {outstandingCellIDs.includes(cell.id) && 'X'}
+      </div>
+    );
+  };
+
   const cellStyle = () => {
     return buildStyle([
       { style: styles.cell, condition: true },
@@ -212,6 +221,8 @@ const Cell = ({
     }
   };
 
+  const isBarred = inBarredBlock || inBarredColumn || inBarredRow;
+
   return (
     <div className={cellStyle()}>
       <div
@@ -219,6 +230,7 @@ const Cell = ({
         onClick={handleClick}
         style={getAnimStyle(Number(value), 'pulse')}
       >
+        {isBarred && renderBarred()}
         {renderCell()}
       </div>
     </div>

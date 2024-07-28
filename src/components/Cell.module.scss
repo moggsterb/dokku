@@ -104,16 +104,37 @@
       }
     }
 
-    &.barredColumn,
-    &.barredRow,
-    &.barredBlock {
-      background-color: var(--cell-barred-bg);
-      color: var(--cell-barred-fg);
+    // &.barredColumn,
+    // &.barredRow,
+    // &.barredBlock {
+    //   .barred {
+    //     // background-color: var(--cell-barred-bg);
+    //     // color: var(--cell-barred-fg);
+    //   }
+    // }
+
+    & .barred {
+      position: absolute;
+
+      // background-color: var(--cell-barred-bg);
+      // color: var(--cell-barred-fg);
+      background: #000000aa;
+      color: #ffffffc7;
+      font-size: calc(var(--cell-value-size) * 0.65);
+      height: 100%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     &.focusedValue {
       background-color: rgb(67, 18, 8);
-      color: rgb(150, 41, 11);
+      // color: rgb(150, 41, 11);
+      color: #ffffffc7;
+      .barred {
+        display: none;
+      }
     }
 
     &.solveableAll {
