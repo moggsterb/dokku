@@ -96,7 +96,7 @@ const Narrator = ({
         );
 
       default:
-        return <span>{displayMode}</span>;
+        return <span />;
     }
   };
 
