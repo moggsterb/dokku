@@ -119,17 +119,19 @@
       // background-color: var(--cell-barred-bg);
       // color: var(--cell-barred-fg);
       background: #000000aa;
-      color: #ffffffc7;
-      font-size: calc(var(--cell-value-size) * 0.65);
+      color: #ad3e27;
+      font-size: calc(var(--cell-value-size) * 0.75);
+      font-weight: bold;
       height: 100%;
       width: 100%;
+      border-radius: var(--cell-radius);
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
     &.focusedValue {
-      background-color: rgb(67, 18, 8);
+      background-color: #ad3e27;
       // color: rgb(150, 41, 11);
       color: #ffffffc7;
       .barred {

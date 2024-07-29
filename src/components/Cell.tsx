@@ -84,7 +84,7 @@ const Cell = ({
     return (
       <>
         {showHints && renderSolveHints()}
-        {(isActive || showCandidates) && renderCandidates()}
+        {(showCandidates || isActive || isSolveable) && renderCandidates()}
       </>
     );
   };
