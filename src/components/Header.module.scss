@@ -14,12 +14,12 @@
   }
 
   .title {
-    color: var(--accent2-off);
+    color: #666;
     padding: 0 20px;
     text-decoration: none;
     transition: color ease-in-out 0.3s;
     &:hover {
-      color: var(--accent2-on);
+      color: #333;
     }
   }
 

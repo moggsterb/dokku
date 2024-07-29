@@ -1,6 +1,6 @@
 .wrapper {
-  background: #333;
-  color: #999;
+  background: #00000030;
+  color: #666;
   display: flex;
   align-items: center;
   border-radius: 10px;
@@ -29,7 +29,7 @@
   user-select: none;
 
   &.hoverable:hover {
-    background: #555;
+    background: #00000060;
     cursor: pointer;
   }
 
