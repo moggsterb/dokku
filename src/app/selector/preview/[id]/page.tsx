@@ -17,7 +17,7 @@ export default function Preview({
   const header = (
     <Control
       banner={{
-        title: example?.title || '',
+        title: `${level?.title} Grid #${example?.id}`,
         description: `${example?.unsolvedAtStart} cells to solve - (${
           example?.completes ? 'solves in' : 'stalls at'
         } ${example?.cycles} cycles)`,
@@ -28,7 +28,9 @@ export default function Preview({
   const footer = (
     <Control
       beforeActions={[{ title: 'cancel', url: level?.url || '/' }]}
-      afterActions={[{ title: 'solve', url: `/play?puzzle=${id}` }]}
+      afterActions={[
+        { title: 'solve', url: `/play?puzzle=${id}`, style: 'solve' },
+      ]}
     />
   );
 

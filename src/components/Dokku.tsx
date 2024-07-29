@@ -35,7 +35,8 @@ const Dokku = () => {
         key={p}
         className={pixelClass}
         style={{
-          animationDelay: `${Math.random() * 1.5 + r * 1}s`,
+          // animationDelay: `${Math.random() * 1.5 + r * 1}s`,
+          animationDelay: `${Math.random() * 20}s`,
         }}
       />
     );

@@ -4,7 +4,12 @@ import { ReactNode } from 'react';
 import styles from './Control.module.scss';
 import { useRouter } from 'next/navigation';
 
-type ControlAction = { title: string; url?: string; handler?: () => void };
+type ControlAction = {
+  title: string;
+  url?: string;
+  handler?: () => void;
+  style?: string;
+};
 
 interface Props {
   banner?: { title: string; description: string };
@@ -20,7 +25,7 @@ const Control = ({ banner, beforeActions = [], afterActions = [] }: Props) => {
   };
 
   const renderButtons = (actions: ControlAction[]) => {
-    return actions.map(({ url, title, handler }, index) => {
+    return actions.map(({ url, title, handler, style }, index) => {
       return (
         <button
           key={index}
@@ -31,6 +36,7 @@ const Control = ({ banner, beforeActions = [], afterActions = [] }: Props) => {
               handler();
             }
           }}
+          className={`${style && styles[style]}`}
         >
           {title}
         </button>

@@ -56,6 +56,10 @@
       color: yellow;
       cursor: pointer;
     }
+
+    &.solve {
+      color: green;
+    }
   }
 
   h1 {
