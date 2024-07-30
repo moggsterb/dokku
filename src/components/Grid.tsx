@@ -6,7 +6,6 @@ import GridStatus from './GridStatus';
 import styles from './Grid.module.scss';
 import { displayCell, isCellSolveable } from '@/utils/display';
 import { GridActions } from '@/utils/grid';
-import { ThemeContext } from './ThemeContext';
 
 interface Props {
   grid: IGrid;
@@ -26,8 +25,6 @@ const Grid = ({ grid, showCandidates, showHints, gridDispatch }: Props) => {
     solveableCells,
     focusSolveable,
   } = grid;
-
-  const { theme } = useContext(ThemeContext);
 
   const handleCellClick = (cellID: number) => {
     if (!gridDispatch || gridStatus === 'preview') return;
@@ -101,7 +98,7 @@ const Grid = ({ grid, showCandidates, showHints, gridDispatch }: Props) => {
     });
   };
 
-  const gridStyle = `${styles.grid} ${styles[theme]} ${
+  const gridStyle = `${styles.grid} ${
     gridStatus === 'selector' ? styles.gridSelector : ''
   }`;
 

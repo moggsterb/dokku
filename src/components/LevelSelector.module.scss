@@ -31,7 +31,7 @@
       width: 100%;
       text-align: center;
       color: transparent;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
       white-space: nowrap;
     }
 
@@ -42,7 +42,7 @@
     &:before,
     &:after {
       content: ' ';
-      background: linear-gradient(0deg, var(--theme-01), var(--theme-03));
+      background: linear-gradient(0deg, var(--theme-07), var(--theme-08));
       width: 50%;
       height: 100%;
       position: absolute;
@@ -57,8 +57,8 @@
     }
 
     &:hover {
-      background: var(--theme-01);
-      color: var(--theme-09);
+      background: var(--theme-09);
+      color: var(--theme-01);
 
       &:before {
         left: -50%;
@@ -68,24 +68,6 @@
       &:after {
         left: 100%;
         opacity: 0;
-      }
-    }
-  }
-
-  &.light {
-    a {
-      &:before,
-      &:after {
-        background: linear-gradient(0deg, var(--theme-08), var(--theme-09));
-      }
-
-      &:hover {
-        background: var(--theme-09);
-        color: var(--theme-01);
-      }
-
-      div {
-        text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
       }
     }
   }

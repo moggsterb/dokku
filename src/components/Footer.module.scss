@@ -1,29 +1,31 @@
 .footer {
+  background: var(--theme-09);
+  height: 50px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
   .copy {
     font-size: 14px;
-    padding: 15px 20px 15px;
+    line-height: 20px;
+    padding: 5px 20px 5px;
     color: var(--theme-03);
   }
 
   .theme {
     padding: 5px 20px;
-    margin-left: 20px;
+    margin: 0 0 0 20px;
     background: rgba(0, 0, 0, 0.05);
+    font-size: 14px;
+    line-height: 20px;
     border: none;
     outline: none;
     border-radius: 5px;
     color: var(--theme-03);
+
     &:hover {
       cursor: pointer;
       background: rgba(0, 0, 0, 0.2);
     }
-  }
-
-  &.dark {
-    background: var(--theme-01);
-  }
-
-  &.light {
-    background: var(--theme-09);
   }
 }

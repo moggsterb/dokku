@@ -3,7 +3,8 @@ import type { Metadata } from 'next';
 import './globals.scss';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
-import { ThemeProvider } from '@/components/ThemeContext';
+
+import { ThemeProvider } from 'next-themes';
 
 export const metadata: Metadata = {
   title: 'Dokku',
@@ -16,9 +17,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en'>
+    <html lang='en' suppressHydrationWarning>
       <body>
-        <ThemeProvider>
+        <ThemeProvider enableSystem={false}>
           <>
             <div className='content'>
               <Header />

@@ -10,14 +10,7 @@
   flex-wrap: wrap;
   padding: var(--grid-padding);
   border-radius: var(--grid-padding);
-
-  &.dark {
-    background: var(--grid-bg-dark);
-  }
-
-  &.light {
-    background: var(--grid-bg-light);
-  }
+  background: var(--grid-bg);
 }
 
 .gridSelector {

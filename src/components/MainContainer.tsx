@@ -3,7 +3,7 @@
 import { ReactNode, useContext } from 'react';
 
 import styles from './MainContainer.module.scss';
-import { ThemeContext } from './ThemeContext';
+import { useTheme } from 'next-themes';
 
 interface Props {
   header?: ReactNode;
@@ -12,9 +12,9 @@ interface Props {
 }
 
 const MainContainer = ({ header, footer, children }: Props) => {
-  const { theme } = useContext(ThemeContext);
+  const { theme, setTheme } = useTheme();
   return (
-    <div className={`${styles.wrapper} ${styles[theme]}`}>
+    <div className={`${styles.wrapper}`}>
       {header && <header className={styles.header}>{header}</header>}
       <main className={styles.content}>{children}</main>
       {footer && <footer className={styles.footer}>{footer}</footer>}

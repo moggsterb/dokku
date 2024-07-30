@@ -1,20 +1,32 @@
 'use client';
 
-import { useContext } from 'react';
+import { useTheme } from 'next-themes';
 import styles from './Footer.module.scss';
-import { ThemeContext } from './ThemeContext';
+import { useEffect, useState } from 'react';
 
 const Footer = () => {
-  const { theme, toggleTheme } = useContext(ThemeContext);
+  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // if (!mounted) {
+  //   return null;
+  // }
 
   return (
-    <footer className={`${styles.footer} ${styles[theme]}`}>
-      <div className={styles.copy}>
-        &copy; MB 2024
-        <button className={styles.theme} onClick={toggleTheme}>
+    <footer className={styles.footer}>
+      <div className={styles.copy}>&copy; MB 2024</div>
+      {mounted && (
+        <button
+          className={styles.theme}
+          onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+        >
           Theme: {theme}
         </button>
-      </div>
+      )}
     </footer>
   );
 };

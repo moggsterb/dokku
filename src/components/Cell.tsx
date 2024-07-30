@@ -2,7 +2,6 @@
 
 import { isBrowser } from 'react-device-detect';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareFull } from '@fortawesome/free-regular-svg-icons';
 import {
   faArrowsLeftRight,
@@ -16,7 +15,6 @@ import { IDisplayCellProps } from '@/utils/display';
 import { buildStyle } from '@/utils/helpers';
 import { useContext, useEffect, useState } from 'react';
 import { SolveType } from '@/utils/types';
-import { ThemeContext } from './ThemeContext';
 
 interface Props {
   displayCell: IDisplayCellProps;
@@ -65,8 +63,6 @@ const Cell = ({
 }: Props) => {
   const { id, status, value, row, column, candidates } = cell;
   const [animID, setAnimID] = useState<number | undefined>(undefined);
-
-  const { theme } = useContext(ThemeContext);
 
   const animRequired =
     (value !== undefined || id === focusCellID) &&
@@ -145,7 +141,6 @@ const Cell = ({
   const cellStyle = () => {
     return buildStyle([
       { style: styles.cell, condition: true },
-      { style: styles[theme], condition: true },
       { style: styles.inSelector, condition: gridStatus === 'selector' },
       { style: styles.topGutter, condition: row === 3 || row === 6 },
       { style: styles.rightGutter, condition: column === 3 || column === 6 },

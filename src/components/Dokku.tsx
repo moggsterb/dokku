@@ -3,12 +3,9 @@
 import { DOKKU } from '@/utils/dokku';
 
 import styles from './Dokku.module.scss';
-import { ThemeContext } from './ThemeContext';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const Dokku = () => {
-  const { theme } = useContext(ThemeContext);
-
   const [anim, setAnim] = useState(false);
 
   useEffect(() => {
@@ -46,7 +43,7 @@ const Dokku = () => {
   };
 
   return (
-    <div className={`${styles.dokku} ${styles[theme]}`}>
+    <div className={styles.dokku}>
       {DOKKU.map((row, r) => renderRow(row, r))}
     </div>
   );
