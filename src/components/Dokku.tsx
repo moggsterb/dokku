@@ -1,11 +1,21 @@
+'use client';
+
 import { DOKKU } from '@/utils/dokku';
 
 import styles from './Dokku.module.scss';
 import { ThemeContext } from './ThemeContext';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 const Dokku = () => {
   const { theme } = useContext(ThemeContext);
+
+  const [anim, setAnim] = useState(false);
+
+  useEffect(() => {
+    if (!anim) {
+      setAnim(true);
+    }
+  }, [anim]);
 
   const renderRow = (row: string[], r: number) => {
     return (
@@ -27,19 +37,12 @@ const Dokku = () => {
   };
 
   const renderPixel = (r: number, pixel: string, p: number) => {
-    const pixelClass = `${pixel === '0' ? styles.on : styles.off} ${
+    const pixelClass = `${pixel === '0' && anim ? styles.on : styles.off} ${
       p === 2 || p === 5 ? styles.hGutter : ''
     }`;
-    return (
-      <div
-        key={p}
-        className={pixelClass}
-        style={{
-          // animationDelay: `${Math.random() * 1.5 + r * 1}s`,
-          animationDelay: `${Math.random() * 20}s`,
-        }}
-      />
-    );
+
+    const style = anim ? { animationDelay: `${Math.random() * 20}s` } : {};
+    return <div key={p} className={pixelClass} style={style} />;
   };
 
   return (
