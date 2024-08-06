@@ -1,6 +1,5 @@
 import { GridActions, gridToChunks, gridToString } from '@/utils/grid';
 import { IGrid } from '@/utils/types';
-import { useRouter } from 'next/navigation';
 import { Dispatch } from 'react';
 
 import styles from './Control.module.scss';

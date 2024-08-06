@@ -25,6 +25,7 @@ body {
   --theme-09: #eee;
 
   --main-bg: #1c1715; // body
+  --main-fg: #61612e;
   --bold-bg: #222; // header / footer
 
   --accent1-on: #bfc81d;
@@ -131,6 +132,7 @@ body {
 
 [data-theme='dark'] {
   --main-bg: #e1d9d6;
+  --main-fg: #e0e0b6;
   --bold-bg: #ddd;
   --grid-bg: #ffffff05;
   --theme-09: #111;
@@ -159,6 +161,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  color: var(--main-fg);
 }
 
 .content {

@@ -27,8 +27,10 @@
     color: var(--cell-fg);
     transition: background 0.25s ease-in, transform 0.25s ease-in;
     border-radius: var(--cell-radius);
+    // @media only screen and (min-width: 640px) {
+    //   border-radius: var(--cell-radius);
+    // }
     position: relative;
-    // overflow: hidden;
 
     &.hasValue {
       justify-content: center;
@@ -47,7 +49,7 @@
     &.active {
       background-color: var(--cell-active-bg);
       color: var(--cell-active-fg);
-      transform: scale(1.2);
+      transform: scale(1.5);
       z-index: 10;
     }
 
@@ -92,11 +94,11 @@
     }
 
     &.active {
-      transform: scale(2.2);
+      transform: scale(3);
       z-index: 10;
 
       @media only screen and (min-width: 640px) {
-        transform: scale(1.6);
+        transform: scale(2);
       }
 
       .solveIconWrapper {
@@ -161,6 +163,7 @@
 
     .solveIconWrapper {
       border-radius: var(--cell-radius) var(--cell-radius) 0 0;
+      height: calc(var(--cell-size) * 0.15);
       overflow: hidden;
       width: 100%;
       display: flex;
@@ -173,7 +176,7 @@
   }
 
   .solveIcon {
-    height: calc(var(--cell-value-size) * 0.25);
+    height: calc(var(--cell-size) * 0.15);
     flex: 1;
     display: flex;
     justify-content: center;
@@ -205,11 +208,14 @@
     flex-direction: row;
     flex-wrap: wrap;
     align-content: flex-end;
-
     height: 100%;
+    padding: calc(var(--cell-size) / 16);
+    padding-left: calc(var(--cell-size) / 32 + 0.5px);
+    padding-right: calc(var(--cell-size) / 32 - 1px);
     @media only screen and (min-width: 640px) {
-      padding: 7px 5px 3px;
       padding: calc(var(--cell-size) / 16);
+      padding-left: calc(var(--cell-size) / 16 + 0.5px);
+      padding-right: calc(var(--cell-size) / 16 - 1px);
     }
   }
 

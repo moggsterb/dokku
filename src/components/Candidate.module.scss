@@ -2,23 +2,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: calc(((var(--cell-size) - 3px) / 3) - 2px);
-  height: calc(((var(--cell-size) - 3px) / 3) - 2px);
+  width: calc((var(--cell-size) - 3px - 2px - var(--cell-size) / 16) / 3);
+  height: calc((var(--cell-size) - 3px - 2px - var(--cell-size) / 4) / 3);
+  margin: 1px 1px 0 0;
   font-size: 4px;
   transition: background 0.25s ease-in, transform 0.25s ease-in;
 
   color: rgba(255, 255, 255, 0.4);
-  // margin: 0.5px;
 
   @media only screen and (min-width: 640px) {
-    // width = cellSize - 6px (can.marg) - 2px (cell.padd) - canWrap.padd / 8 ... divided by 3
-    width: calc((var(--cell-size) - 6px - 2px - var(--cell-size) / 8) / 3);
-    // height = cellSize - 6px (can.marg) - 2px (cell.padd) ... divided by 3
-    height: calc((var(--cell-size) - 6px - 2px - var(--cell-size) / 4) / 3);
-    // background: black !important;
     font-size: 12px;
     line-height: 12px;
-    margin: 0 1px 2px;
+    width: calc((var(--cell-size) - 3px - 2px - var(--cell-size) / 8) / 3);
+    height: calc((var(--cell-size) - 3px - 2px - var(--cell-size) / 4) / 3);
   }
 }
 

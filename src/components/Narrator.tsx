@@ -10,14 +10,7 @@ interface Props {
 }
 
 const Narrator = ({
-  grid: {
-    cells,
-    gridStatus,
-    focusCellID,
-    focusSolveable,
-    displayMode,
-    solveableByType,
-  },
+  grid: { cells, focusCellID, focusSolveable, displayMode, solveableByType },
   gridDispatch,
 }: Props) => {
   const focusCellObj =

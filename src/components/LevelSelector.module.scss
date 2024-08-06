@@ -5,7 +5,7 @@
   }
 
   a {
-    color: var(--accent1-on);
+    color: var(--accent3-on);
     display: flex;
     padding: calc(var(--grid-unit) * 3) calc(var(--grid-unit) * 12);
     text-decoration: none;
@@ -13,12 +13,12 @@
     justify-content: center;
     font-size: calc(var(--grid-unit) * 3.5);
     text-transform: uppercase;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    // box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     position: relative;
     overflow: hidden;
 
     &.create {
-      color: var(--accent3-on);
+      color: var(--accent2-on);
     }
 
     div {
@@ -58,7 +58,7 @@
 
     &:hover {
       background: var(--theme-09);
-      color: var(--theme-01);
+      color: var(--theme-04);
 
       &:before {
         left: -50%;

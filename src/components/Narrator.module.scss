@@ -12,8 +12,8 @@
   }
 
   p {
-    color: #666;
-    background: #00000030;
+    color: var(--theme-03);
+    background: var(--theme-05);
     padding: 10px 25px;
     border-radius: 10px;
     text-align: center;
@@ -21,7 +21,7 @@
   }
 
   em {
-    color: rgb(19, 184, 19);
+    color: var(--cell-all);
     font-style: normal;
 
     &.any {
