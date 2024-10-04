@@ -5,6 +5,7 @@ import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 
 import { ThemeProvider } from 'next-themes';
+import React from 'react';
 
 export const metadata: Metadata = {
   title: 'Dokku',

@@ -1,6 +1,7 @@
 .wrapper {
   background: #00000030;
-  color: #666;
+  color: var(--theme-09);
+  background: var(--theme-06);
   display: flex;
   align-items: center;
   border-radius: 10px;

@@ -19,7 +19,7 @@ const Header = () => {
     if (menuOpen === undefined) {
       setMenuOpen(false);
     }
-  }, []);
+  }, [menuOpen]);
 
   const navHandler = (url: string) => {
     router.push(url);
