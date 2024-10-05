@@ -5,20 +5,20 @@
   }
 
   a {
-    color: var(--accent3-on);
+    color: var(--theme-03);
     display: flex;
     padding: calc(var(--grid-unit) * 3) calc(var(--grid-unit) * 12);
     text-decoration: none;
     border-radius: 10px;
     justify-content: center;
     font-size: calc(var(--grid-unit) * 3.5);
-    text-transform: uppercase;
+    // text-transform: uppercase;
     // box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     position: relative;
     overflow: hidden;
 
     &.create {
-      color: var(--accent2-on);
+      color: var(--theme-06);
     }
 
     div {
