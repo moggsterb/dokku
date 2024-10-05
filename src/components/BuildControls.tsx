@@ -1,9 +1,11 @@
+'use client';
+
 import { GridActions, gridToChunks, gridToString } from '@/utils/grid';
 import { IGrid } from '@/utils/types';
 import { Dispatch } from 'react';
-
-import styles from './Control.module.scss';
 import Control from './Control';
+import Portal from './Portal';
+import React from 'react';
 
 interface Props {
   grid: IGrid;
@@ -20,12 +22,25 @@ const BuildControls = ({ grid, gridDispatch }: Props) => {
   };
 
   return (
-    <Control
-      beforeActions={[{ title: 'reset', handler: resetHandler }]}
-      afterActions={[
-        { title: 'solve', url: `/play?custom=${gridToString(grid.cells)}` },
-      ]}
-    />
+    <>
+      <Portal type='header'>
+        <Control
+          banner={{
+            title: 'Create your own Grid',
+            description:
+              'Enter your own puzzle and DOKKU will help you solve it',
+          }}
+        />
+      </Portal>
+      <Portal type='footer'>
+        <Control
+          beforeActions={[{ title: 'reset', handler: resetHandler }]}
+          afterActions={[
+            { title: 'solve', url: `/play?custom=${gridToString(grid.cells)}` },
+          ]}
+        />
+      </Portal>
+    </>
   );
 };
 

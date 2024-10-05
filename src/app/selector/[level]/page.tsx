@@ -8,6 +8,9 @@ import Grid from '@/components/Grid';
 import { initialGrid } from '@/utils/grid';
 import AnimReveal from '@/components/AnimReveal';
 import Control from '@/components/Control';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Portal from '@/components/Portal';
 
 export default function Selector({
   params: { level },
@@ -31,48 +34,52 @@ export default function Selector({
     (item) => item.id === (levelID === 5 ? 1 : levelID + 1)
   );
 
-  const header = (
-    <Control
-      banner={{
-        title: `${levelObj.title} Puzzles`,
-        description: levelObj.description,
-      }}
-    />
-  );
-
-  const footer = (
-    <Control
-      beforeActions={[{ title: `${prevOBJ?.title}`, url: `${prevOBJ?.url}` }]}
-      afterActions={[{ title: `${nextOBJ?.title}`, url: `${nextOBJ?.url}` }]}
-    />
-  );
-
   return (
-    <MainContainer header={header} footer={footer}>
-      <div className='selector'>
-        <AnimReveal
-          items={grids.map((grid, index) => {
-            return {
-              initX: 0,
-              initOpacity: 0,
-              component: (
-                <div
-                  className={`selector-block block-${index}`}
-                  key={index}
-                  onClick={() => {
-                    router.push(`/selector/preview/${grid.id}`);
-                  }}
-                >
-                  <Grid
-                    grid={initialGrid('selector', loadCells(grid.id))}
-                    showHints={false}
-                  />
-                </div>
-              ),
-            };
-          })}
+    <>
+      <MainContainer>
+        <div className='selector'>
+          <AnimReveal
+            items={grids.map((grid, index) => {
+              return {
+                initX: 0,
+                initOpacity: 0,
+                component: (
+                  <div
+                    className={`selector-block block-${index}`}
+                    key={index}
+                    onClick={() => {
+                      router.push(`/selector/preview/${grid.id}`);
+                    }}
+                  >
+                    <Grid
+                      grid={initialGrid('selector', loadCells(grid.id))}
+                      showHints={false}
+                    />
+                  </div>
+                ),
+              };
+            })}
+          />
+        </div>
+      </MainContainer>
+      <Portal type='header'>
+        <Control
+          banner={{
+            title: `${levelObj.title} Puzzles`,
+            description: levelObj.description,
+          }}
         />
-      </div>
-    </MainContainer>
+      </Portal>
+      <Portal type='footer'>
+        <Control
+          beforeActions={[
+            { title: `${prevOBJ?.title}`, url: `${prevOBJ?.url}` },
+          ]}
+          afterActions={[
+            { title: `${nextOBJ?.title}`, url: `${nextOBJ?.url}` },
+          ]}
+        />
+      </Portal>
+    </>
   );
 }

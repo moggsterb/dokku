@@ -29,6 +29,7 @@ export const initialGrid = (startStatus: string, startCells: ICell[]): IGrid => 
 
 export type GridActions =
   | { type: 'RESET_GRID' }
+  | { type: 'RESTART_GRID', payload: { cells: ICell[] } }
   | { type: 'UPDATE_MODE', payload: { mode: string; } }
   | { type: 'UPDATE_STATUS', payload: { status: string; } }
   | { type: 'SET_CELL', payload: { cellID: number, value: number, type: 'solved' | 'preset' } }
@@ -42,13 +43,18 @@ export type GridActions =
 
 export const gridReducer = (state: IGrid, action: GridActions) => {
 
-  // console.log('Processing Reducer')
-
   switch (action.type) {
     case 'RESET_GRID': {
       return scanGrid({
         ...state,
         cells: initialCells()
+      })
+    }
+    case 'RESTART_GRID': {
+      return scanGrid({
+        ...state,
+        cells: [...action.payload.cells],
+        gridStatus: 'auto'
       })
     }
     case 'UPDATE_MODE':
@@ -107,9 +113,6 @@ export const gridReducer = (state: IGrid, action: GridActions) => {
       const displayMode = !solveable
         ? 'manual'
         : `cell_${solveable.type}`
-      // : solveable.type === 'cell_single'
-      //   ? 'cell_singles'
-      //   : 'scanning_solve_cell'
 
       return {
         ...state,
@@ -161,7 +164,7 @@ const scanGrid = (grid: IGrid): IGrid => {
 
   const complete = cells.filter((item) => item.status === 'unsolved').length === 0;
 
-  console.log({ complete })
+  // console.log({ complete })
 
   return {
     ...grid,

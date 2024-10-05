@@ -11,13 +11,11 @@ interface Props {
   children: ReactNode;
 }
 
-const MainContainer = ({ header, footer, children }: Props) => {
+const MainContainer = ({ children }: Props) => {
   const { theme, setTheme } = useTheme();
   return (
     <div className={`${styles.wrapper}`}>
-      {header && <header className={styles.header}>{header}</header>}
       <main className={styles.content}>{children}</main>
-      {footer && <footer className={styles.footer}>{footer}</footer>}
     </div>
   );
 };

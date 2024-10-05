@@ -1,7 +1,6 @@
 'use client';
 
 import { ICell } from '@/utils/types';
-import MainContainer from './MainContainer';
 import Grid from './Grid';
 
 import useControl from '@/utils/hooks/useControl';
@@ -10,6 +9,8 @@ import SolveControls from './SolveControls';
 
 import styles from './Puzzle.module.scss';
 import Narrator from './Narrator';
+import React from 'react';
+import CompleteControls from './CompleteControls';
 
 interface Props {
   initialCells: ICell[];
@@ -27,20 +28,6 @@ const Puzzle = ({
   const { grid, gridDispatch } = useControl(initialStatus, initialCells);
   const { gridStatus, cells, enneads, focusCellID, focusValue } = grid;
 
-  const setCellValue = (value: number | string) => {
-    if (focusCellID !== undefined) {
-      const cell = { ...cells[focusCellID] };
-
-      cell.value = typeof value === 'number' ? value : 0;
-      cell.status =
-        typeof value === 'number'
-          ? gridStatus === 'builder'
-            ? 'preset'
-            : 'solved'
-          : 'unsolved';
-    }
-  };
-
   return (
     <div className={styles.wrapper}>
       <Grid
@@ -57,6 +44,13 @@ const Puzzle = ({
           <SolveControls grid={grid} gridDispatch={gridDispatch} />
           <Narrator grid={grid} gridDispatch={gridDispatch} />
         </>
+      )}
+      {gridStatus === 'complete' && (
+        <CompleteControls
+          grid={grid}
+          gridDispatch={gridDispatch}
+          initialCells={initialCells}
+        />
       )}
     </div>
   );

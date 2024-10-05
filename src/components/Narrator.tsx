@@ -3,6 +3,7 @@ import { IGrid, SolveType } from '@/utils/types';
 import { Dispatch } from 'react';
 
 import styles from './Narrator.module.scss';
+import Portal from './Portal';
 
 interface Props {
   grid: IGrid;
@@ -94,9 +95,11 @@ const Narrator = ({
   };
 
   return (
-    <div className={styles.wrapper}>
-      <p>{buildMessage()}</p>
-    </div>
+    <Portal type='header'>
+      <div className={styles.wrapper}>
+        <p>{buildMessage()}</p>
+      </div>
+    </Portal>
   );
 };
 

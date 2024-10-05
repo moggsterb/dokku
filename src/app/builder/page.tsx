@@ -1,20 +1,13 @@
-import Control from '@/components/Control';
+'use client';
+
 import MainContainer from '@/components/MainContainer';
 import Puzzle from '@/components/Puzzle';
-import { initialCells, loadCells } from '@/utils/cell';
+import { initialCells } from '@/utils/cell';
+import React from 'react';
 
 export default function Builder() {
-  const header = (
-    <Control
-      banner={{
-        title: 'Create your own Grid',
-        description: 'Enter your own puzzle and DOKKU will help you solve it',
-      }}
-    />
-  );
-
   return (
-    <MainContainer header={header}>
+    <MainContainer>
       <Puzzle
         initialCells={initialCells()}
         initialStatus={'builder'}
