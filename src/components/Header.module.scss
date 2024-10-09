@@ -10,8 +10,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: var(--theme-09);
-    border-bottom: 1px solid var(--theme-08);
+    background: var(--theme-08);
+    border-bottom: 1px solid var(--theme-09);
+
     z-index: 10;
   }
 
@@ -61,7 +62,8 @@
     background: var(--theme-08);
     color: var(--theme-05);
     border: none;
-    border-bottom: 1px solid var(--theme-07);
+    border-top: 1px solid var(--theme-07);
+    // border-bottom: 1px solid var(--theme-07);
 
     outline: none;
     transition: all ease-in-out 0.3s;

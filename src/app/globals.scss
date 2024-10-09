@@ -24,7 +24,6 @@ body {
   --theme-02: #413b2f;
   --theme-01: #3c362a;
 
-  --main-bg: #1c1715; // body
   --main-fg: #4e4e47;
   --bold-bg: #222; // header / footer
 
@@ -84,18 +83,9 @@ body {
   }
 }
 
-/* Extra large devices (large desktops, 1200px and up) */
-// @media only screen and (min-width: 1200px) {
-//   :root {
-//     // --main-bg: rgb(138, 51, 16);
-//     --grid-size: 720px;
-//   }
-// }
-
 /* XXLarge devices (larger desktops, 1440px and up) */
 @media only screen and (min-width: 1440px) {
   :root {
-    // --main-bg: #dd5620;
     --grid-size: 750px;
   }
 }
@@ -131,22 +121,12 @@ body {
 }
 
 [data-theme='dark'] {
-  --main-bg: #e1d9d6;
   --main-fg: #afafaf;
   --bold-bg: #ddd;
   --grid-bg: #ffffff05;
-  --theme-09: #111;
-  --theme-08: #222;
-  --theme-07: #333;
-  --theme-06: #444;
-  --theme-05: #999;
-  --theme-04: #bbb;
-  --theme-03: #ccc;
-  --theme-02: #ddd;
-  --theme-01: #eee;
 
   --theme-09: #27221a;
-  --theme-08: #4d4333;
+  --theme-08: #1e1b17;
   --theme-07: #554b3b;
   --theme-06: #6b6353;
   --theme-05: #888273;
