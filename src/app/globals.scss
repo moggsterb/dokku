@@ -14,16 +14,6 @@ body {
   --cell-value-size: 20px;
 
   // colours
-  --theme-01: #111;
-  --theme-02: #222;
-  --theme-03: #333;
-  --theme-04: #444;
-  --theme-05: #999;
-  --theme-06: #bbb;
-  --theme-07: #ccc;
-  --theme-08: #ddd;
-  --theme-09: #eee;
-
   --theme-09: #bfb9ad;
   --theme-08: #9f998d;
   --theme-07: #8f897d;
@@ -35,7 +25,7 @@ body {
   --theme-01: #3c362a;
 
   --main-bg: #1c1715; // body
-  --main-fg: #61612e;
+  --main-fg: #4e4e47;
   --bold-bg: #222; // header / footer
 
   --accent1-on: #bfc81d;
@@ -142,7 +132,7 @@ body {
 
 [data-theme='dark'] {
   --main-bg: #e1d9d6;
-  --main-fg: #e0e0b6;
+  --main-fg: #afafaf;
   --bold-bg: #ddd;
   --grid-bg: #ffffff05;
   --theme-09: #111;

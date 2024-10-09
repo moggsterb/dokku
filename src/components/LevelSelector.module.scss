@@ -5,9 +5,11 @@
   }
 
   a {
-    color: var(--theme-03);
+    color: var(--theme-09);
     display: flex;
-    padding: calc(var(--grid-unit) * 3) calc(var(--grid-unit) * 12);
+    padding: calc(var(--grid-unit) * 3) calc(var(--grid-unit) * 30);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
+      rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
     text-decoration: none;
     border-radius: 10px;
     justify-content: center;
@@ -18,7 +20,7 @@
     overflow: hidden;
 
     &.create {
-      color: var(--theme-06);
+      color: var(--theme-03);
     }
 
     div {
@@ -42,7 +44,8 @@
     &:before,
     &:after {
       content: ' ';
-      background: linear-gradient(0deg, var(--theme-07), var(--theme-08));
+      background: linear-gradient(0deg, var(--theme-06), var(--theme-07));
+
       width: 50%;
       height: 100%;
       position: absolute;

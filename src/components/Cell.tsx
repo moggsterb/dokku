@@ -15,6 +15,7 @@ import { IDisplayCellProps } from '@/utils/display';
 import { buildStyle } from '@/utils/helpers';
 import { useContext, useEffect, useState } from 'react';
 import { SolveType } from '@/utils/types';
+import React from 'react';
 
 interface Props {
   displayCell: IDisplayCellProps;
