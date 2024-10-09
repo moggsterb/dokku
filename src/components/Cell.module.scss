@@ -58,7 +58,8 @@
           background-color: var(--cell-column-off);
         }
       }
-      color: var(--cell-column);
+      // color: var(--cell-column);
+      color: #ffffff50;
     }
 
     &.connectedRow {
@@ -69,7 +70,8 @@
           background-color: var(--cell-row-off);
         }
       }
-      color: var(--cell-row);
+      // color: var(--cell-row);
+      color: #ffffff50;
     }
 
     &.connectedBlock {
@@ -80,7 +82,8 @@
           background-color: var(--cell-block-off);
         }
       }
-      color: var(--cell-block);
+      // color: var(--cell-block);
+      color: #ffffff50;
     }
 
     &.singleSolve.active {
@@ -110,7 +113,8 @@
       // color: var(--cell-barred-fg);
       background: #00000090;
       color: white;
-      font-size: calc(var(--cell-value-size) * 0.75);
+      color: #000000cc;
+      font-size: calc(var(--cell-value-size));
       font-weight: bold;
       height: 100%;
       width: 100%;
