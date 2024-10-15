@@ -19,8 +19,9 @@
   padding: var(--selector-grid-padding);
   border-radius: var(--selector-grid-padding);
   transition: background 0.25s ease-in;
-  &:hover {
-    background: rgba(160, 160, 160, 0.3);
-    cursor: pointer;
-  }
+}
+
+.gridHoverable:hover {
+  background: rgba(160, 160, 160, 0.3);
+  cursor: pointer;
 }

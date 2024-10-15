@@ -1,11 +1,12 @@
-import { ICell, IEnneads, IGrid, SolveType } from '@/utils/types';
+import { IGrid, SolveType } from '@/utils/types';
 import Cell from './Cell';
-import { Dispatch, SetStateAction, useContext } from 'react';
-import GridStatus from './GridStatus';
+import { Dispatch } from 'react';
 
 import styles from './Grid.module.scss';
 import { displayCell, isCellSolveable } from '@/utils/display';
 import { GridActions } from '@/utils/grid';
+
+import { isBrowser } from 'react-device-detect';
 
 interface Props {
   grid: IGrid;
@@ -99,7 +100,9 @@ const Grid = ({ grid, showCandidates, showHints, gridDispatch }: Props) => {
   };
 
   const gridStyle = `${styles.grid} ${
-    gridStatus === 'selector' ? styles.gridSelector : ''
+    gridStatus === 'selector'
+      ? `${styles.gridSelector} ${isBrowser ? styles.gridHoverable : ''}`
+      : ''
   }`;
 
   return (

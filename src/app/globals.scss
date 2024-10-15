@@ -74,8 +74,16 @@ body {
   }
 }
 
+@media only screen and (min-width: 900px) and (orientation: portrait) {
+  :root {
+    --pixel-size: 15px;
+    --grid-size: 800px;
+    --cell-value-size: 30px;
+  }
+}
+
 /* Large devices (desktops, 1024px and up) */
-@media only screen and (min-width: 1024px) {
+@media only screen and (min-width: 1024px) and (orientation: landscape) {
   :root {
     --pixel-size: 15px;
     --grid-size: 640px;
@@ -84,7 +92,7 @@ body {
 }
 
 /* XXLarge devices (larger desktops, 1440px and up) */
-@media only screen and (min-width: 1440px) {
+@media only screen and (min-width: 1440px) and (orientation: landscape) {
   :root {
     --grid-size: 750px;
   }

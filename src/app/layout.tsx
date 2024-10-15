@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning>
       <body>
-        <ThemeProvider enableSystem={false}>
+        <ThemeProvider enableSystem={false} defaultTheme='dark'>
           <>
             <div className='content'>
               <Header />
