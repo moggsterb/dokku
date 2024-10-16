@@ -28,6 +28,7 @@ const Candidate = ({
       clickHandler(cell.id, value);
     }
   };
+  const canClick = (canSet || canSolve) && !rejected;
 
   const candidateStyle = () => {
     return buildStyle([
@@ -37,7 +38,7 @@ const Candidate = ({
       { style: styles.settable, condition: canSet },
       {
         style: styles.hoverable,
-        condition: isBrowser && !rejected && canSet,
+        condition: isBrowser && canClick,
       },
     ]);
   };
@@ -45,7 +46,7 @@ const Candidate = ({
   return (
     <div
       className={candidateStyle()}
-      onClick={canSet && !rejected ? handleClick : undefined}
+      onClick={canClick ? handleClick : undefined}
       style={animStyle}
     >
       {rejected ? '' : value}

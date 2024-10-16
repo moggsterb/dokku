@@ -121,7 +121,10 @@ const Cell = ({
                 id === animID && value === highlightSolve ? highlightSolve : 0,
                 'pulseBig'
               )}
-              canSet={isActive}
+              canSet={
+                (isActive && highlightSolve === value) ||
+                gridStatus === 'builder'
+              }
               clickHandler={setHandler}
             />
           );
