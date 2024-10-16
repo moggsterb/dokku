@@ -26,13 +26,13 @@ const Puzzle = ({
   showHints = false,
 }: Props) => {
   const { grid, gridDispatch } = useControl(initialStatus, initialCells);
-  const { gridStatus, focusCellID } = grid;
+  const { gridStatus, focusCellID, displayMode } = grid;
 
   return (
     <div
       className={styles.wrapper}
       onClick={() => {
-        if (focusCellID) {
+        if (displayMode !== 'ready') {
           gridDispatch({ type: 'BLUR_CELL' });
         }
       }}
