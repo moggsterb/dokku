@@ -4,6 +4,7 @@ import MainContainer from '@/components/MainContainer';
 import Dokku from '@/components/Dokku';
 import LevelSelector from '@/components/LevelSelector';
 import React from 'react';
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -11,6 +12,9 @@ export default function Home() {
       <>
         <Dokku />
         <LevelSelector />
+        <Link href='/method' className='link'>
+          How Dokku Solves Puzzles
+        </Link>
       </>
     </MainContainer>
   );
