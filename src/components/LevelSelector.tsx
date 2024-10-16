@@ -12,7 +12,12 @@ const LevelSelector = () => {
             initX,
             initOpacity: 0,
             component: (
-              <Link href={url} style={{ marginTop }} className={styles[style]}>
+              <Link
+                href={url}
+                style={{ marginTop }}
+                className={styles[style]}
+                prefetch={false}
+              >
                 <div>{title}</div>
                 <span>{title}</span>
               </Link>

@@ -46,7 +46,8 @@ const SolveController = ({
     ]);
   };
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
     if (!isActive) {
       gridDispatch({
         type: 'UPDATE_MODE',

@@ -19,7 +19,6 @@ import React from 'react';
 
 interface Props {
   displayCell: IDisplayCellProps;
-
   clickHandler?: (value: number) => void;
   setHandler: (cellID: number, value: number) => void;
   methodHandler: (cellID: number, method: SolveType) => void;
@@ -194,8 +193,9 @@ const Cell = ({
     ]);
   };
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (canActivate && clickHandler) {
+      e.stopPropagation();
       clickHandler(id);
     }
   };

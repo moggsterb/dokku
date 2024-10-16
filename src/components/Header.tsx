@@ -11,7 +11,11 @@ import Link from 'next/link';
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState<boolean | undefined>();
 
-  const navItems = [{ title: 'DOKKU', url: '/' }, ...LEVELS];
+  const navItems = [
+    { title: 'DOKKU', url: '/' },
+    ...LEVELS,
+    { title: 'How Dokku Solves Puzzles', url: '/method' },
+  ];
 
   const router = useRouter();
 
@@ -31,7 +35,7 @@ const Header = () => {
       className={`${styles.header} ${menuOpen ? styles.open : styles.closed}`}
     >
       <div className={styles.row}>
-        <Link href='/' className={styles.title}>
+        <Link href='/' className={styles.title} prefetch={false}>
           DOKKU
         </Link>
 
@@ -48,7 +52,10 @@ const Header = () => {
       </div>
 
       {menuOpen !== undefined && (
-        <div className={styles.menuItems}>
+        <div
+          className={styles.menuItems}
+          style={{ marginTop: menuOpen ? 0 : navItems.length * -50 }}
+        >
           {navItems.map(({ url, title }, index) => {
             return (
               <div key={index} className={styles.menuItem}>

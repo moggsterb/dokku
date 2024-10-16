@@ -48,6 +48,7 @@ export default function Selector({
                     className={`selector-block block-${index}`}
                     key={index}
                     onClick={() => {
+                      alert('hallo');
                       router.push(`/selector/preview/${grid.id}`);
                     }}
                   >

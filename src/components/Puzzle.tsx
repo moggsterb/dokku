@@ -9,7 +9,7 @@ import SolveControls from './SolveControls';
 
 import styles from './Puzzle.module.scss';
 import Narrator from './Narrator';
-import React from 'react';
+import React, { useEffect } from 'react';
 import CompleteControls from './CompleteControls';
 
 interface Props {
@@ -26,16 +26,17 @@ const Puzzle = ({
   showHints = false,
 }: Props) => {
   const { grid, gridDispatch } = useControl(initialStatus, initialCells);
-  const { gridStatus, cells, enneads, focusCellID, focusValue } = grid;
+  const { gridStatus, focusCellID } = grid;
 
   return (
-    <div className={styles.wrapper}>
-      <Grid
-        grid={grid}
-        showCandidates={showCandidates}
-        showHints={showHints}
-        gridDispatch={gridDispatch}
-      />
+    <div
+      className={styles.wrapper}
+      onClick={() => {
+        if (focusCellID) {
+          gridDispatch({ type: 'BLUR_CELL' });
+        }
+      }}
+    >
       {gridStatus === 'builder' && (
         <BuildControls grid={grid} gridDispatch={gridDispatch} />
       )}
@@ -52,6 +53,12 @@ const Puzzle = ({
           initialCells={initialCells}
         />
       )}
+      <Grid
+        grid={grid}
+        showCandidates={showCandidates}
+        showHints={showHints}
+        gridDispatch={gridDispatch}
+      />
     </div>
   );
 };
