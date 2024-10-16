@@ -9,19 +9,10 @@ export default function Method() {
         How <em>Dokku</em> Solves Sudoku Puzzles
       </h2>
 
-<<<<<<< HEAD
       <p className='extra'>
         <em>Dokku</em> is a sophisticated Sudoku solver that applies four key
         strategies simultaneously, allowing users to see in real time how many
         cells are solvable and which method can be used for each one.
-=======
-      <p>
-        <em>Dokku</em> is a sophisticated Sudoku solver that applies four key
-        strategies simultaneously, allowing users to see in real time how many
-        cells are solvable and which method can be used for each one. This
-        approach is highly effective for many puzzles, but some more complex
-        grids require additional strategies beyond these four.
->>>>>>> 1785c4c9ff89e2c023cac5b54feb83bee5696d00
       </p>
 
       <p>
@@ -72,14 +63,11 @@ export default function Method() {
         transparent solving experience.
       </p>
 
-<<<<<<< HEAD
       <p>
         This approach is highly effective for many puzzles, but some more
         complex grids require additional strategies beyond these four.
       </p>
 
-=======
->>>>>>> 1785c4c9ff89e2c023cac5b54feb83bee5696d00
       <hr />
 
       <h2>The Next Phase: Advanced Solving Techniques</h2>
@@ -156,11 +144,7 @@ export default function Method() {
 
       <hr />
 
-<<<<<<< HEAD
       <p className='extra'>
-=======
-      <p className='conclude'>
->>>>>>> 1785c4c9ff89e2c023cac5b54feb83bee5696d00
         By rolling out these more advanced techniques in the future,
         <em>Dokku</em> could evolve into an even more powerful solver, tackling
         even the most complex and challenging puzzles with ease.
