@@ -233,9 +233,18 @@ body {
   }
 }
 
+.copy-wrapper {
+  background: var(--theme-09);
+  width: 100%;
+}
 .copy {
-  padding: 5rem;
-  max-width: 70%;
+  padding: 1em;
+  font-size: 16px;
+  @media only screen and (min-width: 640px) {
+    max-width: 70%;
+    padding: 5em;
+  }
+
   margin: 0 auto;
 
   > * {
@@ -255,11 +264,11 @@ body {
 
   p,
   ul {
-    font-size: 1.2rem;
+    font-size: 1.2em;
     line-height: 1.6;
 
     &.extra {
-      font-size: 1.5rem;
+      font-size: 1.5em;
       line-height: 1.5;
     }
   }
