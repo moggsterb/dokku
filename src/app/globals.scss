@@ -233,51 +233,6 @@ body {
   }
 }
 
-.copy-wrapper {
-  background: var(--theme-09);
-  width: 100%;
-}
-.copy {
-  padding: 1em;
-  font-size: 16px;
-  @media only screen and (min-width: 640px) {
-    max-width: 70%;
-    padding: 5em;
-  }
-
-  margin: 0 auto;
-
-  > * {
-    margin-bottom: 2rem;
-    color: var(--cell-fg-preset);
-  }
-
-  h1 {
-    color: var(--accent2-on);
-  }
-  h2 {
-    color: var(--accent3-on);
-  }
-  h3 {
-    color: var(--accent1-on);
-  }
-
-  p,
-  ul {
-    font-size: 1.2em;
-    line-height: 1.6;
-
-    &.extra {
-      font-size: 1.5em;
-      line-height: 1.5;
-    }
-  }
-
-  hr {
-    margin: 6rem 0;
-  }
-}
-
 @keyframes pulse {
   5% {
     transform: scale(1);
