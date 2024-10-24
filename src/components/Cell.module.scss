@@ -48,6 +48,8 @@
       color: var(--cell-active-fg);
       transform: scale(1.5);
       z-index: 10;
+      // border: 10px solid red;
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     }
 
     &.connectedColumn {
