@@ -19,9 +19,9 @@ const SubSection = ({
       <div className={styles.grab}>
         <Image
           src={
-            theme === 'dark'
-              ? `/grabs/${type}-dark.jpg`
-              : `/grabs/${type}-light.jpg`
+            theme === 'light'
+              ? `/grabs/${type}-light.jpg`
+              : `/grabs/${type}-dark.jpg`
           }
           alt='Block Scanning'
           width={'730'}
