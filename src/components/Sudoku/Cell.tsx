@@ -1,6 +1,14 @@
 'use client';
 
+import React, { useEffect, useState } from 'react';
+
 import { isBrowser } from 'react-device-detect';
+
+import { IDisplayCellProps } from '@/utils/display';
+import { buildStyle } from '@/utils/helpers';
+import { SolveType } from '@/utils/types';
+
+import Candidate from './Candidate';
 
 import { faSquareFull } from '@fortawesome/free-regular-svg-icons';
 import {
@@ -9,13 +17,7 @@ import {
   fa1,
 } from '@fortawesome/free-solid-svg-icons';
 
-import Candidate from './Candidate';
 import styles from './Cell.module.scss';
-import { IDisplayCellProps } from '@/utils/display';
-import { buildStyle } from '@/utils/helpers';
-import { useContext, useEffect, useState } from 'react';
-import { SolveType } from '@/utils/types';
-import React from 'react';
 
 interface Props {
   displayCell: IDisplayCellProps;

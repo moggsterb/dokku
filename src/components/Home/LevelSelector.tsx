@@ -1,7 +1,9 @@
-import { LEVELS } from '@/utils/examples';
-import AnimReveal from './AnimReveal';
-import styles from './LevelSelector.module.scss';
 import Link from 'next/link';
+
+import AnimReveal from '../Layout/AnimReveal';
+
+import { LEVELS } from '@/utils/examples';
+import styles from './LevelSelector.module.scss';
 
 const LevelSelector = () => {
   return (

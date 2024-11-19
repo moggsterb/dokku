@@ -1,17 +1,17 @@
 'use client';
 
-import { ICell } from '@/utils/types';
-import Grid from './Grid';
+import React from 'react';
 
+import { ICell } from '@/utils/types';
 import useControl from '@/utils/hooks/useControl';
-import BuildControls from './BuildControls';
-import SolveControls from './SolveControls';
+
+import Grid from './Grid';
+import Narrator from './Narrator';
+import CompleteControls from '../Controls/CompleteControls';
+import BuildControls from '../Controls/BuildControls';
+import SolveControls from '../Controls/SolveControls';
 
 import styles from './Puzzle.module.scss';
-import Narrator from './Narrator';
-import React, { useEffect } from 'react';
-import CompleteControls from './CompleteControls';
-
 interface Props {
   initialCells: ICell[];
   initialStatus: string; // builder, preview, play
@@ -26,7 +26,7 @@ const Puzzle = ({
   showHints = false,
 }: Props) => {
   const { grid, gridDispatch } = useControl(initialStatus, initialCells);
-  const { gridStatus, focusCellID, displayMode } = grid;
+  const { gridStatus, displayMode } = grid;
 
   return (
     <div

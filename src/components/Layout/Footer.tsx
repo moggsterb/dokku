@@ -1,8 +1,8 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
 import styles from './Footer.module.scss';
-import { useEffect, useState } from 'react';
 
 const Footer = () => {
   const [mounted, setMounted] = useState(false);
@@ -11,10 +11,6 @@ const Footer = () => {
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  // if (!mounted) {
-  //   return null;
-  // }
 
   return (
     <footer className={styles.footer}>

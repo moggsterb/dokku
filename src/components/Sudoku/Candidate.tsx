@@ -1,8 +1,9 @@
 import { isBrowser } from 'react-device-detect';
 
 import { ICell, IRejected } from '@/utils/types';
-import styles from './Candidate.module.scss';
 import { buildStyle } from '@/utils/helpers';
+
+import styles from './Candidate.module.scss';
 
 interface Props {
   cell: ICell;

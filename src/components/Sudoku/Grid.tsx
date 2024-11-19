@@ -1,12 +1,14 @@
-import { IGrid, SolveType } from '@/utils/types';
-import Cell from './Cell';
 import { Dispatch } from 'react';
 
-import styles from './Grid.module.scss';
+import { isBrowser } from 'react-device-detect';
+
+import { IGrid, SolveType } from '@/utils/types';
 import { displayCell, isCellSolveable } from '@/utils/display';
 import { GridActions } from '@/utils/grid';
 
-import { isBrowser } from 'react-device-detect';
+import Cell from './Cell';
+
+import styles from './Grid.module.scss';
 
 interface Props {
   grid: IGrid;

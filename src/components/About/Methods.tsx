@@ -1,9 +1,10 @@
 'use client';
 
+import { ReactNode } from 'react';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
+
 import styles from './Methods.module.scss';
-import { ReactNode } from 'react';
 
 const SubSection = ({
   children,

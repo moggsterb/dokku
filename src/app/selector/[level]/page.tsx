@@ -1,16 +1,17 @@
 'use client';
 
-import MainContainer from '@/components/MainContainer';
+import React from 'react';
+import { useRouter } from 'next/navigation';
+
+import { initialGrid } from '@/utils/grid';
 import { loadCells } from '@/utils/cell';
 import { EXAMPLES, LEVELS } from '@/utils/examples';
-import { useRouter } from 'next/navigation';
-import Grid from '@/components/Grid';
-import { initialGrid } from '@/utils/grid';
-import AnimReveal from '@/components/AnimReveal';
-import Control from '@/components/Control';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Portal from '@/components/Portal';
+
+import MainContainer from '@/components/Layout/MainContainer';
+import AnimReveal from '@/components/Layout/AnimReveal';
+import Portal from '@/components/Layout/Portal';
+import Grid from '@/components/Sudoku/Grid';
+import Control from '@/components/Controls/Control';
 
 export default function Selector({
   params: { level },

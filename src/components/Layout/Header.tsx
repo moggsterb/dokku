@@ -1,12 +1,15 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import styles from './Header.module.scss';
-import { LEVELS } from '@/utils/examples';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+
+import { LEVELS } from '@/utils/examples';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faX } from '@fortawesome/free-solid-svg-icons';
-import Link from 'next/link';
+
+import styles from './Header.module.scss';
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState<boolean | undefined>();

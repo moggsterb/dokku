@@ -1,8 +1,8 @@
 'use client';
 
-import { ReactNode } from 'react';
-import styles from './Control.module.scss';
 import { useRouter } from 'next/navigation';
+
+import styles from './Control.module.scss';
 
 type ControlAction = {
   title: string;

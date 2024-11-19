@@ -1,6 +1,7 @@
-import MainContainer from '@/components/MainContainer';
-import Puzzle from '@/components/Puzzle';
 import { customCells, loadCells } from '@/utils/cell';
+
+import MainContainer from '@/components/Layout/MainContainer';
+import Puzzle from '@/components/Sudoku/Puzzle';
 
 export default function Play({
   searchParams: { puzzle, custom },

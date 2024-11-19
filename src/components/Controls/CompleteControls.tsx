@@ -1,10 +1,10 @@
+import React, { Dispatch } from 'react';
+
 import { GridActions } from '@/utils/grid';
 import { ICell, IGrid } from '@/utils/types';
-import { Dispatch } from 'react';
 
 import Control from './Control';
-import React from 'react';
-import Portal from './Portal';
+import Portal from '../Layout/Portal';
 
 interface Props {
   grid: IGrid;

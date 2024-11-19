@@ -12,7 +12,7 @@ const Portal = ({ type, children }: Props) => {
   const [portalID, setPortalID] = useState<HTMLElement | null>();
   useEffect(() => {
     const id = document.getElementById(
-      type === 'header' ? 'gHeader' : 'gFooter'
+      type === 'header' ? 'portHeader' : 'portFooter'
     );
     setPortalID(id);
   }, [type]);

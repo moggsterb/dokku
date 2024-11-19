@@ -1,20 +1,20 @@
+import React, { Dispatch } from 'react';
+
 import { buildStyle } from '@/utils/helpers';
-import styles from './SolveController.module.scss';
 import { SolveType } from '@/utils/types';
-import { Dispatch, SetStateAction } from 'react';
+
 import { GridActions } from '@/utils/grid';
+
 import { faCircleCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
 
+import styles from './SolveController.module.scss';
 interface Props {
   type: SolveType;
   cellIDs: {
     cellID: number;
     solution: number;
   }[];
-  // solveState: SolveType | undefined;
-  // setSolveState: Dispatch<SetStateAction<SolveType | undefined>>;
   displayMode: string;
   gridDispatch: Dispatch<GridActions>;
 }
@@ -53,7 +53,6 @@ const SolveController = ({
         type: 'UPDATE_MODE',
         payload: { mode: TYPES[type].displayMode },
       });
-      // setSolveState(type);
     } else {
       gridDispatch({
         type: 'BATCH_SOLVE',
@@ -65,7 +64,6 @@ const SolveController = ({
         type: 'UPDATE_MODE',
         payload: { mode: 'ready' },
       });
-      // setSolveState(undefined);
     }
   };
 

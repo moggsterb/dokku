@@ -1,11 +1,11 @@
 'use client';
+import React, { Dispatch } from 'react';
 
 import { GridActions, gridToChunks, gridToString } from '@/utils/grid';
 import { IGrid } from '@/utils/types';
-import { Dispatch } from 'react';
+
 import Control from './Control';
-import Portal from './Portal';
-import React from 'react';
+import Portal from '../Layout/Portal';
 
 interface Props {
   grid: IGrid;
@@ -34,7 +34,10 @@ const BuildControls = ({ grid, gridDispatch }: Props) => {
       </Portal>
       <Portal type='footer'>
         <Control
-          beforeActions={[{ title: 'reset', handler: resetHandler }]}
+          beforeActions={[
+            { title: 'reset', handler: resetHandler },
+            // { title: 'output', handler: outputHandler },
+          ]}
           afterActions={[
             { title: 'solve', url: `/play?custom=${gridToString(grid.cells)}` },
           ]}

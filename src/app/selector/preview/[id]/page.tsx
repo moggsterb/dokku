@@ -1,12 +1,14 @@
 'use client';
 
-import Puzzle from '@/components/Puzzle';
-import MainContainer from '@/components/MainContainer';
+import React from 'react';
+
 import { loadCells } from '@/utils/cell';
 import { EXAMPLES, LEVELS } from '@/utils/examples';
-import Control from '@/components/Control';
-import Portal from '@/components/Portal';
-import React from 'react';
+
+import MainContainer from '@/components/Layout/MainContainer';
+import Portal from '@/components/Layout/Portal';
+import Puzzle from '@/components/Sudoku/Puzzle';
+import Control from '@/components/Controls/Control';
 
 export default function Preview({
   params: { id },

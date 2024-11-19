@@ -1,10 +1,12 @@
+import { Dispatch } from 'react';
+
 import { GridActions } from '@/utils/grid';
 import { IGrid } from '@/utils/types';
-import { Dispatch } from 'react';
+
 import SolveController from './SolveController';
+import Portal from '../Layout/Portal';
 
 import styles from './SolveControls.module.scss';
-import Portal from './Portal';
 
 interface Props {
   grid: IGrid;
@@ -15,8 +17,6 @@ const SolveControls = ({
   grid: { gridStatus, displayMode, solveableByType },
   gridDispatch,
 }: Props) => {
-  // const [solveState, setSolveState] = useState<SolveType | undefined>();
-
   const scanAll = solveableByType['any'];
   const scanBlock = solveableByType['block'];
   const scanColumn = solveableByType['column'];

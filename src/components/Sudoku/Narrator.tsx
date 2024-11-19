@@ -1,10 +1,11 @@
+import React, { Dispatch } from 'react';
+
 import { GridActions } from '@/utils/grid';
 import { IGrid, SolveType } from '@/utils/types';
-import { Dispatch } from 'react';
+
+import Portal from '../Layout/Portal';
 
 import styles from './Narrator.module.scss';
-import Portal from './Portal';
-import React from 'react';
 
 interface Props {
   grid: IGrid;
