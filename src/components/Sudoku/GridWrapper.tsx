@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { ICell } from '@/utils/types';
+import { DisplayMode, GridStatus, ICell } from '@/utils/types';
 import useControl from '@/utils/hooks/useControl';
 
 import Grid from './Grid';
@@ -11,15 +11,15 @@ import CompleteControls from '../Controls/CompleteControls';
 import BuildControls from '../Controls/BuildControls';
 import SolveControls from '../Controls/SolveControls';
 
-import styles from './Puzzle.module.scss';
+import styles from './GridWrapper.module.scss';
 interface Props {
   initialCells: ICell[];
-  initialStatus: string; // builder, preview, play
+  initialStatus: GridStatus;
   showCandidates?: boolean;
   showHints?: boolean;
 }
 
-const Puzzle = ({
+const GridWrapper = ({
   initialCells,
   initialStatus,
   showCandidates = false,
@@ -32,21 +32,21 @@ const Puzzle = ({
     <div
       className={styles.wrapper}
       onClick={() => {
-        if (displayMode !== 'ready') {
+        if (displayMode !== DisplayMode.READY) {
           gridDispatch({ type: 'BLUR_CELL' });
         }
       }}
     >
-      {gridStatus === 'builder' && (
+      {gridStatus === GridStatus.BUILDER && (
         <BuildControls grid={grid} gridDispatch={gridDispatch} />
       )}
-      {(gridStatus === 'ready' || gridStatus === 'auto') && (
+      {(gridStatus === GridStatus.READY || gridStatus === GridStatus.AUTO) && (
         <>
           <SolveControls grid={grid} gridDispatch={gridDispatch} />
           <Narrator grid={grid} gridDispatch={gridDispatch} />
         </>
       )}
-      {gridStatus === 'complete' && (
+      {gridStatus === GridStatus.COMPLETE && (
         <CompleteControls
           grid={grid}
           gridDispatch={gridDispatch}
@@ -63,4 +63,4 @@ const Puzzle = ({
   );
 };
 
-export default Puzzle;
+export default GridWrapper;

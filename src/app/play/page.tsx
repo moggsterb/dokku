@@ -1,7 +1,8 @@
 import { customCells, loadCells } from '@/utils/cell';
 
 import MainContainer from '@/components/Layout/MainContainer';
-import Puzzle from '@/components/Sudoku/Puzzle';
+import Puzzle from '@/components/Sudoku/GridWrapper';
+import { GridStatus } from '@/utils/types';
 
 export default function Play({
   searchParams: { puzzle, custom },
@@ -13,7 +14,7 @@ export default function Play({
     <MainContainer>
       <Puzzle
         initialCells={cells}
-        initialStatus='auto'
+        initialStatus={GridStatus.AUTO}
         showCandidates={false}
         showHints={true}
       />

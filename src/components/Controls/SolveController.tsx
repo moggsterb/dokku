@@ -1,7 +1,7 @@
 import React, { Dispatch } from 'react';
 
 import { buildStyle } from '@/utils/helpers';
-import { SolveType } from '@/utils/types';
+import { DisplayMode, SolveType } from '@/utils/types';
 
 import { GridActions } from '@/utils/grid';
 
@@ -20,11 +20,11 @@ interface Props {
 }
 
 const TYPES = {
-  any: { displayMode: 'all_any' },
-  single: { displayMode: 'all_single' },
-  block: { displayMode: 'all_block' },
-  column: { displayMode: 'all_column' },
-  row: { displayMode: 'all_row' },
+  any: { displayMode: DisplayMode.ALL_ANY },
+  single: { displayMode: DisplayMode.ALL_SINGLE },
+  block: { displayMode: DisplayMode.ALL_BLOCK },
+  column: { displayMode: DisplayMode.ALL_COLUMN },
+  row: { displayMode: DisplayMode.ALL_ROW },
 };
 
 const SolveController = ({
@@ -62,7 +62,7 @@ const SolveController = ({
       });
       gridDispatch({
         type: 'UPDATE_MODE',
-        payload: { mode: 'ready' },
+        payload: { mode: DisplayMode.READY },
       });
     }
   };
@@ -71,7 +71,7 @@ const SolveController = ({
     e.stopPropagation();
     gridDispatch({
       type: 'UPDATE_MODE',
-      payload: { mode: 'ready' },
+      payload: { mode: DisplayMode.READY },
     });
     // setSolveState(undefined);
   };

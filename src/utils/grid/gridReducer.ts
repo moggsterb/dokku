@@ -1,37 +1,14 @@
-import { initialCells } from "./cell";
-import { isCellSolveable } from "./display";
-import { initialEnneads, updateEnneadsCounts } from "./ennead";
-import { updateCellCandidates } from "./solving/analysis";
-import { batchSolveCells, findScanningSolves, setCells } from "./solving/scanning";
-import { findSingleSolves } from "./solving/single";
-import { ICell, IEnneads, IGrid, IScanningSolveCell, ISingleSolveCell, IsSolveable, SolveableByType, SolveableCells, SolveType } from "./types"
-
-export const initialGrid = (startStatus: string, startCells: ICell[]): IGrid => {
-  return scanGrid({
-    gridStatus: startStatus,
-    displayMode: 'standard',
-    cells: startCells,
-    enneads: initialEnneads(),
-    solveableCells: [] as SolveableCells,
-    solveableByType: {
-      any: [],
-      block: [],
-      row: [],
-      column: [],
-      single: []
-    },
-    focusCellID: undefined,
-    activeCellID: undefined,
-    focusValue: undefined,
-    focusSolveable: false
-  })
-}
+import { initialCells } from "../cell";
+import { getDisplayModeForType, isCellSolveable } from "../display/cellDisplayState";
+import { setCells, batchSolveCells } from "../solving/scanning";
+import { ICell, SolveType, IGrid, IsSolveable, GridStatus, DisplayMode } from "../types";
+import scanGrid from "./scanGrid";
 
 export type GridActions =
   | { type: 'RESET_GRID' }
   | { type: 'RESTART_GRID', payload: { cells: ICell[] } }
-  | { type: 'UPDATE_MODE', payload: { mode: string; } }
-  | { type: 'UPDATE_STATUS', payload: { status: string; } }
+  | { type: 'UPDATE_MODE', payload: { mode: DisplayMode; } }
+  | { type: 'UPDATE_STATUS', payload: { status: GridStatus; } }
   | { type: 'SET_CELL', payload: { cellID: number, value: number, type: 'solved' | 'preset' } }
   | { type: 'RESET_CELL', payload: { cellID: number } }
   | { type: 'FOCUS_CELL', payload: { cellID: number, method?: SolveType } }
@@ -54,7 +31,7 @@ export const gridReducer = (state: IGrid, action: GridActions) => {
       return scanGrid({
         ...state,
         cells: [...action.payload.cells],
-        gridStatus: 'auto'
+        gridStatus: GridStatus.AUTO
       })
     }
     case 'UPDATE_MODE':
@@ -76,10 +53,8 @@ export const gridReducer = (state: IGrid, action: GridActions) => {
         focusValue: undefined,
         focusCellID: undefined,
         focusSolveable: false as IsSolveable,
-        displayMode: 'ready'
+        displayMode: DisplayMode.READY
       });
-
-
     case 'RESET_CELL':
       return scanGrid({
         ...state,
@@ -94,7 +69,7 @@ export const gridReducer = (state: IGrid, action: GridActions) => {
         focusValue: undefined,
         focusCellID: undefined,
         focusSolveable: false as IsSolveable,
-        displayMode: 'ready'
+        displayMode: DisplayMode.READY
       })
 
     case 'FOCUS_CELL':
@@ -105,14 +80,11 @@ export const gridReducer = (state: IGrid, action: GridActions) => {
           ...state,
           focusCellID: id,
           focusValue: v,
-          displayMode: 'scanning_value'
+          displayMode: DisplayMode.SCANNING_VALUE
         }
       }
       const solveable = isCellSolveable(state.solveableCells, id, action.payload.method || 'any', 'any')
-
-      const displayMode = !solveable
-        ? 'manual'
-        : `cell_${solveable.type}`
+      const displayMode = solveable ? getDisplayModeForType(solveable.type) : DisplayMode.MANUAL;
 
       return {
         ...state,
@@ -126,19 +98,19 @@ export const gridReducer = (state: IGrid, action: GridActions) => {
         focusValue: undefined,
         focusCellID: undefined,
         focusSolveable: false as IsSolveable,
-        displayMode: 'ready'
+        displayMode: DisplayMode.READY
       };
     case 'FOCUS_VALUE':
       return {
         ...state,
         focusValue: action.payload.value,
-        displayMode: 'scanning_value'
+        displayMode: DisplayMode.SCANNING_VALUE
       };
     case 'ACTIVATE_CELL':
       return {
         ...state,
         activeCellID: action.payload.cellID,
-        displayMode: 'active_cell'
+        displayMode: DisplayMode.ACTIVE_CELL
       }
     case 'SOLVE_CELLS':
       return scanGrid({
@@ -156,67 +128,4 @@ export const gridReducer = (state: IGrid, action: GridActions) => {
   }
 }
 
-const scanGrid = (grid: IGrid): IGrid => {
-  const cells = updateCellCandidates(grid.cells, 1);
-  const enneads = updateEnneadsCounts(grid.enneads, cells);
-  const solveableCells = findSolves(cells, enneads);
-  const solveableByType = summariseSolves(solveableCells);
-
-  const complete = cells.filter((item) => item.status === 'unsolved').length === 0;
-
-  // console.log({ complete })
-
-  return {
-    ...grid,
-    ...(complete && { gridStatus: 'complete', displayMode: 'complete' }),
-    cells,
-    enneads,
-    solveableCells,
-    solveableByType
-  }
-}
-
-const findSolves = (cells: ICell[], enneads: IEnneads): SolveableCells => {
-  const x = findScanningSolves(cells, enneads);
-  const y = findSingleSolves(cells);
-  const solves = [
-    ...findScanningSolves(cells, enneads),
-    ...findSingleSolves(cells)
-  ];
-  return solves;
-}
-
-const summariseSolves = (solveableCells: SolveableCells) => {
-  let byType: SolveableByType = {
-    any: [],
-    block: [],
-    row: [],
-    column: [],
-    single: []
-  };
-  solveableCells.forEach(({ method, cellID, solution }) => {
-    byType[method].push({ cellID, solution });
-    if (!byType['any'].find(solve => solve.cellID === cellID)) {
-      byType['any'].push({ cellID, solution });
-    }
-  })
-
-  return byType;
-}
-
-export const filterSolveableCells = (solveableCells: SolveableCells, method: string) => {
-  return solveableCells
-    .filter((cell) => cell.method === method)
-    .map(({ cellID, solution }) => {
-      return { cellID, solution };
-    });
-}
-
-export const gridToString = (cells: ICell[]) => {
-  return cells.map((item) => (item.value ? item.value : '-')).join('');
-};
-
-export const gridToChunks = (cells: ICell[]) => {
-  const str = gridToString(cells);
-  return str.match(/.{1,9}/g);
-};
+export default gridReducer;

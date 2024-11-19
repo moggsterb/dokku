@@ -12,6 +12,7 @@ import AnimReveal from '@/components/Layout/AnimReveal';
 import Portal from '@/components/Layout/Portal';
 import Grid from '@/components/Sudoku/Grid';
 import Control from '@/components/Controls/Control';
+import { GridStatus } from '@/utils/types';
 
 export default function Selector({
   params: { level },
@@ -53,7 +54,10 @@ export default function Selector({
                     }}
                   >
                     <Grid
-                      grid={initialGrid('selector', loadCells(grid.id))}
+                      grid={initialGrid(
+                        GridStatus.SELECTOR,
+                        loadCells(grid.id)
+                      )}
                       showHints={false}
                     />
                   </div>

@@ -32,7 +32,6 @@ export const initialCells = (): ICell[] => {
 export const loadCells = (id: number): ICell[] => {
   const data = EXAMPLES.find(item => item.id === id);
   const grid = data?.grid.join('');
-  // console.log({ grid })
   return customCells(grid);
 }
 

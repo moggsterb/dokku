@@ -1,9 +1,9 @@
 import { useEffect, useReducer, useState } from "react";
-import { ICell } from "../types";
+import { GridStatus, ICell } from "../types";
 import { gridReducer, initialGrid } from "../grid";
 import { initialCells } from "../cell";
 
-const useControl = (initialStatus: string, gridCells: ICell[]) => {
+const useControl = (initialStatus: GridStatus, gridCells: ICell[]) => {
   const outstandingCells: { cellID: number, value: number }[] = gridCells
     .filter(cell => cell.status === 'preset')
     .map(cell => { return { cellID: cell.id, value: cell.value || 0 } })
@@ -13,7 +13,7 @@ const useControl = (initialStatus: string, gridCells: ICell[]) => {
   const [count, setCount] = useState(0);
   const [grid, gridDispatch] = useReducer(
     gridReducer,
-    initialGrid(initialStatus, initialStatus === 'auto' ? initialCells() : gridCells)
+    initialGrid(initialStatus, initialStatus === GridStatus.AUTO ? initialCells() : gridCells)
   );
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const useControl = (initialStatus: string, gridCells: ICell[]) => {
     const interval = setInterval(() => {
 
 
-      if (grid.gridStatus === 'auto') {
+      if (grid.gridStatus === GridStatus.AUTO) {
         setCount(count + 1);
         if (outstanding.length > 0) {
           gridDispatch({
@@ -39,7 +39,7 @@ const useControl = (initialStatus: string, gridCells: ICell[]) => {
           gridDispatch({
             type: 'UPDATE_STATUS',
             payload: {
-              status: 'ready',
+              status: GridStatus.READY,
             },
           });
 

@@ -7,8 +7,9 @@ import { EXAMPLES, LEVELS } from '@/utils/examples';
 
 import MainContainer from '@/components/Layout/MainContainer';
 import Portal from '@/components/Layout/Portal';
-import Puzzle from '@/components/Sudoku/Puzzle';
+import Puzzle from '@/components/Sudoku/GridWrapper';
 import Control from '@/components/Controls/Control';
+import { GridStatus } from '@/utils/types';
 
 export default function Preview({
   params: { id },
@@ -21,7 +22,10 @@ export default function Preview({
   return (
     <>
       <MainContainer>
-        <Puzzle initialCells={loadCells(Number(id))} initialStatus='preview' />
+        <Puzzle
+          initialCells={loadCells(Number(id))}
+          initialStatus={GridStatus.PREVIEW}
+        />
       </MainContainer>
 
       <Portal type='header'>

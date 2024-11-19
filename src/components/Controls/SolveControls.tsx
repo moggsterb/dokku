@@ -1,7 +1,7 @@
 import { Dispatch } from 'react';
 
 import { GridActions } from '@/utils/grid';
-import { IGrid } from '@/utils/types';
+import { GridStatus, IGrid } from '@/utils/types';
 
 import SolveController from './SolveController';
 import Portal from '../Layout/Portal';
@@ -26,40 +26,42 @@ const SolveControls = ({
   return (
     <Portal type='footer'>
       <div className={styles.wrapper}>
-        {gridDispatch && (gridStatus === 'ready' || gridStatus === 'auto') && (
-          <div className={styles.solvers}>
-            <SolveController
-              type={'any'}
-              gridDispatch={gridDispatch}
-              cellIDs={scanAll}
-              displayMode={displayMode}
-            />
-            <SolveController
-              type={'block'}
-              gridDispatch={gridDispatch}
-              cellIDs={scanBlock}
-              displayMode={displayMode}
-            />
-            <SolveController
-              type={'column'}
-              gridDispatch={gridDispatch}
-              cellIDs={scanColumn}
-              displayMode={displayMode}
-            />
-            <SolveController
-              type={'row'}
-              gridDispatch={gridDispatch}
-              cellIDs={scanRow}
-              displayMode={displayMode}
-            />
-            <SolveController
-              type={'single'}
-              gridDispatch={gridDispatch}
-              cellIDs={singles}
-              displayMode={displayMode}
-            />
-          </div>
-        )}
+        {gridDispatch &&
+          (gridStatus === GridStatus.READY ||
+            gridStatus === GridStatus.AUTO) && (
+            <div className={styles.solvers}>
+              <SolveController
+                type={'any'}
+                gridDispatch={gridDispatch}
+                cellIDs={scanAll}
+                displayMode={displayMode}
+              />
+              <SolveController
+                type={'block'}
+                gridDispatch={gridDispatch}
+                cellIDs={scanBlock}
+                displayMode={displayMode}
+              />
+              <SolveController
+                type={'column'}
+                gridDispatch={gridDispatch}
+                cellIDs={scanColumn}
+                displayMode={displayMode}
+              />
+              <SolveController
+                type={'row'}
+                gridDispatch={gridDispatch}
+                cellIDs={scanRow}
+                displayMode={displayMode}
+              />
+              <SolveController
+                type={'single'}
+                gridDispatch={gridDispatch}
+                cellIDs={singles}
+                displayMode={displayMode}
+              />
+            </div>
+          )}
       </div>
     </Portal>
   );

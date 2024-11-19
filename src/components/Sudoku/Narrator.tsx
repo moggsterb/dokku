@@ -1,7 +1,7 @@
 import React, { Dispatch } from 'react';
 
 import { GridActions } from '@/utils/grid';
-import { IGrid, SolveType } from '@/utils/types';
+import { DisplayMode, IGrid, SolveType } from '@/utils/types';
 
 import Portal from '../Layout/Portal';
 
@@ -33,7 +33,7 @@ const Narrator = ({
 
   const buildMessage = () => {
     switch (displayMode) {
-      case 'ready':
+      case DisplayMode.READY:
         const unsolvedCells = cells.filter(
           (item) => item.status === 'unsolved'
         ).length;
@@ -53,7 +53,7 @@ const Narrator = ({
           </p>
         );
 
-      case 'manual':
+      case DisplayMode.MANUAL:
         if (!focusCellObj) return;
         const options = focusCellObj.candidates.filter(
           (item) => !item.rejected
@@ -68,7 +68,7 @@ const Narrator = ({
           </p>
         );
 
-      case 'all_any':
+      case DisplayMode.ALL_ANY:
         const any = solveableByType['any'];
         return (
           <p className={styles.para}>
@@ -84,10 +84,10 @@ const Narrator = ({
             </span>
           </p>
         );
-      case 'all_block':
-      case 'all_column':
-      case 'all_row':
-      case 'all_single':
+      case DisplayMode.ALL_BLOCK:
+      case DisplayMode.ALL_COLUMN:
+      case DisplayMode.ALL_ROW:
+      case DisplayMode.ALL_SINGLE:
         const type = displayMode.substring(4) as SolveType;
         const solves = solveableByType[type];
         return (
@@ -105,10 +105,10 @@ const Narrator = ({
           </p>
         );
 
-      case 'cell_block':
-      case 'cell_column':
-      case 'cell_row':
-      case 'cell_single':
+      case DisplayMode.CELL_BLOCK:
+      case DisplayMode.CELL_COLUMN:
+      case DisplayMode.CELL_ROW:
+      case DisplayMode.CELL_SINGLE:
         if (!focusSolveable) return;
         return (
           <p className={styles.para}>

@@ -1,7 +1,18 @@
-import { cellsInEnnead } from "./cell";
-import { takenCellValues, takenInEnnead } from "./solving/analysis";
-import { EnneadType, ICell, IEnneads, IsSolveable, SolveableCells, SolveType } from "./types";
+import { cellsInEnnead } from "../cell";
+import { takenInEnnead } from "../solving/analysis";
+import { ICell, IsSolveable, SolveType, IEnneads, SolveableCells, EnneadType, DisplayMode, GridStatus } from "../types";
 
+export interface IDisplayCellBefore {
+  cells: ICell[],
+  enneads: IEnneads,
+  cell: ICell,
+  gridStatus: string,
+  displayMode: DisplayMode,
+  focusCellObj: ICell | undefined,
+  focusValue: number | undefined,
+  solveableCells: SolveableCells,
+  focusSolveable: IsSolveable
+}
 
 export interface IDisplayCellProps {
   id?: number,
@@ -22,24 +33,16 @@ export interface IDisplayCellProps {
   inBarredColumn: boolean;
   isSolveable: IsSolveable;
   allSolveMethods: SolveType[];
-  // scanEnneadTypes: EnneadType[];
 
   focusCellID: number | undefined;
   gridStatus: string;
-  displayMode: string;
+  displayMode: DisplayMode;
 }
 
-export const displayCell = (
-  cells: ICell[],
-  enneads: IEnneads,
-  cell: ICell,
-  gridStatus: string,
-  displayMode: string,
-  focusCellObj: ICell | undefined,
-  focusValue: number | undefined,
-  solveableCells: SolveableCells,
-  focusSolveable: IsSolveable
-): IDisplayCellProps => {
+export const enhanceCellForDisplay = ({
+  cells, enneads, cell, gridStatus, displayMode, focusCellObj, focusValue, solveableCells, focusSolveable
+}: IDisplayCellBefore)
+  : IDisplayCellProps => {
 
   const state: IDisplayCellProps = {
     hasValue: cell.value !== undefined,
@@ -53,9 +56,9 @@ export const displayCell = (
     inBarredColumn: false,
     inBarredRow: false,
     isSolveable: false,
-    isComplete: gridStatus === 'complete',
+    isComplete: gridStatus === GridStatus.COMPLETE,
     allSolveMethods: allSolveTypes(solveableCells, cell.id),
-    canActivate: (gridStatus !== 'preview' && gridStatus !== 'selector' && cell.status !== 'preset') || gridStatus === 'builder',
+    canActivate: (gridStatus !== GridStatus.PREVIEW && gridStatus !== GridStatus.SELECTOR && cell.status !== 'preset') || gridStatus === GridStatus.BUILDER,
     focusCellID: focusCellObj?.id,
     gridStatus,
     displayMode,
@@ -68,7 +71,7 @@ export const displayCell = (
       // when a cell without a value is clicked
       // - the cell and candidate grid is scaled up 
       // - influencing enneads are displayed
-      case 'manual':
+      case DisplayMode.MANUAL:
         return {
           ...state,
           isActive: cell.id === focusCellObj?.id,
@@ -78,38 +81,38 @@ export const displayCell = (
           hasFocusedValue: cell.value !== undefined && cell.value === focusValue,
         }
       // highlight all cells that are solveable (any method)
-      case 'all_any':
+      case DisplayMode.ALL_ANY:
         return {
           ...state,
           isSolveable: isCellSolveable(solveableCells, cell.id, 'any', 'any'),
         }
       // highlight all cells that are solveable by SINGLE method
-      case 'all_single':
+      case DisplayMode.ALL_SINGLE:
         return {
           ...state,
           isSolveable: isCellSolveable(solveableCells, cell.id, 'single', 'any')
         }
       // highlight all cells that are solveable by BLOCK SCANNING method
-      case 'all_block':
+      case DisplayMode.ALL_BLOCK:
         return {
           ...state,
           isSolveable: isCellSolveable(solveableCells, cell.id, 'block', 'any')
         }
       // highlight all cells that are solveable by COLUMN SCANNING method
-      case 'all_column':
+      case DisplayMode.ALL_COLUMN:
         return {
           ...state,
           isSolveable: isCellSolveable(solveableCells, cell.id, 'column', 'any')
         }
       // highlight all cells that are solveable by ROW SCANNING method
-      case 'all_row':
+      case DisplayMode.ALL_ROW:
         return {
           ...state,
           isSolveable: isCellSolveable(solveableCells, cell.id, 'row', 'any')
         }
 
       // highlight a cell where solve method is single - and its influencing cells
-      case 'cell_single':
+      case DisplayMode.CELL_SINGLE:
         return {
           ...state,
           isActive: cell.id === focusCellObj?.id,
@@ -120,9 +123,9 @@ export const displayCell = (
         }
 
       // highlight a cell where solve method is block/column/row - and its barring cells
-      case 'cell_block':
-      case 'cell_column':
-      case 'cell_row':
+      case DisplayMode.CELL_BLOCK:
+      case DisplayMode.CELL_COLUMN:
+      case DisplayMode.CELL_ROW:
 
         // && cell.id !== focusCellObj?.id
         if (focusSolveable && focusCellObj && focusSolveable.scanEnneadType) {
@@ -162,7 +165,7 @@ export const displayCell = (
           isSolveable: cell.id === focusCellObj?.id && isCellSolveable(solveableCells, cell.id, 'any', focusValue)
         }
 
-      case 'scanning_value':
+      case DisplayMode.SCANNING_VALUE:
         return {
           ...state,
           inBarredBlock: (state.hasValue && focusValue !== undefined) || takenInEnnead(cells, 'block', cell.block, focusValue),
@@ -199,6 +202,23 @@ export const isCellSolveable = (
   const scanEnneadType = solves[0].method !== 'single' ? solves[0].method : undefined;
 
   return { type: solves[0].method, value: solves[0].solution, scanEnneadType }
+}
+
+export const getDisplayModeForType = (type: SolveType) => {
+
+
+  switch (type) {
+    case 'block':
+      return DisplayMode.CELL_BLOCK;
+    case 'row':
+      return DisplayMode.CELL_ROW;
+    case 'column':
+      return DisplayMode.CELL_COLUMN;
+    case 'single':
+      return DisplayMode.CELL_SINGLE;
+    default:
+      return DisplayMode.CELL_ANY;
+  }
 }
 
 export const allSolveTypes = (solveableCells: SolveableCells, cellID: number) => {

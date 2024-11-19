@@ -4,9 +4,8 @@ import React, { useEffect, useState } from 'react';
 
 import { isBrowser } from 'react-device-detect';
 
-import { IDisplayCellProps } from '@/utils/display';
 import { buildStyle } from '@/utils/helpers';
-import { SolveType } from '@/utils/types';
+import { GridStatus, SolveType } from '@/utils/types';
 
 import Candidate from './Candidate';
 
@@ -18,6 +17,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './Cell.module.scss';
+import { IDisplayCellProps } from '@/utils/display/cellDisplayState';
 
 interface Props {
   displayCell: IDisplayCellProps;
@@ -125,7 +125,7 @@ const Cell = ({
               )}
               canSet={
                 (isActive && highlightSolve === value) ||
-                gridStatus === 'builder'
+                gridStatus === GridStatus.BUILDER
               }
               clickHandler={setHandler}
             />
@@ -146,7 +146,10 @@ const Cell = ({
   const cellStyle = () => {
     return buildStyle([
       { style: styles.cell, condition: true },
-      { style: styles.inSelector, condition: gridStatus === 'selector' },
+      {
+        style: styles.inSelector,
+        condition: gridStatus === GridStatus.SELECTOR,
+      },
       { style: styles.topGutter, condition: row === 3 || row === 6 },
       { style: styles.rightGutter, condition: column === 3 || column === 6 },
     ]);
@@ -188,7 +191,9 @@ const Cell = ({
       {
         style: styles.hoverable,
         condition:
-          isBrowser && cell.status !== 'preset' && gridStatus === 'ready', // && canActivate && !isActive,
+          isBrowser &&
+          cell.status !== 'preset' &&
+          gridStatus === GridStatus.READY, // && canActivate && !isActive,
       },
       {
         style: styles.singleSolve,

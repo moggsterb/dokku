@@ -2,13 +2,16 @@ import { Dispatch } from 'react';
 
 import { isBrowser } from 'react-device-detect';
 
-import { IGrid, SolveType } from '@/utils/types';
-import { displayCell, isCellSolveable } from '@/utils/display';
+import { GridStatus, IGrid, SolveType } from '@/utils/types';
 import { GridActions } from '@/utils/grid';
 
 import Cell from './Cell';
 
 import styles from './Grid.module.scss';
+import {
+  enhanceCellForDisplay,
+  isCellSolveable,
+} from '@/utils/display/cellDisplayState';
 
 interface Props {
   grid: IGrid;
@@ -30,8 +33,8 @@ const Grid = ({ grid, showCandidates, showHints, gridDispatch }: Props) => {
   } = grid;
 
   const handleCellClick = (cellID: number) => {
-    if (!gridDispatch || gridStatus === 'preview') return;
-    if (gridStatus === 'builder' || gridStatus === 'ready') {
+    if (!gridDispatch || gridStatus === GridStatus.PREVIEW) return;
+    if (gridStatus === GridStatus.BUILDER || gridStatus === GridStatus.READY) {
       if (!cells[cellID].value) {
         if (cellID !== focusCellID) {
           gridDispatch({ type: 'FOCUS_CELL', payload: { cellID } });
@@ -61,13 +64,13 @@ const Grid = ({ grid, showCandidates, showHints, gridDispatch }: Props) => {
   };
 
   const handleMethodClick = (cellID: number, method: SolveType) => {
-    if (!gridDispatch || gridStatus === 'preview') return;
+    if (!gridDispatch || gridStatus === GridStatus.PREVIEW) return;
     gridDispatch({ type: 'FOCUS_CELL', payload: { cellID, method } });
   };
 
   const handleCandidateClick = (cellID: number, value: number) => {
-    if (!gridDispatch || gridStatus === 'preview') return;
-    const type = gridStatus === 'builder' ? 'preset' : 'solved';
+    if (!gridDispatch || gridStatus === GridStatus.PREVIEW) return;
+    const type = gridStatus === GridStatus.BUILDER ? 'preset' : 'solved';
     gridDispatch({ type: 'SET_CELL', payload: { cellID, value, type } });
   };
 
@@ -76,7 +79,7 @@ const Grid = ({ grid, showCandidates, showHints, gridDispatch }: Props) => {
       focusCellID !== undefined ? cells[focusCellID] : undefined;
 
     return cells.map((cell, index) => {
-      const dc = displayCell(
+      const dc = enhanceCellForDisplay({
         cells,
         enneads,
         cell,
@@ -85,8 +88,8 @@ const Grid = ({ grid, showCandidates, showHints, gridDispatch }: Props) => {
         focusCellObj,
         focusValue,
         solveableCells,
-        focusSolveable
-      );
+        focusSolveable,
+      });
       return (
         <Cell
           key={index}
@@ -102,7 +105,7 @@ const Grid = ({ grid, showCandidates, showHints, gridDispatch }: Props) => {
   };
 
   const gridStyle = `${styles.grid} ${
-    gridStatus === 'selector'
+    gridStatus === GridStatus.SELECTOR
       ? `${styles.gridSelector} ${isBrowser ? styles.gridHoverable : ''}`
       : ''
   }`;
