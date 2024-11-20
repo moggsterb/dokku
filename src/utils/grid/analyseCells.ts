@@ -35,8 +35,6 @@ export const analyseCells = (
   });
 }
 
-
-
 const analyseCell = (
   cells: Cell[],
   enneads: Enneads,

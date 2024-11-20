@@ -1,9 +1,9 @@
 import { initialEnneads } from "../ennead";
 import { DisplayMode, GridStatus, Cell, Grid, SolveableCells } from "../types";
-import scanGrid from "./scanGrid";
+import { analyseGrid } from "./analyseGrid";
 
 const initialGrid = (startStatus: GridStatus, startCells: Cell[]): Grid => {
-  return scanGrid({
+  return analyseGrid({
     gridStatus: startStatus,
     displayMode: DisplayMode.READY,
     cells: startCells,

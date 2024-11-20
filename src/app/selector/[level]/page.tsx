@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 
 import { initialGrid } from '@/utils/grid';
 import { loadCells } from '@/utils/cell';
-import { EXAMPLES, LEVELS } from '@/utils/examples';
+import { EXAMPLES, LEVELS } from '@/data/examples';
 
 import MainContainer from '@/components/Layout/MainContainer';
 import AnimReveal from '@/components/Layout/AnimReveal';

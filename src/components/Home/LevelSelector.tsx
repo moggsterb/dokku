@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import AnimReveal from '../Layout/AnimReveal';
 
-import { LEVELS } from '@/utils/examples';
+import { LEVELS } from '@/data/examples';
 import styles from './LevelSelector.module.scss';
 
 const LevelSelector = () => {

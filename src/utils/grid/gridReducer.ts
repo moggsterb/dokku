@@ -1,8 +1,8 @@
 import { initialCells } from "../cell";
-import { getDisplayModeForType, isCellSolveable } from "../display/analyseCells";
+import { getDisplayModeForType, isCellSolveable } from "./analyseCells";
 import { setCells, batchSolveCells } from "../solving/scanning";
 import { Cell, SolveType, Grid, IsSolveable, GridStatus, DisplayMode } from "../types";
-import scanGrid from "./scanGrid";
+import { analyseGrid } from "./analyseGrid";
 
 export type GridActions =
   | { type: 'RESET_GRID' }
@@ -14,12 +14,11 @@ export type GridActions =
   | { type: 'FOCUS_CELL', payload: { cellID: number, method?: SolveType } }
   | { type: 'BLUR_CELL' }
   | { type: 'FOCUS_VALUE', payload: { value: number | undefined } }
-  // | { type: 'ACTIVATE_CELL', payload: { cellID: number } }
   | { type: 'SOLVE_CELLS', payload: { cellIDs: number[], value: number } }
   | { type: 'BATCH_SOLVE', payload: { items: { cellID: number, solution: number }[] } }
 
 export const gridReducer = (state: Grid, action: GridActions) => {
-  return scanGrid(updateState(state, action))
+  return analyseGrid(updateState(state, action))
 }
 
 export const updateState = (state: Grid, action: GridActions) => {

@@ -8,7 +8,7 @@ import { GridActions } from '@/utils/grid';
 import DokkuCell from './DokkuCell';
 
 import styles from './DokkuGrid.module.scss';
-import { isCellSolveable } from '@/utils/display/analyseCells';
+import { isCellSolveable } from '@/utils/grid/analyseCells';
 
 interface Props {
   grid: Grid;
@@ -24,8 +24,6 @@ const DokkuGrid = ({
   gridDispatch,
 }: Props) => {
   const { cells, gridStatus, focusCellID, solveableCells } = grid;
-
-  console.log({ grid });
 
   const handleCellClick = (cellID: number) => {
     if (!gridDispatch || gridStatus === GridStatus.PREVIEW) return;

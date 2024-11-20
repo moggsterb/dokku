@@ -3,7 +3,7 @@
 import React from 'react';
 
 import { loadCells } from '@/utils/cell';
-import { EXAMPLES, LEVELS } from '@/utils/examples';
+import { EXAMPLES, LEVELS } from '@/data/examples';
 
 import MainContainer from '@/components/Layout/MainContainer';
 import Portal from '@/components/Layout/Portal';

@@ -1,18 +1,16 @@
 
-import { analyseCells } from "../display/analyseCells";
+import { analyseCells } from "./analyseCells";
 import { updateEnneadsCounts } from "../ennead";
 import { updateCellCandidates } from "../solving/analysis";
 import { findScanningSolves } from "../solving/scanning";
 import { findSingleSolves } from "../solving/single";
 import { Grid, Cell, Enneads, SolveableCells, SolveableCellsByType, DisplayMode, GridStatus } from "../types";
 
-const scanGrid = (grid: Grid): Grid => {
+export const analyseGrid = (grid: Grid): Grid => {
   const cells = updateCellCandidates(grid.cells, 1);
   const enneads = updateEnneadsCounts(grid.enneads, cells);
   const solveableCells = findSolves(cells, enneads);
   const solveableCellsByType = summariseSolves(solveableCells);
-
-  console.log(grid.displayMode)
 
   const analysedCells = analyseCells(
     cells, enneads, grid.gridStatus, grid.displayMode, solveableCells, grid.focusCellID, grid.focusValue, grid.focusSolveable
@@ -57,5 +55,3 @@ const summariseSolves = (solveableCells: SolveableCells) => {
 
   return byType;
 }
-
-export default scanGrid;

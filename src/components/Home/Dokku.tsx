@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { DOKKU } from '@/utils/dokku';
+import { DOKKU } from '@/data/dokku';
 
 import styles from './Dokku.module.scss';
 
