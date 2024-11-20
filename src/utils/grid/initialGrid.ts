@@ -16,9 +16,7 @@ const initialGrid = (startStatus: GridStatus, startCells: Cell[]): Grid => {
       column: [],
       single: []
     },
-    focusCellID: undefined,
-    focusValue: undefined,
-    focusSolveable: false
+    activeCellID: undefined,
   })
 }
 

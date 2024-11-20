@@ -13,7 +13,6 @@ export type GridActions =
   | { type: 'RESET_CELL', payload: { cellID: number } }
   | { type: 'FOCUS_CELL', payload: { cellID: number, method?: SolveType } }
   | { type: 'BLUR_CELL' }
-  | { type: 'FOCUS_VALUE', payload: { value: number | undefined } }
   | { type: 'SOLVE_CELLS', payload: { cellIDs: number[], value: number } }
   | { type: 'BATCH_SOLVE', payload: { items: { cellID: number, solution: number }[] } }
 
@@ -41,7 +40,7 @@ export const updateState = (state: Grid, action: GridActions) => {
         ...state,
         displayMode: action.payload.mode,
         focusValue: undefined,
-        focusCellID: undefined,
+        activeCellID: undefined,
       }
     case 'UPDATE_STATUS':
       return {
@@ -52,9 +51,7 @@ export const updateState = (state: Grid, action: GridActions) => {
       return {
         ...state,
         cells: setCells([...state.cells], [action.payload.cellID], action.payload.value, action.payload.type),
-        focusValue: undefined,
-        focusCellID: undefined,
-        focusSolveable: false as IsSolveable,
+        activeCellID: undefined,
         displayMode: DisplayMode.READY
       };
     case 'RESET_CELL':
@@ -68,9 +65,7 @@ export const updateState = (state: Grid, action: GridActions) => {
             }),
           }
         }),
-        focusValue: undefined,
-        focusCellID: undefined,
-        focusSolveable: false as IsSolveable,
+        activeCellID: undefined,
         displayMode: DisplayMode.READY
       }
 
@@ -80,8 +75,7 @@ export const updateState = (state: Grid, action: GridActions) => {
       if (v) {
         return {
           ...state,
-          focusCellID: id,
-          focusValue: v,
+          activeCellID: id,
           displayMode: DisplayMode.SCANNING_VALUE
         }
       }
@@ -90,25 +84,15 @@ export const updateState = (state: Grid, action: GridActions) => {
 
       return {
         ...state,
-        focusCellID: id,
-        focusSolveable: solveable,
+        activeCellID: id,
         displayMode
       };
     case 'BLUR_CELL':
       return {
         ...state,
-        focusValue: undefined,
-        focusCellID: undefined,
-        focusSolveable: false as IsSolveable,
+        activeCellID: undefined,
         displayMode: DisplayMode.READY
       };
-    case 'FOCUS_VALUE':
-      return {
-        ...state,
-        focusValue: action.payload.value,
-        displayMode: DisplayMode.SCANNING_VALUE
-      };
-
     case 'SOLVE_CELLS':
       return {
         ...state,

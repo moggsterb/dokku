@@ -23,13 +23,13 @@ const DokkuGrid = ({
   showHints,
   gridDispatch,
 }: Props) => {
-  const { cells, gridStatus, focusCellID, solveableCells } = grid;
+  const { cells, gridStatus, activeCellID, solveableCells } = grid;
 
   const handleCellClick = (cellID: number) => {
     if (!gridDispatch || gridStatus === GridStatus.PREVIEW) return;
     if (gridStatus === GridStatus.BUILDER || gridStatus === GridStatus.READY) {
       if (!cells[cellID].value) {
-        if (cellID !== focusCellID) {
+        if (cellID !== activeCellID) {
           gridDispatch({ type: 'FOCUS_CELL', payload: { cellID } });
         } else {
           gridDispatch({ type: 'BLUR_CELL' });

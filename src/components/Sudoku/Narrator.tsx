@@ -6,6 +6,10 @@ import { DisplayMode, Grid, SolveType } from '@/utils/types';
 import Portal from '../Layout/Portal';
 
 import styles from './Narrator.module.scss';
+import {
+  getTypeForDisplayMode,
+  isCellSolveable,
+} from '@/utils/grid/analyseCells';
 
 interface Props {
   grid: Grid;
@@ -15,15 +19,15 @@ interface Props {
 const Narrator = ({
   grid: {
     cells,
-    focusCellID,
-    focusSolveable,
+    activeCellID,
     displayMode,
+    solveableCells,
     solveableCellsByType,
   },
   gridDispatch,
 }: Props) => {
   const focusCellObj =
-    focusCellID !== undefined ? cells[focusCellID] : undefined;
+    activeCellID !== undefined ? cells[activeCellID] : undefined;
 
   const pluralize = (count: number, noun: string) => {
     return `${count} ${noun}${count !== 1 ? 's' : ''}`;
@@ -115,6 +119,14 @@ const Narrator = ({
       case DisplayMode.CELL_COLUMN:
       case DisplayMode.CELL_ROW:
       case DisplayMode.CELL_SINGLE:
+        const focusSolveable = activeCellID
+          ? isCellSolveable(
+              solveableCells,
+              activeCellID,
+              getTypeForDisplayMode(displayMode) || 'any',
+              'any'
+            )
+          : false;
         if (!focusSolveable) return;
         return (
           <p className={styles.para}>

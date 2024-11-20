@@ -6,7 +6,7 @@ export const initialAnalysis = (
   gridStatus: GridStatus,
   displayMode: DisplayMode,
   cellStatus: string,
-  focusCellID: number | undefined,
+  activeCellID: number | undefined,
   allSolveMethods: SolveType[]
 ): CellAnalysis => {
   return {
@@ -31,7 +31,7 @@ export const initialAnalysis = (
     isComplete: gridStatus === GridStatus.COMPLETE,
     allSolveMethods,
     canActivate: (gridStatus !== GridStatus.PREVIEW && gridStatus !== GridStatus.SELECTOR && cellStatus !== 'preset') || gridStatus === GridStatus.BUILDER,
-    focusCellID,
+    activeCellID,
     gridStatus,
     displayMode,
   }

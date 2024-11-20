@@ -33,7 +33,7 @@ export interface CellAnalysis {
 
   allSolveMethods: SolveType[];
 
-  focusCellID: number | undefined;
+  activeCellID: number | undefined;
   gridStatus: string;
   displayMode: DisplayMode;
 }

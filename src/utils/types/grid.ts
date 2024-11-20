@@ -21,7 +21,5 @@ export interface Grid {
   solveableCells: SolveableCells;
   solveableCellsByType: SolveableCellsByType;
 
-  focusCellID: number | undefined;
-  focusValue: number | undefined;
-  focusSolveable: IsSolveable;
+  activeCellID: number | undefined;
 }

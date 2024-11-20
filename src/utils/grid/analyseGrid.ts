@@ -1,5 +1,5 @@
 
-import { analyseCells } from "./analyseCells";
+import { analyseCells, getTypeForDisplayMode, isCellSolveable } from "./analyseCells";
 import { updateEnneadsCounts } from "../ennead";
 import { updateCellCandidates } from "../solving/analysis";
 import { findScanningSolves } from "../solving/scanning";
@@ -11,9 +11,19 @@ export const analyseGrid = (grid: Grid): Grid => {
   const enneads = updateEnneadsCounts(grid.enneads, cells);
   const solveableCells = findSolves(cells, enneads);
   const solveableCellsByType = summariseSolves(solveableCells);
+  const { activeCellID } = grid;
+
+  const activeCell = activeCellID ? cells[activeCellID] : undefined;
+  const activeSolveable = activeCellID ? isCellSolveable(solveableCells, activeCellID, getTypeForDisplayMode(grid.displayMode) || 'any', 'any') : false;
 
   const analysedCells = analyseCells(
-    cells, enneads, grid.gridStatus, grid.displayMode, solveableCells, grid.focusCellID, grid.focusValue, grid.focusSolveable
+    cells,
+    enneads,
+    grid.gridStatus,
+    grid.displayMode,
+    solveableCells,
+    activeCell,
+    activeSolveable
   )
 
   const complete = cells.filter((item) => item.status === 'unsolved').length === 0;

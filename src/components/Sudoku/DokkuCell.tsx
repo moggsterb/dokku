@@ -46,7 +46,7 @@ const DokkuCell = ({
   const { id, status, value, row, column, candidates } = cell;
 
   const {
-    focusCellID,
+    activeCellID,
     gridStatus,
     displayMode,
     hasValue,
@@ -78,15 +78,15 @@ const DokkuCell = ({
     isBrowser && cell.status !== 'preset' && gridStatus === GridStatus.READY;
 
   const animRequired =
-    (value !== undefined || id === focusCellID) &&
+    (value !== undefined || id === activeCellID) &&
     displayMode === 'cell_single' &&
     (inConnectedBlock || inConnectedColumn || inConnectedRow);
 
   useEffect(() => {
-    if (animID !== focusCellID) {
-      setAnimID(animRequired ? focusCellID : undefined);
+    if (animID !== activeCellID) {
+      setAnimID(animRequired ? activeCellID : undefined);
     }
-  }, [focusCellID, animID, animRequired]);
+  }, [activeCellID, animID, animRequired]);
 
   const renderCell = () => {
     if (hasValue) return <span>{value}</span>;
@@ -199,7 +199,7 @@ const DokkuCell = ({
       return {
         animationDelay: `${Number(value - 1)}s`,
       };
-    } else if (animID && animID === focusCellID && value) {
+    } else if (animID && animID === activeCellID && value) {
       return {
         animationName: name,
         animationDuration: '5s',
