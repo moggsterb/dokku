@@ -72,44 +72,56 @@ const analyseCell = (
         }
       // highlight all cells that are solveable (any method)
       case DisplayMode.ALL_ANY:
+        const isSolveableAny = isCellSolveable(solveableCells, cell.id, 'any', 'any')
         return {
           ...state,
-          isSolveable: isCellSolveable(solveableCells, cell.id, 'any', 'any'),
+          isSolveable: isSolveableAny,
+          isSolveableAny: isSolveableAny !== false
         }
       // highlight all cells that are solveable by SINGLE method
       case DisplayMode.ALL_SINGLE:
+        const isSolveableSingle = isCellSolveable(solveableCells, cell.id, 'single', 'any');
         return {
           ...state,
-          isSolveable: isCellSolveable(solveableCells, cell.id, 'single', 'any')
+          isSolveable: isSolveableSingle,
+          isSolveableSingle: isSolveableSingle !== false
         }
       // highlight all cells that are solveable by BLOCK SCANNING method
       case DisplayMode.ALL_BLOCK:
+        const isSolveableBlock = isCellSolveable(solveableCells, cell.id, 'block', 'any');
         return {
           ...state,
-          isSolveable: isCellSolveable(solveableCells, cell.id, 'block', 'any')
+          isSolveable: isSolveableBlock,
+          isSolveableBlock: isSolveableBlock !== false
         }
       // highlight all cells that are solveable by COLUMN SCANNING method
       case DisplayMode.ALL_COLUMN:
+        const isSolveableColumn = isCellSolveable(solveableCells, cell.id, 'column', 'any')
         return {
           ...state,
-          isSolveable: isCellSolveable(solveableCells, cell.id, 'column', 'any')
+          isSolveable: isSolveableColumn,
+          isSolveableColumn: isSolveableColumn !== false
         }
       // highlight all cells that are solveable by ROW SCANNING method
       case DisplayMode.ALL_ROW:
+        const isSolveableRow = isCellSolveable(solveableCells, cell.id, 'row', 'any');
         return {
           ...state,
-          isSolveable: isCellSolveable(solveableCells, cell.id, 'row', 'any')
+          isSolveable: isSolveableRow,
+          isSolveableRow: isSolveableRow !== false
         }
 
       // highlight a cell where solve method is single - and its influencing cells
       case DisplayMode.CELL_SINGLE:
+        const isCellSingleSolve = cell.id === focusCellObj?.id ? isCellSolveable(solveableCells, cell.id, 'single', 'any') : false
         return {
           ...state,
           isActive: cell.id === focusCellObj?.id,
           inConnectedBlock: cell.block === focusCellObj?.block,
           inConnectedColumn: cell.column === focusCellObj?.column,
           inConnectedRow: cell.row === focusCellObj?.row,
-          isSolveable: cell.id === focusCellObj?.id && isCellSolveable(solveableCells, cell.id, 'single', 'any')
+          isSolveable: isCellSingleSolve,
+          isCellSingleSolve: isCellSingleSolve !== false
         }
 
       // highlight a cell where solve method is block/column/row - and its barring cells

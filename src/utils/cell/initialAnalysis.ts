@@ -10,6 +10,7 @@ export const initialAnalysis = (
   allSolveMethods: SolveType[]
 ): CellAnalysis => {
   return {
+    inSelector: gridStatus === GridStatus.SELECTOR,
     hasValue: value !== undefined,
     isActive: false,
     inConnectedBlock: false,
@@ -21,6 +22,12 @@ export const initialAnalysis = (
     inBarredColumn: false,
     inBarredRow: false,
     isSolveable: false,
+    isSolveableAny: false,
+    isSolveableBlock: false,
+    isSolveableColumn: false,
+    isSolveableRow: false,
+    isSolveableSingle: false,
+    isCellSingleSolve: false,
     isComplete: gridStatus === GridStatus.COMPLETE,
     allSolveMethods,
     canActivate: (gridStatus !== GridStatus.PREVIEW && gridStatus !== GridStatus.SELECTOR && cellStatus !== 'preset') || gridStatus === GridStatus.BUILDER,

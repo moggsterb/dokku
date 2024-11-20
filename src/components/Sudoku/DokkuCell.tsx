@@ -51,6 +51,7 @@ const DokkuCell = ({
     displayMode,
     hasValue,
     isActive,
+    inSelector,
     inConnectedBlock,
     inConnectedColumn,
     inConnectedRow,
@@ -60,12 +61,21 @@ const DokkuCell = ({
     inBarredColumn,
     inBarredRow,
     isSolveable,
+    isSolveableAny,
+    isSolveableBlock,
+    isSolveableColumn,
+    isSolveableRow,
+    isSolveableSingle,
+    isCellSingleSolve,
     isComplete,
     allSolveMethods,
     canActivate,
   } = cell.cellAnalysis;
 
   const [animID, setAnimID] = useState<number | undefined>(undefined);
+
+  const isHoverable =
+    isBrowser && cell.status !== 'preset' && gridStatus === GridStatus.READY;
 
   const animRequired =
     (value !== undefined || id === focusCellID) &&
@@ -147,10 +157,7 @@ const DokkuCell = ({
   const cellStyle = () => {
     return buildStyle([
       { style: styles.cell, condition: true },
-      {
-        style: styles.inSelector,
-        condition: gridStatus === GridStatus.SELECTOR,
-      },
+      { style: styles.inSelector, condition: inSelector },
       { style: styles.topGutter, condition: row === 3 || row === 6 },
       { style: styles.rightGutter, condition: column === 3 || column === 6 },
     ]);
@@ -168,39 +175,15 @@ const DokkuCell = ({
       { style: styles.barredBlock, condition: inBarredBlock },
       { style: styles.barredColumn, condition: inBarredColumn },
       { style: styles.barredRow, condition: inBarredRow },
-      {
-        style: styles.solveableAll,
-        condition: displayMode === 'all_any' && isSolveable !== false,
-      },
-      {
-        style: styles.solveableBlock,
-        condition: displayMode === 'all_block' && isSolveable !== false,
-      },
-      {
-        style: styles.solveableColumn,
-        condition: displayMode === 'all_column' && isSolveable !== false,
-      },
-      {
-        style: styles.solveableRow,
-        condition: displayMode === 'all_row' && isSolveable !== false,
-      },
-      {
-        style: styles.solveableSingle,
-        condition: displayMode === 'all_single' && isSolveable !== false,
-      },
+      { style: styles.solveableAll, condition: isSolveableAny },
+      { style: styles.solveableBlock, condition: isSolveableBlock },
+      { style: styles.solveableColumn, condition: isSolveableColumn },
+      { style: styles.solveableRow, condition: isSolveableRow },
+      { style: styles.solveableSingle, condition: isSolveableSingle },
       { style: styles.preset, condition: status === 'preset' },
-      {
-        style: styles.hoverable,
-        condition:
-          isBrowser &&
-          cell.status !== 'preset' &&
-          gridStatus === GridStatus.READY, // && canActivate && !isActive,
-      },
-      {
-        style: styles.singleSolve,
-        condition: displayMode === 'cell_single' && isActive,
-      },
+      { style: styles.singleSolve, condition: isCellSingleSolve },
       { style: styles.complete, condition: isComplete },
+      { style: styles.hoverable, condition: isHoverable },
     ]);
   };
 
