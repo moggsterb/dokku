@@ -1,21 +1,21 @@
 import { isBrowser } from 'react-device-detect';
 
-import { ICell, IRejected } from '@/utils/types';
+import { Cell, Rejected } from '@/utils/types';
 import { buildStyle } from '@/utils/helpers';
 
-import styles from './Candidate.module.scss';
+import styles from './DokkuCandidate.module.scss';
 
 interface Props {
-  cell: ICell;
+  cell: Cell;
   value: number;
-  rejected?: IRejected;
+  rejected?: Rejected;
   canSolve: boolean;
   canSet: boolean;
   clickHandler: (cellID: number, value: number) => void;
   animStyle: Object;
 }
 
-const Candidate = ({
+const DokkuCandidate = ({
   cell,
   value,
   rejected,
@@ -55,4 +55,4 @@ const Candidate = ({
   );
 };
 
-export default Candidate;
+export default DokkuCandidate;

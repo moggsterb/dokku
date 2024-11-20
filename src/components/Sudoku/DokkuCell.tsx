@@ -5,9 +5,9 @@ import React, { useEffect, useState } from 'react';
 import { isBrowser } from 'react-device-detect';
 
 import { buildStyle } from '@/utils/helpers';
-import { GridStatus, SolveType } from '@/utils/types';
+import { Cell, GridStatus, SolveType } from '@/utils/types';
 
-import Candidate from './Candidate';
+import DokkuCandidate from './DokkuCandidate';
 
 import { faSquareFull } from '@fortawesome/free-regular-svg-icons';
 import {
@@ -16,11 +16,10 @@ import {
   fa1,
 } from '@fortawesome/free-solid-svg-icons';
 
-import styles from './Cell.module.scss';
-import { IDisplayCellProps } from '@/utils/display/cellDisplayState';
+import styles from './DokkuCell.module.scss';
 
 interface Props {
-  displayCell: IDisplayCellProps;
+  cell: Cell;
   clickHandler?: (value: number) => void;
   setHandler: (cellID: number, value: number) => void;
   methodHandler: (cellID: number, method: SolveType) => void;
@@ -36,9 +35,17 @@ const ICONS = {
   row: { icon: faArrowsLeftRight },
 };
 
-const Cell = ({
-  displayCell: {
-    cell,
+const DokkuCell = ({
+  cell,
+  clickHandler,
+  setHandler,
+  methodHandler,
+  showCandidates,
+  showHints = false,
+}: Props) => {
+  const { id, status, value, row, column, candidates } = cell;
+
+  const {
     focusCellID,
     gridStatus,
     displayMode,
@@ -56,14 +63,8 @@ const Cell = ({
     isComplete,
     allSolveMethods,
     canActivate,
-  },
-  clickHandler,
-  setHandler,
-  methodHandler,
-  showCandidates,
-  showHints = false,
-}: Props) => {
-  const { id, status, value, row, column, candidates } = cell;
+  } = cell.cellAnalysis;
+
   const [animID, setAnimID] = useState<number | undefined>(undefined);
 
   const animRequired =
@@ -113,7 +114,7 @@ const Cell = ({
       <div className={styles.candidates}>
         {candidates.map(({ value, rejected }) => {
           return (
-            <Candidate
+            <DokkuCandidate
               key={`candidate-${cell.id}-${value}`}
               cell={cell}
               value={value}
@@ -243,4 +244,4 @@ const Cell = ({
   );
 };
 
-export default Cell;
+export default DokkuCell;

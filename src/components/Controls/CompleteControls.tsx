@@ -1,15 +1,15 @@
 import React, { Dispatch } from 'react';
 
 import { GridActions } from '@/utils/grid';
-import { ICell, IGrid } from '@/utils/types';
+import { Cell, Grid } from '@/utils/types';
 
 import Control from './Control';
 import Portal from '../Layout/Portal';
 
 interface Props {
-  grid: IGrid;
+  grid: Grid;
   gridDispatch: Dispatch<GridActions>;
-  initialCells: ICell[];
+  initialCells: Cell[];
 }
 
 const CompleteControls = ({ grid, gridDispatch, initialCells }: Props) => {

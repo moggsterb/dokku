@@ -1,12 +1,12 @@
 import { initialCells } from "../cell";
-import { getDisplayModeForType, isCellSolveable } from "../display/cellDisplayState";
+import { getDisplayModeForType, isCellSolveable } from "../display/analyseCells";
 import { setCells, batchSolveCells } from "../solving/scanning";
-import { ICell, SolveType, IGrid, IsSolveable, GridStatus, DisplayMode } from "../types";
+import { Cell, SolveType, Grid, IsSolveable, GridStatus, DisplayMode } from "../types";
 import scanGrid from "./scanGrid";
 
 export type GridActions =
   | { type: 'RESET_GRID' }
-  | { type: 'RESTART_GRID', payload: { cells: ICell[] } }
+  | { type: 'RESTART_GRID', payload: { cells: Cell[] } }
   | { type: 'UPDATE_MODE', payload: { mode: DisplayMode; } }
   | { type: 'UPDATE_STATUS', payload: { status: GridStatus; } }
   | { type: 'SET_CELL', payload: { cellID: number, value: number, type: 'solved' | 'preset' } }
@@ -14,25 +14,28 @@ export type GridActions =
   | { type: 'FOCUS_CELL', payload: { cellID: number, method?: SolveType } }
   | { type: 'BLUR_CELL' }
   | { type: 'FOCUS_VALUE', payload: { value: number | undefined } }
-  | { type: 'ACTIVATE_CELL', payload: { cellID: number } }
+  // | { type: 'ACTIVATE_CELL', payload: { cellID: number } }
   | { type: 'SOLVE_CELLS', payload: { cellIDs: number[], value: number } }
   | { type: 'BATCH_SOLVE', payload: { items: { cellID: number, solution: number }[] } }
 
-export const gridReducer = (state: IGrid, action: GridActions) => {
+export const gridReducer = (state: Grid, action: GridActions) => {
+  return scanGrid(updateState(state, action))
+}
 
+export const updateState = (state: Grid, action: GridActions) => {
   switch (action.type) {
     case 'RESET_GRID': {
-      return scanGrid({
+      return {
         ...state,
         cells: initialCells()
-      })
+      }
     }
     case 'RESTART_GRID': {
-      return scanGrid({
+      return {
         ...state,
         cells: [...action.payload.cells],
         gridStatus: GridStatus.AUTO
-      })
+      }
     }
     case 'UPDATE_MODE':
       return {
@@ -47,16 +50,16 @@ export const gridReducer = (state: IGrid, action: GridActions) => {
         gridStatus: action.payload.status
       }
     case 'SET_CELL':
-      return scanGrid({
+      return {
         ...state,
         cells: setCells([...state.cells], [action.payload.cellID], action.payload.value, action.payload.type),
         focusValue: undefined,
         focusCellID: undefined,
         focusSolveable: false as IsSolveable,
         displayMode: DisplayMode.READY
-      });
+      };
     case 'RESET_CELL':
-      return scanGrid({
+      return {
         ...state,
         cells: setCells([...state.cells], [action.payload.cellID], undefined, 'unsolved').map(cell => {
           return {
@@ -70,7 +73,7 @@ export const gridReducer = (state: IGrid, action: GridActions) => {
         focusCellID: undefined,
         focusSolveable: false as IsSolveable,
         displayMode: DisplayMode.READY
-      })
+      }
 
     case 'FOCUS_CELL':
       const id = action.payload.cellID;
@@ -106,22 +109,17 @@ export const gridReducer = (state: IGrid, action: GridActions) => {
         focusValue: action.payload.value,
         displayMode: DisplayMode.SCANNING_VALUE
       };
-    case 'ACTIVATE_CELL':
+
+    case 'SOLVE_CELLS':
       return {
         ...state,
-        activeCellID: action.payload.cellID,
-        displayMode: DisplayMode.ACTIVE_CELL
-      }
-    case 'SOLVE_CELLS':
-      return scanGrid({
-        ...state,
         cells: setCells([...state.cells], action.payload.cellIDs, action.payload.value, 'solved')
-      });
+      };
     case 'BATCH_SOLVE':
-      return scanGrid({
+      return {
         ...state,
         cells: batchSolveCells([...state.cells], action.payload.items)
-      })
+      }
 
     default:
       return state;

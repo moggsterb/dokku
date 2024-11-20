@@ -1,28 +1,36 @@
+
+import { analyseCells } from "../display/analyseCells";
 import { updateEnneadsCounts } from "../ennead";
 import { updateCellCandidates } from "../solving/analysis";
 import { findScanningSolves } from "../solving/scanning";
 import { findSingleSolves } from "../solving/single";
-import { IGrid, ICell, IEnneads, SolveableCells, SolveableByType, DisplayMode, GridStatus } from "../types";
+import { Grid, Cell, Enneads, SolveableCells, SolveableCellsByType, DisplayMode, GridStatus } from "../types";
 
-const scanGrid = (grid: IGrid): IGrid => {
+const scanGrid = (grid: Grid): Grid => {
   const cells = updateCellCandidates(grid.cells, 1);
   const enneads = updateEnneadsCounts(grid.enneads, cells);
   const solveableCells = findSolves(cells, enneads);
-  const solveableByType = summariseSolves(solveableCells);
+  const solveableCellsByType = summariseSolves(solveableCells);
+
+  console.log(grid.displayMode)
+
+  const analysedCells = analyseCells(
+    cells, enneads, grid.gridStatus, grid.displayMode, solveableCells, grid.focusCellID, grid.focusValue, grid.focusSolveable
+  )
 
   const complete = cells.filter((item) => item.status === 'unsolved').length === 0;
 
   return {
     ...grid,
     ...(complete && { gridStatus: GridStatus.COMPLETE, displayMode: DisplayMode.COMPLETE }),
-    cells,
+    cells: analysedCells,
     enneads,
     solveableCells,
-    solveableByType
+    solveableCellsByType
   }
 }
 
-const findSolves = (cells: ICell[], enneads: IEnneads): SolveableCells => {
+const findSolves = (cells: Cell[], enneads: Enneads): SolveableCells => {
   const x = findScanningSolves(cells, enneads);
   const y = findSingleSolves(cells);
   const solves = [
@@ -33,7 +41,7 @@ const findSolves = (cells: ICell[], enneads: IEnneads): SolveableCells => {
 }
 
 const summariseSolves = (solveableCells: SolveableCells) => {
-  let byType: SolveableByType = {
+  let byType: SolveableCellsByType = {
     any: [],
     block: [],
     row: [],

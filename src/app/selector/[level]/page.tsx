@@ -10,7 +10,7 @@ import { EXAMPLES, LEVELS } from '@/utils/examples';
 import MainContainer from '@/components/Layout/MainContainer';
 import AnimReveal from '@/components/Layout/AnimReveal';
 import Portal from '@/components/Layout/Portal';
-import Grid from '@/components/Sudoku/Grid';
+import DokkuGrid from '@/components/Sudoku/DokkuGrid';
 import Control from '@/components/Controls/Control';
 import { GridStatus } from '@/utils/types';
 
@@ -53,7 +53,7 @@ export default function Selector({
                       router.push(`/selector/preview/${grid.id}`);
                     }}
                   >
-                    <Grid
+                    <DokkuGrid
                       grid={initialGrid(
                         GridStatus.SELECTOR,
                         loadCells(grid.id)

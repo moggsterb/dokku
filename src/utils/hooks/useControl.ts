@@ -1,9 +1,9 @@
 import { useEffect, useReducer, useState } from "react";
-import { GridStatus, ICell } from "../types";
+import { GridStatus, Cell } from "../types";
 import { gridReducer, initialGrid } from "../grid";
 import { initialCells } from "../cell";
 
-const useControl = (initialStatus: GridStatus, gridCells: ICell[]) => {
+const useControl = (initialStatus: GridStatus, gridCells: Cell[]) => {
   const outstandingCells: { cellID: number, value: number }[] = gridCells
     .filter(cell => cell.status === 'preset')
     .map(cell => { return { cellID: cell.id, value: cell.value || 0 } })

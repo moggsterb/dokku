@@ -1,6 +1,6 @@
-import { ICell, ISingleSolveCell } from "../types";
+import { Cell, SingleSolveCell } from "../types";
 
-export const findSingleSolves = (cells: ICell[]): ISingleSolveCell[] => {
+export const findSingleSolves = (cells: Cell[]): SingleSolveCell[] => {
 
   return cells.filter((item) => item.status === 'unsolved')
     .map(item => {

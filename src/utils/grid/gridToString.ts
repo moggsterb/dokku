@@ -1,6 +1,6 @@
-import { ICell } from "../types";
+import { Cell } from "../types";
 
-const gridToString = (cells: ICell[]) => {
+const gridToString = (cells: Cell[]) => {
   return cells.map((item) => (item.value ? item.value : '-')).join('');
 };
 

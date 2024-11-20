@@ -2,35 +2,30 @@ import { Dispatch } from 'react';
 
 import { isBrowser } from 'react-device-detect';
 
-import { GridStatus, IGrid, SolveType } from '@/utils/types';
+import { GridStatus, Grid, SolveType } from '@/utils/types';
 import { GridActions } from '@/utils/grid';
 
-import Cell from './Cell';
+import DokkuCell from './DokkuCell';
 
-import styles from './Grid.module.scss';
-import {
-  enhanceCellForDisplay,
-  isCellSolveable,
-} from '@/utils/display/cellDisplayState';
+import styles from './DokkuGrid.module.scss';
+import { isCellSolveable } from '@/utils/display/analyseCells';
 
 interface Props {
-  grid: IGrid;
+  grid: Grid;
   showCandidates?: boolean;
   showHints?: boolean;
   gridDispatch?: Dispatch<GridActions>;
 }
 
-const Grid = ({ grid, showCandidates, showHints, gridDispatch }: Props) => {
-  const {
-    cells,
-    enneads,
-    gridStatus,
-    displayMode,
-    focusCellID,
-    focusValue,
-    solveableCells,
-    focusSolveable,
-  } = grid;
+const DokkuGrid = ({
+  grid,
+  showCandidates,
+  showHints,
+  gridDispatch,
+}: Props) => {
+  const { cells, gridStatus, focusCellID, solveableCells } = grid;
+
+  console.log({ grid });
 
   const handleCellClick = (cellID: number) => {
     if (!gridDispatch || gridStatus === GridStatus.PREVIEW) return;
@@ -75,25 +70,11 @@ const Grid = ({ grid, showCandidates, showHints, gridDispatch }: Props) => {
   };
 
   const RenderCells = () => {
-    const focusCellObj =
-      focusCellID !== undefined ? cells[focusCellID] : undefined;
-
     return cells.map((cell, index) => {
-      const dc = enhanceCellForDisplay({
-        cells,
-        enneads,
-        cell,
-        gridStatus,
-        displayMode,
-        focusCellObj,
-        focusValue,
-        solveableCells,
-        focusSolveable,
-      });
       return (
-        <Cell
+        <DokkuCell
           key={index}
-          displayCell={dc}
+          cell={cell}
           clickHandler={handleCellClick}
           setHandler={handleCandidateClick}
           methodHandler={handleMethodClick}
@@ -117,4 +98,4 @@ const Grid = ({ grid, showCandidates, showHints, gridDispatch }: Props) => {
   );
 };
 
-export default Grid;
+export default DokkuGrid;

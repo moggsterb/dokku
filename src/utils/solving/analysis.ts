@@ -1,9 +1,9 @@
 import { cellsInEnnead } from "../cell";
-import { EnneadType, ICandidate, ICell } from "../types";
+import { EnneadType, Candidate, Cell } from "../types";
 
 
-// returns a 81 element ICell[] with candidates up to date
-export const updateCellCandidates = (cells: ICell[], stage: number): ICell[] => {
+// returns a 81 element Cell[] with candidates up to date
+export const updateCellCandidates = (cells: Cell[], stage: number): Cell[] => {
   return cells.map((cell) => {
     return {
       ...cell,
@@ -12,8 +12,8 @@ export const updateCellCandidates = (cells: ICell[], stage: number): ICell[] => 
   });
 };
 
-// returns updated ICandidate[] for a particular cell
-const cellCandidates = (cells: ICell[], cell: ICell, stage: number): ICandidate[] => {
+// returns updated Candidate[] for a particular cell
+const cellCandidates = (cells: Cell[], cell: Cell, stage: number): Candidate[] => {
   const takenAll = getTakenValues(cells, cell);
 
   return cell.candidates.map((candidate) => {
@@ -27,7 +27,7 @@ const cellCandidates = (cells: ICell[], cell: ICell, stage: number): ICandidate[
   });
 };
 
-export const getTakenValues = (cells: ICell[], cell: ICell) => {
+export const getTakenValues = (cells: Cell[], cell: Cell) => {
   const taken = takenCellValues([
     ...cellsInEnnead(cells, 'row', cell.row),
     ...cellsInEnnead(cells, 'column', cell.column),
@@ -37,12 +37,12 @@ export const getTakenValues = (cells: ICell[], cell: ICell) => {
   return uniqueArray;
 }
 
-// returns a number[] of taken values for a given  ICell[]
-export const takenCellValues = (cells: ICell[]): number[] => {
+// returns a number[] of taken values for a given  Cell[]
+export const takenCellValues = (cells: Cell[]): number[] => {
   return cells.filter((cell) => cell.value !== undefined).map((cell) => cell.value) as number[];
 };
 
-export const takenInEnnead = (cells: ICell[], enneadType: EnneadType, id: number, value: number | undefined) => {
+export const takenInEnnead = (cells: Cell[], enneadType: EnneadType, id: number, value: number | undefined) => {
   if (value === undefined) return false;
   return takenCellValues(cellsInEnnead(cells, enneadType, id)).includes(value);
 }

@@ -1,15 +1,15 @@
 import { initialEnneads } from "../ennead";
-import { DisplayMode, GridStatus, ICell, IGrid, SolveableCells } from "../types";
+import { DisplayMode, GridStatus, Cell, Grid, SolveableCells } from "../types";
 import scanGrid from "./scanGrid";
 
-const initialGrid = (startStatus: GridStatus, startCells: ICell[]): IGrid => {
+const initialGrid = (startStatus: GridStatus, startCells: Cell[]): Grid => {
   return scanGrid({
     gridStatus: startStatus,
     displayMode: DisplayMode.READY,
     cells: startCells,
     enneads: initialEnneads(),
     solveableCells: [] as SolveableCells,
-    solveableByType: {
+    solveableCellsByType: {
       any: [],
       block: [],
       row: [],
@@ -17,7 +17,6 @@ const initialGrid = (startStatus: GridStatus, startCells: ICell[]): IGrid => {
       single: []
     },
     focusCellID: undefined,
-    activeCellID: undefined,
     focusValue: undefined,
     focusSolveable: false
   })

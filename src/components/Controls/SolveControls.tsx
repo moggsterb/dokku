@@ -1,7 +1,7 @@
 import { Dispatch } from 'react';
 
 import { GridActions } from '@/utils/grid';
-import { GridStatus, IGrid } from '@/utils/types';
+import { GridStatus, Grid } from '@/utils/types';
 
 import SolveController from './SolveController';
 import Portal from '../Layout/Portal';
@@ -9,19 +9,19 @@ import Portal from '../Layout/Portal';
 import styles from './SolveControls.module.scss';
 
 interface Props {
-  grid: IGrid;
+  grid: Grid;
   gridDispatch: Dispatch<GridActions> | undefined;
 }
 
 const SolveControls = ({
-  grid: { gridStatus, displayMode, solveableByType },
+  grid: { gridStatus, displayMode, solveableCellsByType },
   gridDispatch,
 }: Props) => {
-  const scanAll = solveableByType['any'];
-  const scanBlock = solveableByType['block'];
-  const scanColumn = solveableByType['column'];
-  const scanRow = solveableByType['row'];
-  const singles = solveableByType['single'];
+  const scanAll = solveableCellsByType['any'];
+  const scanBlock = solveableCellsByType['block'];
+  const scanColumn = solveableCellsByType['column'];
+  const scanRow = solveableCellsByType['row'];
+  const singles = solveableCellsByType['single'];
 
   return (
     <Portal type='footer'>

@@ -1,19 +1,25 @@
 import React, { Dispatch } from 'react';
 
 import { GridActions } from '@/utils/grid';
-import { DisplayMode, IGrid, SolveType } from '@/utils/types';
+import { DisplayMode, Grid, SolveType } from '@/utils/types';
 
 import Portal from '../Layout/Portal';
 
 import styles from './Narrator.module.scss';
 
 interface Props {
-  grid: IGrid;
+  grid: Grid;
   gridDispatch: Dispatch<GridActions> | undefined;
 }
 
 const Narrator = ({
-  grid: { cells, focusCellID, focusSolveable, displayMode, solveableByType },
+  grid: {
+    cells,
+    focusCellID,
+    focusSolveable,
+    displayMode,
+    solveableCellsByType,
+  },
   gridDispatch,
 }: Props) => {
   const focusCellObj =
@@ -47,7 +53,7 @@ const Narrator = ({
             <span>
               with
               <em className={styles.any}>
-                {solveableByType.any.length} immediately solveable
+                {solveableCellsByType.any.length} immediately solveable
               </em>
             </span>
           </p>
@@ -69,7 +75,7 @@ const Narrator = ({
         );
 
       case DisplayMode.ALL_ANY:
-        const any = solveableByType['any'];
+        const any = solveableCellsByType['any'];
         return (
           <p className={styles.para}>
             <span>
@@ -89,7 +95,7 @@ const Narrator = ({
       case DisplayMode.ALL_ROW:
       case DisplayMode.ALL_SINGLE:
         const type = displayMode.substring(4) as SolveType;
-        const solves = solveableByType[type];
+        const solves = solveableCellsByType[type];
         return (
           <p className={styles.para}>
             <span>

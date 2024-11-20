@@ -2,13 +2,13 @@
 import React, { Dispatch } from 'react';
 
 import { GridActions, gridToChunks, gridToString } from '@/utils/grid';
-import { IGrid } from '@/utils/types';
+import { Grid } from '@/utils/types';
 
 import Control from './Control';
 import Portal from '../Layout/Portal';
 
 interface Props {
-  grid: IGrid;
+  grid: Grid;
   gridDispatch: Dispatch<GridActions>;
 }
 

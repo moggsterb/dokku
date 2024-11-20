@@ -2,10 +2,10 @@
 
 import React from 'react';
 
-import { DisplayMode, GridStatus, ICell } from '@/utils/types';
+import { DisplayMode, GridStatus, Cell } from '@/utils/types';
 import useControl from '@/utils/hooks/useControl';
 
-import Grid from './Grid';
+import DokkuGrid from './DokkuGrid';
 import Narrator from './Narrator';
 import CompleteControls from '../Controls/CompleteControls';
 import BuildControls from '../Controls/BuildControls';
@@ -13,7 +13,7 @@ import SolveControls from '../Controls/SolveControls';
 
 import styles from './GridWrapper.module.scss';
 interface Props {
-  initialCells: ICell[];
+  initialCells: Cell[];
   initialStatus: GridStatus;
   showCandidates?: boolean;
   showHints?: boolean;
@@ -53,7 +53,7 @@ const GridWrapper = ({
           initialCells={initialCells}
         />
       )}
-      <Grid
+      <DokkuGrid
         grid={grid}
         showCandidates={showCandidates}
         showHints={showHints}

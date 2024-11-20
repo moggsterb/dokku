@@ -1,8 +1,38 @@
 import { EXAMPLES } from "./examples";
-import { EnneadType, ICell, IEnneads, ICandidate, ITrio } from "./types";
+import { EnneadType, Cell, Enneads, Candidate, Trio, DisplayMode, GridStatus, SolveType } from "./types";
+import { CellAnalysis } from "./types/cell";
 
-export const initialCells = (): ICell[] => {
-  const cells: ICell[] = [];
+export const initialAnalysis = (
+  value: number | undefined,
+  gridStatus: GridStatus,
+  displayMode: DisplayMode,
+  cellStatus: string,
+  focusCellID: number | undefined,
+  allSolveMethods: SolveType[]
+): CellAnalysis => {
+  return {
+    hasValue: value !== undefined,
+    isActive: false,
+    inConnectedBlock: false,
+    inConnectedColumn: false,
+    inConnectedRow: false,
+    outstandingCellIDs: [],
+    hasFocusedValue: false,
+    inBarredBlock: false,
+    inBarredColumn: false,
+    inBarredRow: false,
+    isSolveable: false,
+    isComplete: gridStatus === GridStatus.COMPLETE,
+    allSolveMethods,
+    canActivate: (gridStatus !== GridStatus.PREVIEW && gridStatus !== GridStatus.SELECTOR && cellStatus !== 'preset') || gridStatus === GridStatus.BUILDER,
+    focusCellID,
+    gridStatus,
+    displayMode,
+  }
+}
+
+export const initialCells = (): Cell[] => {
+  const cells: Cell[] = [];
   [0, 1, 2, 3, 4, 5, 6, 7, 8].forEach((row) => {
     [0, 1, 2, 3, 4, 5, 6, 7, 8].forEach((column) => {
       const blockRow = Math.floor(row / 3);
@@ -23,13 +53,21 @@ export const initialCells = (): ICell[] => {
         solution: [],
         trioRow,
         trioColumn,
+        cellAnalysis: initialAnalysis(
+          undefined,
+          GridStatus.READY,
+          DisplayMode.READY,
+          'unsolved',
+          undefined,
+          []
+        )
       });
     });
   });
   return cells;
 };
 
-export const loadCells = (id: number): ICell[] => {
+export const loadCells = (id: number): Cell[] => {
   const data = EXAMPLES.find(item => item.id === id);
   const grid = data?.grid.join('');
   return customCells(grid);
@@ -48,13 +86,13 @@ export const customCells = (str: string | undefined) => {
   return cells;
 }
 
-// returns a 9 element ICell[] for a given Ennead
-export const cellsInEnnead = (cells: ICell[], type: EnneadType, id: number): ICell[] => {
+// returns a 9 element Cell[] for a given Ennead
+export const cellsInEnnead = (cells: Cell[], type: EnneadType, id: number): Cell[] => {
   return cells.filter((cell) => cell[type] === id);
 };
 
-// returns a 3 element ICell[] for a given trio
-export const cellsInTrio = (cells: ICell[], trio: ITrio): ICell[] => {
+// returns a 3 element Cell[] for a given trio
+export const cellsInTrio = (cells: Cell[], trio: Trio): Cell[] => {
   return cells
     .filter((cell) => cell.status === 'unsolved')
     .filter(
@@ -66,7 +104,7 @@ export const cellsInTrio = (cells: ICell[], trio: ITrio): ICell[] => {
     )
 }
 
-export const setSolvedByCLO = (cells: ICell[]) => {
+export const setSolvedByCLO = (cells: Cell[]) => {
   return cells.map((cell) => {
     const solvedByCLO = cell.value === 0 && flagCellsLastCandidate(cell)
     return {
@@ -76,14 +114,14 @@ export const setSolvedByCLO = (cells: ICell[]) => {
   })
 }
 
-export const flagCellsLastCandidate = (cell: ICell) => {
+export const flagCellsLastCandidate = (cell: Cell) => {
   const available = cell.candidates
     .filter((candidate) => !candidate.rejected)
     .map((candidate) => candidate.value);
   return available.length === 1 && { stage: 1, reason: 'clo', value: available[0] }
 }
 
-export const setSolvedByVLC = (cells: ICell[], enneads: IEnneads) => {
+export const setSolvedByVLC = (cells: Cell[], enneads: Enneads) => {
   return cells.map((cell) => {
     const solvedByVLC = cell.value === 0 && flagValuesLastCell(cell, enneads)
     return {
@@ -93,7 +131,7 @@ export const setSolvedByVLC = (cells: ICell[], enneads: IEnneads) => {
   });
 };
 
-export const flagValuesLastCell = (cell: ICell, enneads: IEnneads) => {
+export const flagValuesLastCell = (cell: Cell, enneads: Enneads) => {
   // check candidate.value in each of the 3 enneads ... if any are 1 ... we can solve
   const onlyCandidate = cell.candidates
     .filter((candidate) => !candidate.rejected)
@@ -106,20 +144,20 @@ export const flagValuesLastCell = (cell: ICell, enneads: IEnneads) => {
 }
 
 
-export const anythingToSolve = (cells: ICell[]) => {
+export const anythingToSolve = (cells: Cell[]) => {
   return cells.filter(cell => cell.status === 'unsolved').length
 }
 
 
-export const unsolvedCells = (cells: ICell[]) => {
+export const unsolvedCells = (cells: Cell[]) => {
   return cells.filter((cell) => cell.value === 0).length;
 };
 
-export const solvedCells = (cells: ICell[]) => {
+export const solvedCells = (cells: Cell[]) => {
   return cells.filter((cell) => cell.value !== undefined).length;
 };
 
-export const outstandingCellCandidates = (cells: ICell[]) => {
+export const outstandingCellCandidates = (cells: Cell[]) => {
   return cells.filter(cell => cell.value === 0).reduce((total, cell) => { return total + cell.candidates.filter(candidate => !candidate.rejected).length }, 0);
 }
 

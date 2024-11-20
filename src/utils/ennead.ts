@@ -1,8 +1,8 @@
 
 import { cellsInEnnead } from './cell';
-import { EnneadType, IEnnead, IEnneads, ICell } from './types';
+import { EnneadType, Ennead, Enneads, Cell } from './types';
 
-export const initialEnneads = (): IEnneads => {
+export const initialEnneads = (): Enneads => {
   return {
     block: initialEnnead('block'),
     row: initialEnnead('row'),
@@ -13,7 +13,7 @@ export const initialEnneads = (): IEnneads => {
 
 
 export const initialEnnead = (type: EnneadType) => {
-  const enneads: IEnnead[] = [];
+  const enneads: Ennead[] = [];
 
   [0, 1, 2, 3, 4, 5, 6, 7, 8].forEach((id) => {
     enneads.push({
@@ -59,7 +59,7 @@ const getIntersects = (type: EnneadType, id: number) => {
   }
 }
 
-export const updateEnneadsCounts = (enneads: IEnneads, cells: ICell[]): IEnneads => {
+export const updateEnneadsCounts = (enneads: Enneads, cells: Cell[]): Enneads => {
   return {
     column: updateEnnead(enneads, 'column', cells),
     block: updateEnnead(enneads, 'block', cells),
@@ -67,7 +67,7 @@ export const updateEnneadsCounts = (enneads: IEnneads, cells: ICell[]): IEnneads
   };
 };
 
-export const updateEnnead = (enneads: IEnneads, type: EnneadType, cells: ICell[]) => {
+export const updateEnnead = (enneads: Enneads, type: EnneadType, cells: Cell[]) => {
   return enneads[type].map((ennead) => {
     const enneadCells = cellsInEnnead(cells, type, ennead.id);
     const cellValues = enneadCells.map(item => item.value)

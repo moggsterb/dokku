@@ -1,7 +1,7 @@
-import { ICell } from "../types";
+import { Cell } from "../types";
 import gridToString from "./gridToString";
 
-const gridToChunks = (cells: ICell[]) => {
+const gridToChunks = (cells: Cell[]) => {
   const str = gridToString(cells);
   return str.match(/.{1,9}/g);
 };
