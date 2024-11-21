@@ -1,7 +1,7 @@
 import { initialCells } from "../cell";
 import { getDisplayModeForType, isCellSolveable } from "./analyseCells";
 import { setCells, batchSolveCells } from "../solving/scanning";
-import { Cell, SolveType, Grid, IsSolveable, GridStatus, DisplayMode } from "../types";
+import { Cell, SolveType, Grid, IsSolveable, GridStatus, DisplayMode, CellStatus } from "../types";
 import { analyseGrid } from "./analyseGrid";
 
 export type GridActions =
@@ -9,7 +9,7 @@ export type GridActions =
   | { type: 'RESTART_GRID', payload: { cells: Cell[] } }
   | { type: 'UPDATE_MODE', payload: { mode: DisplayMode; } }
   | { type: 'UPDATE_STATUS', payload: { status: GridStatus; } }
-  | { type: 'SET_CELL', payload: { cellID: number, value: number, type: 'solved' | 'preset' } }
+  | { type: 'SET_CELL', payload: { cellID: number, value: number, type: CellStatus.SOLVED | CellStatus.PRESET } }
   | { type: 'RESET_CELL', payload: { cellID: number } }
   | { type: 'FOCUS_CELL', payload: { cellID: number, method?: SolveType } }
   | { type: 'BLUR_CELL' }
@@ -57,7 +57,7 @@ export const updateState = (state: Grid, action: GridActions) => {
     case 'RESET_CELL':
       return {
         ...state,
-        cells: setCells([...state.cells], [action.payload.cellID], undefined, 'unsolved').map(cell => {
+        cells: setCells([...state.cells], [action.payload.cellID], undefined, CellStatus.UNSOLVED).map(cell => {
           return {
             ...cell,
             candidates: [1, 2, 3, 4, 5, 6, 7, 8, 9].map((value) => {
@@ -96,7 +96,7 @@ export const updateState = (state: Grid, action: GridActions) => {
     case 'SOLVE_CELLS':
       return {
         ...state,
-        cells: setCells([...state.cells], action.payload.cellIDs, action.payload.value, 'solved')
+        cells: setCells([...state.cells], action.payload.cellIDs, action.payload.value, CellStatus.SOLVED)
       };
     case 'BATCH_SOLVE':
       return {

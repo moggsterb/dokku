@@ -24,3 +24,9 @@ export enum DisplayMode {
   SCANNING_VALUE = 'scanning_value',
   COMPLETE = 'complete',
 }
+
+export enum CellStatus {
+  PRESET = 'preset',
+  UNSOLVED = 'unsolved',
+  SOLVED = 'solved'
+}

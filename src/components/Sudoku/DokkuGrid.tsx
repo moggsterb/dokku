@@ -2,7 +2,7 @@ import { Dispatch } from 'react';
 
 import { isBrowser } from 'react-device-detect';
 
-import { GridStatus, Grid, SolveType } from '@/utils/types';
+import { GridStatus, Grid, SolveType, CellStatus } from '@/utils/types';
 import { GridActions } from '@/utils/grid';
 
 import DokkuCell from './DokkuCell';
@@ -23,7 +23,7 @@ const DokkuGrid = ({
   showHints,
   gridDispatch,
 }: Props) => {
-  const { cells, gridStatus, activeCellID, solveableCells } = grid;
+  const { cells, gridStatus, displayMode, activeCellID, solveableCells } = grid;
 
   const handleCellClick = (cellID: number) => {
     if (!gridDispatch || gridStatus === GridStatus.PREVIEW) return;
@@ -63,7 +63,8 @@ const DokkuGrid = ({
 
   const handleCandidateClick = (cellID: number, value: number) => {
     if (!gridDispatch || gridStatus === GridStatus.PREVIEW) return;
-    const type = gridStatus === GridStatus.BUILDER ? 'preset' : 'solved';
+    const type =
+      gridStatus === GridStatus.BUILDER ? CellStatus.PRESET : CellStatus.SOLVED;
     gridDispatch({ type: 'SET_CELL', payload: { cellID, value, type } });
   };
 
@@ -72,6 +73,8 @@ const DokkuGrid = ({
       return (
         <DokkuCell
           key={index}
+          gridStatus={gridStatus}
+          displayMode={displayMode}
           cell={cell}
           clickHandler={handleCellClick}
           setHandler={handleCandidateClick}

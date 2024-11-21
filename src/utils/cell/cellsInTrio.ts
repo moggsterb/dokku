@@ -1,9 +1,9 @@
-import { Cell, Trio } from "../types"
+import { Cell, CellStatus, Trio } from "../types"
 
 // returns a 3 element Cell[] for a given trio
 export const cellsInTrio = (cells: Cell[], trio: Trio): Cell[] => {
   return cells
-    .filter((cell) => cell.status === 'unsolved')
+    .filter((cell) => cell.status === CellStatus.UNSOLVED)
     .filter(
       (cell) =>
         cell.block === trio.block &&

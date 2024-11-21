@@ -5,7 +5,13 @@ import React, { useEffect, useState } from 'react';
 import { isBrowser } from 'react-device-detect';
 
 import { buildStyle } from '@/utils/helpers';
-import { Cell, GridStatus, SolveType } from '@/utils/types';
+import {
+  Cell,
+  CellStatus,
+  DisplayMode,
+  GridStatus,
+  SolveType,
+} from '@/utils/types';
 
 import DokkuCandidate from './DokkuCandidate';
 
@@ -20,6 +26,8 @@ import styles from './DokkuCell.module.scss';
 
 interface Props {
   cell: Cell;
+  gridStatus: GridStatus;
+  displayMode: DisplayMode;
   clickHandler?: (value: number) => void;
   setHandler: (cellID: number, value: number) => void;
   methodHandler: (cellID: number, method: SolveType) => void;
@@ -36,6 +44,8 @@ const ICONS = {
 };
 
 const DokkuCell = ({
+  gridStatus,
+  displayMode,
   cell,
   clickHandler,
   setHandler,
@@ -46,9 +56,6 @@ const DokkuCell = ({
   const { id, status, value, row, column, candidates } = cell;
 
   const {
-    activeCellID,
-    gridStatus,
-    displayMode,
     hasValue,
     isActive,
     inSelector,
@@ -70,16 +77,19 @@ const DokkuCell = ({
     isComplete,
     allSolveMethods,
     canActivate,
+    activeCellID,
   } = cell.cellAnalysis;
 
   const [animID, setAnimID] = useState<number | undefined>(undefined);
 
   const isHoverable =
-    isBrowser && cell.status !== 'preset' && gridStatus === GridStatus.READY;
+    isBrowser &&
+    cell.status !== CellStatus.PRESET &&
+    gridStatus === GridStatus.READY;
 
   const animRequired =
     (value !== undefined || id === activeCellID) &&
-    displayMode === 'cell_single' &&
+    displayMode === DisplayMode.CELL_SINGLE &&
     (inConnectedBlock || inConnectedColumn || inConnectedRow);
 
   useEffect(() => {
@@ -180,7 +190,7 @@ const DokkuCell = ({
       { style: styles.solveableColumn, condition: isSolveableColumn },
       { style: styles.solveableRow, condition: isSolveableRow },
       { style: styles.solveableSingle, condition: isSolveableSingle },
-      { style: styles.preset, condition: status === 'preset' },
+      { style: styles.preset, condition: status === CellStatus.PRESET },
       { style: styles.singleSolve, condition: isCellSingleSolve },
       { style: styles.complete, condition: isComplete },
       { style: styles.hoverable, condition: isHoverable },

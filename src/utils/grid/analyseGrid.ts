@@ -4,7 +4,7 @@ import { updateEnneadsCounts } from "../ennead";
 import { updateCellCandidates } from "../solving/analysis";
 import { findScanningSolves } from "../solving/scanning";
 import { findSingleSolves } from "../solving/single";
-import { Grid, Cell, Enneads, SolveableCells, SolveableCellsByType, DisplayMode, GridStatus } from "../types";
+import { Grid, Cell, Enneads, SolveableCells, SolveableCellsByType, DisplayMode, GridStatus, CellStatus } from "../types";
 
 export const analyseGrid = (grid: Grid): Grid => {
   const cells = updateCellCandidates(grid.cells, 1);
@@ -26,7 +26,7 @@ export const analyseGrid = (grid: Grid): Grid => {
     activeSolveable
   )
 
-  const complete = cells.filter((item) => item.status === 'unsolved').length === 0;
+  const complete = cells.filter((item) => item.status === CellStatus.UNSOLVED).length === 0;
 
   return {
     ...grid,

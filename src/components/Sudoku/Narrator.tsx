@@ -1,7 +1,7 @@
 import React, { Dispatch } from 'react';
 
 import { GridActions } from '@/utils/grid';
-import { DisplayMode, Grid, SolveType } from '@/utils/types';
+import { CellStatus, DisplayMode, Grid, SolveType } from '@/utils/types';
 
 import Portal from '../Layout/Portal';
 
@@ -45,7 +45,7 @@ const Narrator = ({
     switch (displayMode) {
       case DisplayMode.READY:
         const unsolvedCells = cells.filter(
-          (item) => item.status === 'unsolved'
+          (item) => item.status === CellStatus.UNSOLVED
         ).length;
 
         return (

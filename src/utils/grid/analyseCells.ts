@@ -46,7 +46,6 @@ const analyseCell = (
   const state: CellAnalysis = initialAnalysis(
     cell.value,
     gridStatus,
-    displayMode,
     cell.status,
     activeCell?.id,
     allSolveMethods

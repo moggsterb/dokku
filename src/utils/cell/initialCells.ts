@@ -1,4 +1,4 @@
-import { Cell, GridStatus, DisplayMode } from "../types";
+import { Cell, GridStatus, DisplayMode, CellStatus } from "../types";
 import { initialAnalysis } from "./initialAnalysis";
 
 export const initialCells = (): Cell[] => {
@@ -15,7 +15,7 @@ export const initialCells = (): Cell[] => {
         row,
         column,
         block: blockRow * 3 + blockColumn,
-        status: 'unsolved',
+        status: CellStatus.UNSOLVED,
         value: undefined,
         candidates: [1, 2, 3, 4, 5, 6, 7, 8, 9].map((value) => {
           return { value };
@@ -26,8 +26,7 @@ export const initialCells = (): Cell[] => {
         cellAnalysis: initialAnalysis(
           undefined,
           GridStatus.READY,
-          DisplayMode.READY,
-          'unsolved',
+          CellStatus.UNSOLVED,
           undefined,
           []
         )

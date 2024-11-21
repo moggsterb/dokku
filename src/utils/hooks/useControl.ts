@@ -1,11 +1,11 @@
 import { useEffect, useReducer, useState } from "react";
-import { GridStatus, Cell } from "../types";
+import { GridStatus, Cell, CellStatus } from "../types";
 import { gridReducer, initialGrid } from "../grid";
 import { initialCells } from "../cell";
 
 const useControl = (initialStatus: GridStatus, gridCells: Cell[]) => {
   const outstandingCells: { cellID: number, value: number }[] = gridCells
-    .filter(cell => cell.status === 'preset')
+    .filter(cell => cell.status === CellStatus.PRESET)
     .map(cell => { return { cellID: cell.id, value: cell.value || 0 } })
     .sort(() => Math.random() - 0.5);
 
@@ -30,7 +30,7 @@ const useControl = (initialStatus: GridStatus, gridCells: Cell[]) => {
             payload: {
               cellID: outstanding[0].cellID,
               value: outstanding[0].value,
-              type: 'preset'
+              type: CellStatus.PRESET
             },
           });
           setOutstanding(outstanding.slice(1));
