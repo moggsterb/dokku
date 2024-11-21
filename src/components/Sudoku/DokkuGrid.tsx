@@ -2,13 +2,13 @@ import { Dispatch } from 'react';
 
 import { isBrowser } from 'react-device-detect';
 
-import { GridStatus, Grid, SolveType, CellStatus } from '@/utils/types';
-import { GridActions } from '@/utils/grid';
+import { GridStatus, Grid, SolveType, CellStatus } from '@/lib/types';
+import { GridActions } from '@/lib/grid';
 
 import DokkuCell from './DokkuCell';
 
 import styles from './DokkuGrid.module.scss';
-import { isCellSolveable } from '@/utils/solving/analyseCells';
+import { isCellSolveable } from '@/lib/solving/analyseCells';
 
 interface Props {
   grid: Grid;

@@ -2,8 +2,8 @@
 
 import React from 'react';
 
-import { DisplayMode, GridStatus, Cell } from '@/utils/types';
-import useControl from '@/utils/hooks/useControl';
+import { DisplayMode, GridStatus, Cell } from '@/lib/types';
+import useControl from '@/lib/hooks/useControl';
 
 import DokkuGrid from './DokkuGrid';
 import Narrator from './Narrator';

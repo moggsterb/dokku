@@ -1,7 +1,7 @@
 import { Dispatch } from 'react';
 
-import { GridActions } from '@/utils/grid';
-import { GridStatus, Grid, EnneadType, SolveType } from '@/utils/types';
+import { GridActions } from '@/lib/grid';
+import { GridStatus, Grid, EnneadType, SolveType } from '@/lib/types';
 
 import SolveController from './SolveController';
 import Portal from '../Layout/Portal';

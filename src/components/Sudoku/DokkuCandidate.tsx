@@ -1,7 +1,7 @@
 import { isBrowser } from 'react-device-detect';
 
-import { Cell, Rejected } from '@/utils/types';
-import { buildStyle } from '@/utils/helpers';
+import { Cell, Rejected } from '@/lib/types';
+import { buildStyle } from '@/lib/helpers';
 
 import styles from './DokkuCandidate.module.scss';
 

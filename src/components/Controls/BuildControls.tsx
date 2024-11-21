@@ -1,8 +1,8 @@
 'use client';
 import React, { Dispatch } from 'react';
 
-import { GridActions, gridToChunks, gridToString } from '@/utils/grid';
-import { Grid } from '@/utils/types';
+import { GridActions, gridToChunks, gridToString } from '@/lib/grid';
+import { Grid } from '@/lib/types';
 
 import Control from './Control';
 import Portal from '../Layout/Portal';

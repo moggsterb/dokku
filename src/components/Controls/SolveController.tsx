@@ -1,9 +1,9 @@
 import React, { Dispatch } from 'react';
 
-import { buildStyle } from '@/utils/helpers';
-import { DisplayMode, SolveType } from '@/utils/types';
+import { buildStyle } from '@/lib/helpers';
+import { DisplayMode, SolveType } from '@/lib/types';
 
-import { GridActions } from '@/utils/grid';
+import { GridActions } from '@/lib/grid';
 
 import { faCircleCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

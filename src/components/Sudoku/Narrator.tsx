@@ -1,7 +1,7 @@
 import React, { Dispatch } from 'react';
 
-import { GridActions } from '@/utils/grid';
-import { CellStatus, DisplayMode, Grid, SolveType } from '@/utils/types';
+import { GridActions } from '@/lib/grid';
+import { CellStatus, DisplayMode, Grid, SolveType } from '@/lib/types';
 
 import Portal from '../Layout/Portal';
 
@@ -9,7 +9,7 @@ import styles from './Narrator.module.scss';
 import {
   getTypeForDisplayMode,
   isCellSolveable,
-} from '@/utils/solving/analyseCells';
+} from '@/lib/solving/analyseCells';
 
 interface Props {
   grid: Grid;

@@ -2,11 +2,11 @@
 
 import React from 'react';
 
-import { initialCells } from '@/utils/cell';
+import { initialCells } from '@/lib/cell';
 
 import MainContainer from '@/components/Layout/MainContainer';
 import Puzzle from '@/components/Sudoku/GridWrapper';
-import { GridStatus } from '@/utils/types';
+import { GridStatus } from '@/lib/types';
 
 export default function Builder() {
   return (

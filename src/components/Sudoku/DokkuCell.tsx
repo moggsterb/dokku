@@ -4,14 +4,14 @@ import React, { useEffect, useState } from 'react';
 
 import { isBrowser } from 'react-device-detect';
 
-import { buildStyle } from '@/utils/helpers';
+import { buildStyle } from '@/lib/helpers';
 import {
   Cell,
   CellStatus,
   DisplayMode,
   GridStatus,
   SolveType,
-} from '@/utils/types';
+} from '@/lib/types';
 
 import DokkuCandidate from './DokkuCandidate';
 

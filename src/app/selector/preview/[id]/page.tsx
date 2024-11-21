@@ -2,14 +2,14 @@
 
 import React from 'react';
 
-import { loadCells } from '@/utils/cell';
+import { loadCells } from '@/lib/cell';
 import { EXAMPLES, LEVELS } from '@/data/examples';
 
 import MainContainer from '@/components/Layout/MainContainer';
 import Portal from '@/components/Layout/Portal';
 import Puzzle from '@/components/Sudoku/GridWrapper';
 import Control from '@/components/Controls/Control';
-import { GridStatus } from '@/utils/types';
+import { GridStatus } from '@/lib/types';
 
 export default function Preview({
   params: { id },

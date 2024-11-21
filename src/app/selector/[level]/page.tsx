@@ -3,8 +3,8 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 
-import { initialGrid } from '@/utils/grid';
-import { loadCells } from '@/utils/cell';
+import { initialGrid } from '@/lib/grid';
+import { loadCells } from '@/lib/cell';
 import { EXAMPLES, LEVELS } from '@/data/examples';
 
 import MainContainer from '@/components/Layout/MainContainer';
@@ -12,7 +12,7 @@ import AnimReveal from '@/components/Layout/AnimReveal';
 import Portal from '@/components/Layout/Portal';
 import DokkuGrid from '@/components/Sudoku/DokkuGrid';
 import Control from '@/components/Controls/Control';
-import { GridStatus } from '@/utils/types';
+import { GridStatus } from '@/lib/types';
 
 export default function Selector({
   params: { level },

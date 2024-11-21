@@ -1,7 +1,7 @@
 import React, { Dispatch } from 'react';
 
-import { GridActions } from '@/utils/grid';
-import { Cell, Grid } from '@/utils/types';
+import { GridActions } from '@/lib/grid';
+import { Cell, Grid } from '@/lib/types';
 
 import Control from './Control';
 import Portal from '../Layout/Portal';
