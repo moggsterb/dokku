@@ -30,3 +30,20 @@ export enum CellStatus {
   UNSOLVED = 'unsolved',
   SOLVED = 'solved'
 }
+
+export enum EnneadType {
+  BLOCK = 'block',
+  ROW = 'row',
+  COLUMN = 'column'
+}
+
+export enum SolveType {
+  ANY = 'any',
+  BLOCK = 'block',
+  ROW = 'row',
+  COLUMN = 'column',
+  SINGLE = 'single'
+
+}
+
+// export type EnneadType = 'block' | 'row' | 'column';

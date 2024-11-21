@@ -1,20 +1,20 @@
-import { CellStatus, DisplayMode, GridStatus } from "./enums";
+import { CellStatus, DisplayMode, EnneadType, GridStatus, SolveType } from "./enums";
 import { Grid, ActiveCell } from "./grid";
 import { Cell } from "./cell";
-import { EnneadType, Ennead, Enneads } from "./ennead";
+import { Ennead, Enneads } from "./ennead";
 import { Trio } from "./trio";
-import { ScanningSolveCell, SingleSolveCell, IsSolveable, SolveableCells, SolveableCellsByType, SolveType } from "./solveable";
+import { ScanningSolveCell, SingleSolveCell, IsSolveable, SolveableCells, SolveableCellsByType } from "./solveable";
 import { Candidate, Rejected } from "./candidate";
 
-export { DisplayMode, GridStatus, CellStatus };
+export { DisplayMode, GridStatus, CellStatus, EnneadType, SolveType };
 
 export type {
   Grid, ActiveCell,
   Cell,
-  EnneadType, Ennead, Enneads,
+  Ennead, Enneads,
   Trio,
   ScanningSolveCell, SingleSolveCell,
-  IsSolveable, SolveableCells, SolveableCellsByType, SolveType,
+  IsSolveable, SolveableCells, SolveableCellsByType,
   Candidate, Rejected
 };
 

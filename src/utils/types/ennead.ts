@@ -1,4 +1,5 @@
-export type EnneadType = 'block' | 'row' | 'column';
+import { EnneadType } from "./enums";
+
 
 export type Enneads = {
   [key in EnneadType]: Ennead[];

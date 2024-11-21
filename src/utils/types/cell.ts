@@ -1,6 +1,6 @@
 import { Candidate } from "./candidate";
-import { CellStatus, DisplayMode } from "./enums";
-import { IsSolveable, SolveType } from "./solveable";
+import { CellStatus, SolveType } from "./enums";
+import { IsSolveable } from "./solveable";
 
 export interface CellAnalysis {
   inSelector: boolean,

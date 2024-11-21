@@ -9,7 +9,7 @@ import styles from './Narrator.module.scss';
 import {
   getTypeForDisplayMode,
   isCellSolveable,
-} from '@/utils/grid/analyseCells';
+} from '@/utils/solving/analyseCells';
 
 interface Props {
   grid: Grid;
@@ -33,10 +33,10 @@ const Narrator = ({
     return `${count} ${noun}${count !== 1 ? 's' : ''}`;
   };
 
-  const getMethod = (type: string) => {
-    return type === 'any'
+  const getMethod = (type: SolveType) => {
+    return type === SolveType.ANY
       ? 'any method'
-      : type === 'single'
+      : type === SolveType.SINGLE
       ? 'single candidate'
       : `${type} scanning`;
   };
@@ -123,7 +123,7 @@ const Narrator = ({
           ? isCellSolveable(
               solveableCells,
               activeCellID,
-              getTypeForDisplayMode(displayMode) || 'any',
+              getTypeForDisplayMode(displayMode),
               'any'
             )
           : false;

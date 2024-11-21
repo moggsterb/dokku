@@ -1,9 +1,9 @@
 
 import { analyseCells, getTypeForDisplayMode, isCellSolveable } from "./analyseCells";
 import { updateEnneadsCounts } from "../ennead";
-import { updateCellCandidates } from "../solving/analysis";
-import { findScanningSolves } from "../solving/scanning";
-import { findSingleSolves } from "../solving/single";
+import { updateCellCandidates } from "./updateCounts";
+import { findScanningSolves } from "./findScanningSolves";
+import { findSingleSolves } from "./findSingleSolves";
 import { Grid, Cell, Enneads, SolveableCells, SolveableCellsByType, DisplayMode, GridStatus, CellStatus } from "../types";
 
 export const analyseGrid = (grid: Grid): Grid => {

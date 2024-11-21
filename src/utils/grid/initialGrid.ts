@@ -1,6 +1,6 @@
 import { initialEnneads } from "../ennead";
 import { DisplayMode, GridStatus, Cell, Grid, SolveableCells } from "../types";
-import { analyseGrid } from "./analyseGrid";
+import { analyseGrid } from "../solving/analyseGrid";
 
 const initialGrid = (startStatus: GridStatus, startCells: Cell[]): Grid => {
   return analyseGrid({

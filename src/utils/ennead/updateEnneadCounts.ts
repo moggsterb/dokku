@@ -3,9 +3,9 @@ import { Enneads, Cell, EnneadType } from "../types";
 
 export const updateEnneadsCounts = (enneads: Enneads, cells: Cell[]): Enneads => {
   return {
-    column: updateEnnead(enneads, 'column', cells),
-    block: updateEnnead(enneads, 'block', cells),
-    row: updateEnnead(enneads, 'row', cells),
+    column: updateEnnead(enneads, EnneadType.COLUMN, cells),
+    block: updateEnnead(enneads, EnneadType.BLOCK, cells),
+    row: updateEnnead(enneads, EnneadType.ROW, cells),
   };
 };
 

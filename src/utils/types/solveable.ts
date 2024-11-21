@@ -1,4 +1,4 @@
-import { EnneadType } from "./ennead";
+import { EnneadType, SolveType } from "./enums";
 
 interface SolveableCellBase {
   cellID: number,
@@ -6,17 +6,17 @@ interface SolveableCellBase {
 }
 
 export interface ScanningSolveCell extends SolveableCellBase {
-  method: EnneadType;
+  method: SolveType;
   enneadID: number;
 }
 
 export interface SingleSolveCell extends SolveableCellBase {
-  method: 'single';
+  method: SolveType.SINGLE;
 }
 
 export type SolveableCells = (ScanningSolveCell | SingleSolveCell)[]
 
-export type SolveType = EnneadType | 'single' | 'any';
+
 export type SolveableCellsByType = {
   [key in SolveType]: { cellID: number, solution: number }[]
 }

@@ -1,4 +1,4 @@
-import { Cell, CellStatus, SingleSolveCell } from "../types";
+import { Cell, CellStatus, SingleSolveCell, SolveType } from "../types";
 
 export const findSingleSolves = (cells: Cell[]): SingleSolveCell[] => {
 
@@ -12,7 +12,7 @@ export const findSingleSolves = (cells: Cell[]): SingleSolveCell[] => {
     .filter(item => item.candidates.length === 1)
     .map(item => {
       return {
-        method: 'single',
+        method: SolveType.SINGLE,
         cellID: item.cellID,
         solution: item.candidates[0].value
       }

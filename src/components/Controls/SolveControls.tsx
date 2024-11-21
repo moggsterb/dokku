@@ -1,7 +1,7 @@
 import { Dispatch } from 'react';
 
 import { GridActions } from '@/utils/grid';
-import { GridStatus, Grid } from '@/utils/types';
+import { GridStatus, Grid, EnneadType, SolveType } from '@/utils/types';
 
 import SolveController from './SolveController';
 import Portal from '../Layout/Portal';
@@ -17,11 +17,11 @@ const SolveControls = ({
   grid: { gridStatus, displayMode, solveableCellsByType },
   gridDispatch,
 }: Props) => {
-  const scanAll = solveableCellsByType['any'];
-  const scanBlock = solveableCellsByType['block'];
-  const scanColumn = solveableCellsByType['column'];
-  const scanRow = solveableCellsByType['row'];
-  const singles = solveableCellsByType['single'];
+  const scanAll = solveableCellsByType[SolveType.ANY];
+  const scanBlock = solveableCellsByType[SolveType.BLOCK];
+  const scanColumn = solveableCellsByType[SolveType.COLUMN];
+  const scanRow = solveableCellsByType[SolveType.ROW];
+  const singles = solveableCellsByType[SolveType.SINGLE];
 
   return (
     <Portal type='footer'>
@@ -31,31 +31,31 @@ const SolveControls = ({
             gridStatus === GridStatus.AUTO) && (
             <div className={styles.solvers}>
               <SolveController
-                type={'any'}
+                type={SolveType.ANY}
                 gridDispatch={gridDispatch}
                 cellIDs={scanAll}
                 displayMode={displayMode}
               />
               <SolveController
-                type={'block'}
+                type={SolveType.BLOCK}
                 gridDispatch={gridDispatch}
                 cellIDs={scanBlock}
                 displayMode={displayMode}
               />
               <SolveController
-                type={'column'}
+                type={SolveType.COLUMN}
                 gridDispatch={gridDispatch}
                 cellIDs={scanColumn}
                 displayMode={displayMode}
               />
               <SolveController
-                type={'row'}
+                type={SolveType.ROW}
                 gridDispatch={gridDispatch}
                 cellIDs={scanRow}
                 displayMode={displayMode}
               />
               <SolveController
-                type={'single'}
+                type={SolveType.SINGLE}
                 gridDispatch={gridDispatch}
                 cellIDs={singles}
                 displayMode={displayMode}

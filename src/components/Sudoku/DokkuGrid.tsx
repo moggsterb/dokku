@@ -8,7 +8,7 @@ import { GridActions } from '@/utils/grid';
 import DokkuCell from './DokkuCell';
 
 import styles from './DokkuGrid.module.scss';
-import { isCellSolveable } from '@/utils/grid/analyseCells';
+import { isCellSolveable } from '@/utils/solving/analyseCells';
 
 interface Props {
   grid: Grid;
@@ -43,7 +43,12 @@ const DokkuGrid = ({
         });
       }
     } else {
-      const solveable = isCellSolveable(solveableCells, cellID, 'any', 'any');
+      const solveable = isCellSolveable(
+        solveableCells,
+        cellID,
+        SolveType.ANY,
+        'any'
+      );
       if (solveable) {
         gridDispatch({
           type: 'SOLVE_CELLS',

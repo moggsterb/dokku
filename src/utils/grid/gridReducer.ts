@@ -1,8 +1,7 @@
-import { initialCells } from "../cell";
-import { getDisplayModeForType, isCellSolveable } from "./analyseCells";
-import { setCells, batchSolveCells } from "../solving/scanning";
-import { Cell, SolveType, Grid, IsSolveable, GridStatus, DisplayMode, CellStatus } from "../types";
-import { analyseGrid } from "./analyseGrid";
+import { batchSolveCells, initialCells, setCells } from "../cell";
+import { getDisplayModeForType, isCellSolveable } from "../solving/analyseCells";
+import { Cell, SolveType, Grid, GridStatus, DisplayMode, CellStatus } from "../types";
+import { analyseGrid } from "../solving/analyseGrid";
 
 export type GridActions =
   | { type: 'RESET_GRID' }
@@ -79,7 +78,7 @@ export const updateState = (state: Grid, action: GridActions) => {
           displayMode: DisplayMode.SCANNING_VALUE
         }
       }
-      const solveable = isCellSolveable(state.solveableCells, id, action.payload.method || 'any', 'any')
+      const solveable = isCellSolveable(state.solveableCells, id, action.payload.method || SolveType.ANY, 'any')
       const displayMode = solveable ? getDisplayModeForType(solveable.type) : DisplayMode.MANUAL;
 
       return {

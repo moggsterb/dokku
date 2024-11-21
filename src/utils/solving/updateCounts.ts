@@ -29,9 +29,9 @@ const cellCandidates = (cells: Cell[], cell: Cell, stage: number): Candidate[] =
 
 export const getTakenValues = (cells: Cell[], cell: Cell) => {
   const taken = takenCellValues([
-    ...cellsInEnnead(cells, 'row', cell.row),
-    ...cellsInEnnead(cells, 'column', cell.column),
-    ...cellsInEnnead(cells, 'block', cell.block),
+    ...cellsInEnnead(cells, EnneadType.ROW, cell.row),
+    ...cellsInEnnead(cells, EnneadType.COLUMN, cell.column),
+    ...cellsInEnnead(cells, EnneadType.BLOCK, cell.block),
   ])
   const uniqueArray = taken.filter((value, index) => taken.indexOf(value) === index);
   return uniqueArray;
