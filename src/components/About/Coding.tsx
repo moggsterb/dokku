@@ -24,6 +24,7 @@ const Coding = () => {
         <ul>
           <li>React 18</li>
           <li>Next 14</li>
+          <li>TypeScript</li>
           <li>Module SCSS</li>
           <li>Responsive Web</li>
         </ul>

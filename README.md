@@ -8,6 +8,7 @@ This project serves as my go-to exercise for refining advanced coding skills and
 
 - React 18
 - Next 14
+- TypeScript
 - Module SCSS
 - Responsive Web
 
