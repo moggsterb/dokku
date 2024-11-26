@@ -31,8 +31,8 @@ const Coding = () => {
 
         <h2>Dokku Grid Update Process</h2>
         <p>
-          <em>Dokku</em> employs a reducer to manage the Grid's state, which
-          includes:
+          <em>Dokku</em> employs a reducer to manage the Grid&apos;s state,
+          which includes:
         </p>
         <ul>
           <li>
@@ -103,7 +103,7 @@ const Coding = () => {
                 The display properties are determined by:
                 <ul>
                   <li>The current state of the cell.</li>
-                  <li>The grid's display mode.</li>
+                  <li>The grid&apos;s display mode.</li>
                   <li>
                     The relationship between the cell and any selected (active)
                     cell.
