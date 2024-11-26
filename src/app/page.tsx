@@ -12,6 +12,7 @@ export default function Home() {
     <MainContainer>
       <Dokku />
       <LevelSelector />
+
       <Link href='/method' className='link' prefetch={false}>
         How Dokku Solves Puzzles
       </Link>

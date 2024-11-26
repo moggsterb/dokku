@@ -35,13 +35,24 @@
   }
 
   p,
-  ul {
+  ul,
+  ol {
     font-size: 1.2em;
     line-height: 1.6;
+
+    ol,
+    ul {
+      font-size: 1em;
+    }
 
     &.extra {
       font-size: 1.5em;
       line-height: 1.5;
+    }
+
+    li {
+      width: 90%;
+      margin: 0 auto;
     }
   }
 

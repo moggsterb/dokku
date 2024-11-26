@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
 import styles from './Footer.module.scss';
+import Link from 'next/link';
 
 const Footer = () => {
   const [mounted, setMounted] = useState(false);
@@ -14,7 +15,12 @@ const Footer = () => {
 
   return (
     <footer className={styles.footer}>
-      <div className={styles.copy}>&copy; MB 2024</div>
+      <div className={styles.copy}>
+        &copy; MB 2024{' '}
+        <Link href='/coding' className='link' prefetch={false}>
+          About Dokku
+        </Link>
+      </div>
       {mounted && (
         <button
           className={styles.theme}

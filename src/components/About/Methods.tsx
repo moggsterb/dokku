@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
 
-import styles from './Methods.module.scss';
+import styles from './About.module.scss';
 
 const SubSection = ({
   children,

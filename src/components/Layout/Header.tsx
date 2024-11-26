@@ -18,6 +18,7 @@ const Header = () => {
     { title: 'DOKKU', url: '/' },
     ...LEVELS,
     { title: 'How Dokku Solves Puzzles', url: '/method' },
+    { title: 'About the Dokku Project', url: '/coding' },
   ];
 
   const router = useRouter();
