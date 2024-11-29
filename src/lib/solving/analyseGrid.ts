@@ -30,7 +30,7 @@ export const analyseGrid = (grid: Grid): Grid => {
 
   return {
     ...grid,
-    ...(complete && { gridStatus: GridStatus.COMPLETE, displayMode: DisplayMode.COMPLETE }),
+    ...(complete && { gridStatus: GridStatus.COMPLETED, displayMode: DisplayMode.COMPLETE }),
     cells: analysedCells,
     enneads,
     solveableCells,

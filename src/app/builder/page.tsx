@@ -13,7 +13,7 @@ export default function Builder() {
     <MainContainer>
       <Puzzle
         initialCells={initialCells()}
-        initialStatus={GridStatus.BUILDER}
+        initialStatus={GridStatus.BUILDING}
         showCandidates={false}
       />
     </MainContainer>

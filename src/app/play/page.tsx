@@ -14,7 +14,7 @@ export default function Play({
     <MainContainer>
       <Puzzle
         initialCells={cells}
-        initialStatus={GridStatus.ASSEMBLE}
+        initialStatus={GridStatus.ASSEMBLING}
         showCandidates={false}
         showHints={true}
       />

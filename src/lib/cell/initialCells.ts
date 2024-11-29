@@ -25,7 +25,7 @@ export const initialCells = (): Cell[] => {
         trioColumn,
         cellAnalysis: initialAnalysis(
           undefined,
-          GridStatus.READY,
+          GridStatus.PLAYING,
           CellStatus.UNSOLVED,
           undefined,
           []

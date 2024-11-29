@@ -26,8 +26,11 @@ const DokkuGrid = ({
   const { cells, gridStatus, displayMode, activeCellID, solveableCells } = grid;
 
   const handleCellClick = (cellID: number) => {
-    if (!gridDispatch || gridStatus === GridStatus.PREVIEW) return;
-    if (gridStatus === GridStatus.BUILDER || gridStatus === GridStatus.READY) {
+    if (!gridDispatch || gridStatus === GridStatus.PREVIEWING) return;
+    if (
+      gridStatus === GridStatus.BUILDING ||
+      gridStatus === GridStatus.PLAYING
+    ) {
       if (!cells[cellID].value) {
         if (cellID !== activeCellID) {
           gridDispatch({ type: 'FOCUS_CELL', payload: { cellID } });
@@ -62,14 +65,16 @@ const DokkuGrid = ({
   };
 
   const handleMethodClick = (cellID: number, method: SolveType) => {
-    if (!gridDispatch || gridStatus === GridStatus.PREVIEW) return;
+    if (!gridDispatch || gridStatus === GridStatus.PREVIEWING) return;
     gridDispatch({ type: 'FOCUS_CELL', payload: { cellID, method } });
   };
 
   const handleCandidateClick = (cellID: number, value: number) => {
-    if (!gridDispatch || gridStatus === GridStatus.PREVIEW) return;
+    if (!gridDispatch || gridStatus === GridStatus.PREVIEWING) return;
     const type =
-      gridStatus === GridStatus.BUILDER ? CellStatus.PRESET : CellStatus.SOLVED;
+      gridStatus === GridStatus.BUILDING
+        ? CellStatus.PRESET
+        : CellStatus.SOLVED;
     gridDispatch({ type: 'SET_CELL', payload: { cellID, value, type } });
   };
 
@@ -92,7 +97,7 @@ const DokkuGrid = ({
   };
 
   const gridStyle = `${styles.grid} ${
-    gridStatus === GridStatus.SELECTOR
+    gridStatus === GridStatus.SELECTING
       ? `${styles.gridSelector} ${isBrowser ? styles.gridHoverable : ''}`
       : ''
   }`;

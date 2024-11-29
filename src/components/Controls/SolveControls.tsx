@@ -27,8 +27,8 @@ const SolveControls = ({
     <Portal type='footer'>
       <div className={styles.wrapper}>
         {gridDispatch &&
-          (gridStatus === GridStatus.READY ||
-            gridStatus === GridStatus.ASSEMBLE) && (
+          (gridStatus === GridStatus.PLAYING ||
+            gridStatus === GridStatus.ASSEMBLING) && (
             <div className={styles.solvers}>
               <SolveController
                 type={SolveType.ANY}

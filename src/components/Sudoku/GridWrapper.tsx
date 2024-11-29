@@ -37,17 +37,17 @@ const GridWrapper = ({
         }
       }}
     >
-      {gridStatus === GridStatus.BUILDER && (
+      {gridStatus === GridStatus.BUILDING && (
         <BuildControls grid={grid} gridDispatch={gridDispatch} />
       )}
-      {(gridStatus === GridStatus.READY ||
-        gridStatus === GridStatus.ASSEMBLE) && (
+      {(gridStatus === GridStatus.PLAYING ||
+        gridStatus === GridStatus.ASSEMBLING) && (
         <>
           <SolveControls grid={grid} gridDispatch={gridDispatch} />
           <Narrator grid={grid} gridDispatch={gridDispatch} />
         </>
       )}
-      {gridStatus === GridStatus.COMPLETE && (
+      {gridStatus === GridStatus.COMPLETED && (
         <CompleteControls
           grid={grid}
           gridDispatch={gridDispatch}
@@ -60,9 +60,9 @@ const GridWrapper = ({
         showHints={showHints}
         gridDispatch={gridDispatch}
       />
-      <h1>
+      {/* <h1>
         {gridStatus} : {displayMode}
-      </h1>
+      </h1> */}
     </div>
   );
 };

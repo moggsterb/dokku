@@ -1,10 +1,10 @@
 export enum GridStatus {
-  BUILDER = 'builder',
-  SELECTOR = 'selector',
-  PREVIEW = 'preview',
-  ASSEMBLE = 'assemble',
-  READY = 'ready',
-  COMPLETE = 'complete',
+  BUILDING = 'building',
+  SELECTING = 'selecting',
+  PREVIEWING = 'previewing',
+  ASSEMBLING = 'assembling',
+  PLAYING = 'playing',
+  COMPLETED = 'completed',
 }
 
 export enum DisplayMode {

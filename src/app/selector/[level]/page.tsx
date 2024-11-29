@@ -55,7 +55,7 @@ export default function Selector({
                   >
                     <DokkuGrid
                       grid={initialGrid(
-                        GridStatus.SELECTOR,
+                        GridStatus.SELECTING,
                         loadCells(grid.id)
                       )}
                       showHints={false}

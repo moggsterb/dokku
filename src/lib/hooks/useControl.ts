@@ -13,7 +13,7 @@ const useControl = (initialStatus: GridStatus, gridCells: Cell[]) => {
   const [count, setCount] = useState(0);
   const [grid, gridDispatch] = useReducer(
     gridReducer,
-    initialGrid(initialStatus, initialStatus === GridStatus.ASSEMBLE ? initialCells() : gridCells)
+    initialGrid(initialStatus, initialStatus === GridStatus.ASSEMBLING ? initialCells() : gridCells)
   );
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const useControl = (initialStatus: GridStatus, gridCells: Cell[]) => {
 
     const interval = setInterval(() => {
 
-      if (grid.gridStatus === GridStatus.ASSEMBLE) {
+      if (grid.gridStatus === GridStatus.ASSEMBLING) {
         setCount(count + 1);
         if (outstanding.length > 0) {
           gridDispatch({
@@ -38,7 +38,7 @@ const useControl = (initialStatus: GridStatus, gridCells: Cell[]) => {
           gridDispatch({
             type: 'UPDATE_STATUS',
             payload: {
-              status: GridStatus.READY,
+              status: GridStatus.PLAYING,
             },
           });
 

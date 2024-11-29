@@ -9,9 +9,9 @@ export const initialAnalysis = (
   allSolveMethods: SolveType[]
 ): CellAnalysis => {
   return {
-    inSelector: gridStatus === GridStatus.SELECTOR,
-    canActivate: (gridStatus !== GridStatus.PREVIEW && gridStatus !== GridStatus.SELECTOR && cellStatus !== CellStatus.PRESET) || gridStatus === GridStatus.BUILDER,
-    isComplete: gridStatus === GridStatus.COMPLETE,
+    inSelector: gridStatus === GridStatus.SELECTING,
+    canActivate: (gridStatus !== GridStatus.PREVIEWING && gridStatus !== GridStatus.SELECTING && cellStatus !== CellStatus.PRESET) || gridStatus === GridStatus.BUILDING,
+    isComplete: gridStatus === GridStatus.COMPLETED,
 
     hasValue: value !== undefined,
     hasFocusedValue: false,

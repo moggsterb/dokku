@@ -85,7 +85,7 @@ const DokkuCell = ({
   const isHoverable =
     isBrowser &&
     cell.status !== CellStatus.PRESET &&
-    gridStatus === GridStatus.READY;
+    gridStatus === GridStatus.PLAYING;
 
   const animRequired =
     (value !== undefined || id === activeCellID) &&
@@ -146,7 +146,7 @@ const DokkuCell = ({
               )}
               canSet={
                 (isActive && highlightSolve === value) ||
-                gridStatus === GridStatus.BUILDER
+                gridStatus === GridStatus.BUILDING
               }
               clickHandler={setHandler}
             />

@@ -24,7 +24,7 @@ export default function Preview({
       <MainContainer>
         <Puzzle
           initialCells={loadCells(Number(id))}
-          initialStatus={GridStatus.PREVIEW}
+          initialStatus={GridStatus.PREVIEWING}
         />
       </MainContainer>
 
