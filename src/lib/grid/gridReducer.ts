@@ -31,7 +31,7 @@ export const updateState = (state: Grid, action: GridActions) => {
       return {
         ...state,
         cells: [...action.payload.cells],
-        gridStatus: GridStatus.AUTO
+        gridStatus: GridStatus.ASSEMBLE
       }
     }
     case 'UPDATE_MODE':

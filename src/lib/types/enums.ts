@@ -2,7 +2,7 @@ export enum GridStatus {
   BUILDER = 'builder',
   SELECTOR = 'selector',
   PREVIEW = 'preview',
-  AUTO = 'auto',
+  ASSEMBLE = 'assemble',
   READY = 'ready',
   COMPLETE = 'complete',
 }

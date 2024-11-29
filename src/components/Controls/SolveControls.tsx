@@ -28,7 +28,7 @@ const SolveControls = ({
       <div className={styles.wrapper}>
         {gridDispatch &&
           (gridStatus === GridStatus.READY ||
-            gridStatus === GridStatus.AUTO) && (
+            gridStatus === GridStatus.ASSEMBLE) && (
             <div className={styles.solvers}>
               <SolveController
                 type={SolveType.ANY}

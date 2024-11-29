@@ -40,7 +40,8 @@ const GridWrapper = ({
       {gridStatus === GridStatus.BUILDER && (
         <BuildControls grid={grid} gridDispatch={gridDispatch} />
       )}
-      {(gridStatus === GridStatus.READY || gridStatus === GridStatus.AUTO) && (
+      {(gridStatus === GridStatus.READY ||
+        gridStatus === GridStatus.ASSEMBLE) && (
         <>
           <SolveControls grid={grid} gridDispatch={gridDispatch} />
           <Narrator grid={grid} gridDispatch={gridDispatch} />
@@ -59,6 +60,9 @@ const GridWrapper = ({
         showHints={showHints}
         gridDispatch={gridDispatch}
       />
+      <h1>
+        {gridStatus} : {displayMode}
+      </h1>
     </div>
   );
 };
