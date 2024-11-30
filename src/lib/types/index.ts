@@ -1,5 +1,5 @@
 import { CellStatus, DisplayMode, EnneadType, GridStatus, SolveType } from "./enums";
-import { Grid, ActiveCell } from "./grid";
+import { Grid, ActiveCell, Sequencer } from "./grid";
 import { Cell } from "./cell";
 import { Ennead, Enneads } from "./ennead";
 import { Trio } from "./trio";
@@ -9,7 +9,7 @@ import { Candidate, Rejected } from "./candidate";
 export { DisplayMode, GridStatus, CellStatus, EnneadType, SolveType };
 
 export type {
-  Grid, ActiveCell,
+  Grid, ActiveCell, Sequencer,
   Cell,
   Ennead, Enneads,
   Trio,

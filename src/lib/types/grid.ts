@@ -11,6 +11,13 @@ interface ActivatedCell {
 
 export type ActiveCell = ActivatedCell | undefined
 
+export interface SequencerTypes {
+  type: 'Assemble' | 'Complete' | 'Scan' | 'Single'
+  currentFrame: number;
+}
+
+export type Sequencer = SequencerTypes | undefined
+
 export interface Grid {
   gridStatus: GridStatus;
   displayMode: DisplayMode;
@@ -23,5 +30,5 @@ export interface Grid {
 
   activeCellID: number | undefined;
 
-  sequencer: number | undefined;
+  sequencer: Sequencer;
 }

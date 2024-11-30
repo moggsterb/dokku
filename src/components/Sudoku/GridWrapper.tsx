@@ -60,13 +60,13 @@ const GridWrapper = ({
         showHints={showHints}
         gridDispatch={gridDispatch}
       />
-      {/* <span>
+      <span>
         Grid: {gridStatus}
         <br />
         Display: {displayMode}
         <br />
-        Sequencer: {sequencer}
-      </span> */}
+        Sequencer: {sequencer?.currentFrame}
+      </span>
     </div>
   );
 };

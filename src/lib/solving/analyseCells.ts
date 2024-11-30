@@ -1,6 +1,6 @@
 import { cellsInEnnead, initialAnalysis } from "../cell";
 import { takenInEnnead } from "./updateCounts";
-import { Cell, Enneads, GridStatus, DisplayMode, SolveableCells, IsSolveable, SolveType, EnneadType } from "../types";
+import { Cell, Enneads, GridStatus, DisplayMode, SolveableCells, IsSolveable, SolveType, EnneadType, Sequencer } from "../types";
 import { CellAnalysis } from "../types/cell";
 
 export const analyseCells = (
@@ -8,7 +8,7 @@ export const analyseCells = (
   enneads: Enneads,
   gridStatus: GridStatus,
   displayMode: DisplayMode,
-  sequencer: number | undefined,
+  sequencer: Sequencer,
   solveableCells: SolveableCells,
   activeCell: Cell | undefined,
   activeSolveable: IsSolveable,
@@ -38,7 +38,7 @@ const analyseCell = (
   cell: Cell,
   gridStatus: GridStatus,
   displayMode: DisplayMode,
-  sequencer: number | undefined,
+  sequencer: Sequencer,
   solveableCells: SolveableCells,
   activeCell: Cell | undefined,
   activeSolveable: IsSolveable,

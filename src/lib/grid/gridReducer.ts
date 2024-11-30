@@ -1,6 +1,6 @@
 import { batchSolveCells, initialCells, setCells } from "../cell";
 import { getDisplayModeForType, isCellSolveable } from "../solving/analyseCells";
-import { Cell, SolveType, Grid, GridStatus, DisplayMode, CellStatus } from "../types";
+import { Cell, SolveType, Grid, GridStatus, DisplayMode, CellStatus, Sequencer } from "../types";
 import { analyseGrid } from "../solving/analyseGrid";
 import { act } from "react-dom/test-utils";
 
@@ -40,7 +40,7 @@ export const updateState = (state: Grid, action: GridActions) => {
         })],
         gridStatus: GridStatus.ASSEMBLING,
         displayMode: DisplayMode.ASSEMBLE,
-        sequencer: 1,
+        sequencer: { type: 'Assemble', currentFrame: 1 } as Sequencer,
       }
     }
     case 'UPDATE_MODE':
@@ -56,10 +56,9 @@ export const updateState = (state: Grid, action: GridActions) => {
         gridStatus: action.payload.status
       }
     case 'INC_SEQUENCER':
-      const sequencer = (state.sequencer || 0) + 1;
+
       const unRevealedPresets = state.cells.filter(cell => (cell.status === CellStatus.PRESET && cell.value === undefined))
       const sequenceComplete = unRevealedPresets.length === 0
-      // console.log(unRevealedPresets.length)
       if (sequenceComplete) {
         return {
           ...state,
@@ -70,10 +69,14 @@ export const updateState = (state: Grid, action: GridActions) => {
         }
       }
       const revealCell = unRevealedPresets[Math.floor(Math.random() * unRevealedPresets.length)]
+      const currentFrame = (state.sequencer?.currentFrame || 0) + 1;
       return {
         ...state,
         cells: setCells([...state.cells], [revealCell.id], revealCell.presetValue, CellStatus.PRESET),
-        sequencer,
+        sequencer: {
+          ...state.sequencer,
+          currentFrame
+        } as Sequencer,
       }
 
     case 'SET_CELL':
