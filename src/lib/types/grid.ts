@@ -22,4 +22,6 @@ export interface Grid {
   solveableCellsByType: SolveableCellsByType;
 
   activeCellID: number | undefined;
+
+  sequencer: number | undefined;
 }

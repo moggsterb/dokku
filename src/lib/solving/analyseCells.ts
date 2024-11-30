@@ -8,6 +8,7 @@ export const analyseCells = (
   enneads: Enneads,
   gridStatus: GridStatus,
   displayMode: DisplayMode,
+  sequencer: number | undefined,
   solveableCells: SolveableCells,
   activeCell: Cell | undefined,
   activeSolveable: IsSolveable,
@@ -19,6 +20,7 @@ export const analyseCells = (
       cell,
       gridStatus,
       displayMode,
+      sequencer,
       solveableCells,
       activeCell,
       activeSolveable
@@ -36,6 +38,7 @@ const analyseCell = (
   cell: Cell,
   gridStatus: GridStatus,
   displayMode: DisplayMode,
+  sequencer: number | undefined,
   solveableCells: SolveableCells,
   activeCell: Cell | undefined,
   activeSolveable: IsSolveable,
@@ -58,6 +61,12 @@ const analyseCell = (
     const activeValue = activeCell?.value
 
     switch (displayMode) {
+      // case DisplayMode.ASSEMBLE:
+
+      //   return {
+      //     ...state,
+      //     canDisplayValue: sequencer !== undefined && sequencer > cell.assembleSequenceId
+      //   }
       // when a cell without a value is clicked
       // - the cell and candidate grid is scaled up 
       // - influencing enneads are displayed

@@ -17,12 +17,14 @@ export const initialCells = (): Cell[] => {
         block: blockRow * 3 + blockColumn,
         status: CellStatus.UNSOLVED,
         value: undefined,
+        presetValue: undefined,
         candidates: [1, 2, 3, 4, 5, 6, 7, 8, 9].map((value) => {
           return { value };
         }),
         solution: [],
         trioRow,
         trioColumn,
+        assembleSequenceId: 0,
         cellAnalysis: initialAnalysis(
           undefined,
           GridStatus.PLAYING,

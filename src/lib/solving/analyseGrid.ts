@@ -21,6 +21,7 @@ export const analyseGrid = (grid: Grid): Grid => {
     enneads,
     grid.gridStatus,
     grid.displayMode,
+    grid.sequencer,
     solveableCells,
     activeCell,
     activeSolveable

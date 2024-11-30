@@ -9,7 +9,7 @@ export default function Play({
 }: {
   searchParams: { puzzle: string; custom: string };
 }) {
-  const cells = custom ? customCells(custom) : loadCells(Number(puzzle));
+  const cells = custom ? customCells(custom, false) : loadCells(Number(puzzle));
   return (
     <MainContainer>
       <Puzzle

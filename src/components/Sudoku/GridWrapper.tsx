@@ -3,7 +3,7 @@
 import React from 'react';
 
 import { DisplayMode, GridStatus, Cell } from '@/lib/types';
-import useControl from '@/lib/hooks/useControl';
+import useTicker from '@/lib/hooks/useTicker';
 
 import DokkuGrid from './DokkuGrid';
 import Narrator from './Narrator';
@@ -25,8 +25,8 @@ const GridWrapper = ({
   showCandidates = false,
   showHints = false,
 }: Props) => {
-  const { grid, gridDispatch } = useControl(initialStatus, initialCells);
-  const { gridStatus, displayMode } = grid;
+  const { grid, gridDispatch } = useTicker(initialStatus, initialCells);
+  const { gridStatus, displayMode, sequencer } = grid;
 
   return (
     <div
@@ -60,9 +60,13 @@ const GridWrapper = ({
         showHints={showHints}
         gridDispatch={gridDispatch}
       />
-      {/* <h1>
-        {gridStatus} : {displayMode}
-      </h1> */}
+      {/* <span>
+        Grid: {gridStatus}
+        <br />
+        Display: {displayMode}
+        <br />
+        Sequencer: {sequencer}
+      </span> */}
     </div>
   );
 };

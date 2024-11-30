@@ -57,6 +57,7 @@ const DokkuCell = ({
 
   const {
     hasValue,
+    isPreset,
     isActive,
     inSelector,
     inConnectedBlock,
@@ -190,7 +191,7 @@ const DokkuCell = ({
       { style: styles.solveableColumn, condition: isSolveableColumn },
       { style: styles.solveableRow, condition: isSolveableRow },
       { style: styles.solveableSingle, condition: isSolveableSingle },
-      { style: styles.preset, condition: status === CellStatus.PRESET },
+      { style: styles.preset, condition: isPreset && hasValue },
       { style: styles.singleSolve, condition: isCellSingleSolve },
       { style: styles.complete, condition: isComplete },
       { style: styles.hoverable, condition: isHoverable },

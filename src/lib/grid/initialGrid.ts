@@ -2,10 +2,15 @@ import { initialEnneads } from "../ennead";
 import { DisplayMode, GridStatus, Cell, Grid, SolveableCells } from "../types";
 import { analyseGrid } from "../solving/analyseGrid";
 
-const initialGrid = (startStatus: GridStatus, startCells: Cell[]): Grid => {
+const initialGrid = (
+  gridStatus: GridStatus,
+  displayMode: DisplayMode,
+  sequencer: number | undefined,
+  startCells: Cell[]
+): Grid => {
   return analyseGrid({
-    gridStatus: startStatus,
-    displayMode: DisplayMode.READY,
+    gridStatus,
+    displayMode,
     cells: startCells,
     enneads: initialEnneads(),
     solveableCells: [] as SolveableCells,
@@ -17,6 +22,7 @@ const initialGrid = (startStatus: GridStatus, startCells: Cell[]): Grid => {
       single: []
     },
     activeCellID: undefined,
+    sequencer
   })
 }
 

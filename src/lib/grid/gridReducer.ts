@@ -2,12 +2,14 @@ import { batchSolveCells, initialCells, setCells } from "../cell";
 import { getDisplayModeForType, isCellSolveable } from "../solving/analyseCells";
 import { Cell, SolveType, Grid, GridStatus, DisplayMode, CellStatus } from "../types";
 import { analyseGrid } from "../solving/analyseGrid";
+import { act } from "react-dom/test-utils";
 
 export type GridActions =
   | { type: 'RESET_GRID' }
   | { type: 'RESTART_GRID', payload: { cells: Cell[] } }
   | { type: 'UPDATE_MODE', payload: { mode: DisplayMode; } }
   | { type: 'UPDATE_STATUS', payload: { status: GridStatus; } }
+  | { type: 'INC_SEQUENCER' }
   | { type: 'SET_CELL', payload: { cellID: number, value: number, type: CellStatus.SOLVED | CellStatus.PRESET } }
   | { type: 'RESET_CELL', payload: { cellID: number } }
   | { type: 'FOCUS_CELL', payload: { cellID: number, method?: SolveType } }
@@ -46,6 +48,26 @@ export const updateState = (state: Grid, action: GridActions) => {
         ...state,
         gridStatus: action.payload.status
       }
+    case 'INC_SEQUENCER':
+      const sequencer = (state.sequencer || 0) + 1;
+      const unRevealedPresets = state.cells.filter(cell => (cell.status === CellStatus.PRESET && cell.value === undefined))
+      const sequenceComplete = unRevealedPresets.length === 0
+      if (sequenceComplete) {
+        return {
+          ...state,
+          sequencer: undefined,
+          displayMode: DisplayMode.READY,
+          gridStatus: GridStatus.PLAYING,
+
+        }
+      }
+      const revealCell = unRevealedPresets[Math.floor(Math.random() * unRevealedPresets.length)]
+      return {
+        ...state,
+        cells: setCells([...state.cells], [revealCell.id], revealCell.presetValue, CellStatus.PRESET),
+        sequencer,
+      }
+
     case 'SET_CELL':
       return {
         ...state,

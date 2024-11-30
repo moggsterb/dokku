@@ -25,7 +25,7 @@
     align-items: center;
     background: var(--cell-bg);
     color: var(--cell-fg);
-    transition: background 0.25s ease-in, transform 0.25s ease-in;
+    transition: all 0.25s ease-in, transform 0.25s ease-in;
     border-radius: var(--cell-radius);
     position: relative;
 

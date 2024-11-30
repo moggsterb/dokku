@@ -14,13 +14,13 @@ export const initialAnalysis = (
     isComplete: gridStatus === GridStatus.COMPLETED,
 
     hasValue: value !== undefined,
+    isPreset: cellStatus === CellStatus.PRESET,
     hasFocusedValue: false,
     isActive: false,
 
     inConnectedBlock: false,
     inConnectedColumn: false,
     inConnectedRow: false,
-
 
     inBarredBlock: false,
     inBarredColumn: false,

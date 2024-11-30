@@ -8,6 +8,7 @@ export enum GridStatus {
 }
 
 export enum DisplayMode {
+  ASSEMBLE = 'assemble',
   READY = 'ready',
   MANUAL = 'manual',
   ACTIVE_CELL = 'active_cell',

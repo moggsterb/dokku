@@ -12,7 +12,7 @@ import AnimReveal from '@/components/Layout/AnimReveal';
 import Portal from '@/components/Layout/Portal';
 import DokkuGrid from '@/components/Sudoku/DokkuGrid';
 import Control from '@/components/Controls/Control';
-import { GridStatus } from '@/lib/types';
+import { DisplayMode, GridStatus } from '@/lib/types';
 
 export default function Selector({
   params: { level },
@@ -56,7 +56,9 @@ export default function Selector({
                     <DokkuGrid
                       grid={initialGrid(
                         GridStatus.SELECTING,
-                        loadCells(grid.id)
+                        DisplayMode.READY,
+                        undefined,
+                        loadCells(grid.id, true)
                       )}
                       showHints={false}
                     />

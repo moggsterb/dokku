@@ -8,6 +8,7 @@ export interface CellAnalysis {
   isComplete: boolean;
 
   hasValue: boolean;
+  isPreset: boolean;
   hasFocusedValue: boolean;
   isActive: boolean;
 
@@ -44,7 +45,10 @@ export interface Cell {
   trioRow: number;
   trioColumn: number;
 
+  assembleSequenceId: number,
+
   value: number | undefined;
+  presetValue: number | undefined;
 
   candidates: Candidate[];
   solution: { value: number; method: string }[];
