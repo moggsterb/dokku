@@ -32,8 +32,15 @@ export const updateState = (state: Grid, action: GridActions) => {
     case 'RESTART_GRID': {
       return {
         ...state,
-        cells: [...action.payload.cells],
-        gridStatus: GridStatus.ASSEMBLING
+        cells: [...action.payload.cells.map(cell => {
+          return {
+            ...cell,
+            value: undefined
+          }
+        })],
+        gridStatus: GridStatus.ASSEMBLING,
+        displayMode: DisplayMode.ASSEMBLE,
+        sequencer: 1,
       }
     }
     case 'UPDATE_MODE':
@@ -52,6 +59,7 @@ export const updateState = (state: Grid, action: GridActions) => {
       const sequencer = (state.sequencer || 0) + 1;
       const unRevealedPresets = state.cells.filter(cell => (cell.status === CellStatus.PRESET && cell.value === undefined))
       const sequenceComplete = unRevealedPresets.length === 0
+      // console.log(unRevealedPresets.length)
       if (sequenceComplete) {
         return {
           ...state,

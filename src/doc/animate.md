@@ -51,6 +51,9 @@ Control Ticker will update the grid state which will trigger a display update.
 3. [ ] modify (ticker) to update it (which will force the display update)
 
 4. [ ] refactor anims for ASSEMBLE
+
+- Fix 'replay' action for new ASSEMBLE
+
 5. refactor anims for COMPLETE
 6. refactor anims for SINGLE
 7. refactor anims for SCANNING
