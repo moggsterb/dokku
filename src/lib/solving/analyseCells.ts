@@ -61,12 +61,6 @@ const analyseCell = (
     const activeValue = activeCell?.value
 
     switch (displayMode) {
-      // case DisplayMode.ASSEMBLE:
-
-      //   return {
-      //     ...state,
-      //     canDisplayValue: sequencer !== undefined && sequencer > cell.assembleSequenceId
-      //   }
       // when a cell without a value is clicked
       // - the cell and candidate grid is scaled up 
       // - influencing enneads are displayed
@@ -183,6 +177,11 @@ const analyseCell = (
           inBarredRow: takenInEnnead(cells, EnneadType.ROW, cell.row, activeValue),
           isSolveable: isCellSolveable(solveableCells, cell.id, SolveType.ANY, activeValue),
           hasFocusedValue: cell.value === activeValue,
+        }
+      case DisplayMode.COMPLETE:
+        return {
+          ...state,
+          isCompleteAnim: cell.value === sequencer?.currentFrame
         }
       default:
         return {

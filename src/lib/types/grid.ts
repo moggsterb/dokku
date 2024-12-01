@@ -1,6 +1,6 @@
 import { Cell } from "./cell";
 import { Enneads } from "./ennead";
-import { DisplayMode, GridStatus } from "./enums";
+import { DisplayMode, GridStatus, SequenceType } from "./enums";
 import { IsSolveable, SolveableCells, SolveableCellsByType } from "./solveable";
 
 interface ActivatedCell {
@@ -12,8 +12,9 @@ interface ActivatedCell {
 export type ActiveCell = ActivatedCell | undefined
 
 export interface SequencerTypes {
-  type: 'Assemble' | 'Complete' | 'Scan' | 'Single'
+  sequenceType: SequenceType;
   currentFrame: number;
+  frameRate: number;
 }
 
 export type Sequencer = SequencerTypes | undefined

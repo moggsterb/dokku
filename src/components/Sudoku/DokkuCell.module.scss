@@ -173,8 +173,12 @@
       justify-content: center;
     }
 
-    &.complete {
-      animation: 10s completed infinite forwards;
+    // &.complete {
+    //   animation: 10s completed infinite forwards;
+    // }
+
+    &.completeAnimate {
+      animation: 1s completed infinite forwards;
     }
   }
 
@@ -254,20 +258,14 @@
   5% {
     transform: scale(1);
   }
-  10% {
+  50% {
     transform: scale(1.75);
-    color: rgb(228, 131, 21);
   }
-  12% {
+  95% {
     transform: scale(1);
-
-    // background: inherit;
-  }
-  20% {
     color: rgb(98, 255, 0);
   }
   100% {
-    // background: inherit;
     transform: scale(1);
   }
 }

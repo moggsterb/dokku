@@ -1,8 +1,8 @@
 import { batchSolveCells, initialCells, setCells } from "../cell";
 import { getDisplayModeForType, isCellSolveable } from "../solving/analyseCells";
-import { Cell, SolveType, Grid, GridStatus, DisplayMode, CellStatus, Sequencer } from "../types";
+import { Cell, SolveType, Grid, GridStatus, DisplayMode, CellStatus, Sequencer, SequenceType } from "../types";
 import { analyseGrid } from "../solving/analyseGrid";
-import { act } from "react-dom/test-utils";
+import { incSequenceFrame, initialiseSequence, sequencePresets } from "./sequencer";
 
 export type GridActions =
   | { type: 'RESET_GRID' }
@@ -40,7 +40,7 @@ export const updateState = (state: Grid, action: GridActions) => {
         })],
         gridStatus: GridStatus.ASSEMBLING,
         displayMode: DisplayMode.ASSEMBLE,
-        sequencer: { type: 'Assemble', currentFrame: 1 } as Sequencer,
+        sequencer: initialiseSequence(SequenceType.ASSEMBLE),
       }
     }
     case 'UPDATE_MODE':
@@ -56,27 +56,11 @@ export const updateState = (state: Grid, action: GridActions) => {
         gridStatus: action.payload.status
       }
     case 'INC_SEQUENCER':
-
-      const unRevealedPresets = state.cells.filter(cell => (cell.status === CellStatus.PRESET && cell.value === undefined))
-      const sequenceComplete = unRevealedPresets.length === 0
-      if (sequenceComplete) {
-        return {
-          ...state,
-          sequencer: undefined,
-          displayMode: DisplayMode.READY,
-          gridStatus: GridStatus.PLAYING,
-
-        }
-      }
-      const revealCell = unRevealedPresets[Math.floor(Math.random() * unRevealedPresets.length)]
-      const currentFrame = (state.sequencer?.currentFrame || 0) + 1;
+      console.log('inc')
       return {
         ...state,
-        cells: setCells([...state.cells], [revealCell.id], revealCell.presetValue, CellStatus.PRESET),
-        sequencer: {
-          ...state.sequencer,
-          currentFrame
-        } as Sequencer,
+        ...(state.displayMode === DisplayMode.ASSEMBLE && sequencePresets(state.cells, state.sequencer)),
+        ...(state.displayMode === DisplayMode.COMPLETE && { sequencer: incSequenceFrame(state.sequencer, 9) })
       }
 
     case 'SET_CELL':

@@ -1,7 +1,8 @@
 import { useEffect, useReducer, useState } from "react";
 import { GridStatus, Cell, CellStatus, DisplayMode } from "../types";
-import { gridReducer, initialGrid } from "../grid";
+import { gridReducer, initialGrid, initialiseSequence } from "../grid";
 import { initialCells } from "../cell";
+import { SequenceType } from "../types/enums";
 
 const useTicker = (initialStatus: GridStatus, gridCells: Cell[]) => {
   const [grid, gridDispatch] = useReducer(
@@ -9,22 +10,21 @@ const useTicker = (initialStatus: GridStatus, gridCells: Cell[]) => {
     initialGrid(
       initialStatus,
       initialStatus === GridStatus.ASSEMBLING ? DisplayMode.ASSEMBLE : DisplayMode.READY,
-      initialStatus === GridStatus.ASSEMBLING ? 1 : undefined,
+      initialStatus === GridStatus.ASSEMBLING ? initialiseSequence(SequenceType.ASSEMBLE) : undefined,
       gridCells,
     )
   );
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (grid.sequencer) {
+    if (grid.sequencer) {
+      const interval = setInterval(() => {
         gridDispatch({
           type: 'INC_SEQUENCER',
         })
-      }
+      }, grid.sequencer.frameRate)
 
-    }, 100)
-
-    return () => clearInterval(interval);
+      return () => clearInterval(interval);
+    }
 
   })
   return { grid, gridDispatch }

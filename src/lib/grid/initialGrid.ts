@@ -1,11 +1,11 @@
 import { initialEnneads } from "../ennead";
-import { DisplayMode, GridStatus, Cell, Grid, SolveableCells } from "../types";
+import { DisplayMode, GridStatus, Cell, Grid, SolveableCells, Sequencer } from "../types";
 import { analyseGrid } from "../solving/analyseGrid";
 
 const initialGrid = (
   gridStatus: GridStatus,
   displayMode: DisplayMode,
-  sequencer: number | undefined,
+  sequencer: Sequencer,
   startCells: Cell[]
 ): Grid => {
   return analyseGrid({

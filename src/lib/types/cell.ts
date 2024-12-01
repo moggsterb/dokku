@@ -6,6 +6,7 @@ export interface CellAnalysis {
   inSelector: boolean,
   canActivate: boolean;
   isComplete: boolean;
+  isCompleteAnim: boolean;
 
   hasValue: boolean;
   isPreset: boolean;

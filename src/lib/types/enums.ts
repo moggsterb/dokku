@@ -26,6 +26,13 @@ export enum DisplayMode {
   COMPLETE = 'complete',
 }
 
+export enum SequenceType {
+  ASSEMBLE = 'Assemble',
+  SCAN = 'Scan',
+  SINGLE = 'Single',
+  COMPLETE = 'Complete'
+}
+
 export enum CellStatus {
   PRESET = 'preset',
   UNSOLVED = 'unsolved',

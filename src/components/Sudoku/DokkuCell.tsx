@@ -76,6 +76,7 @@ const DokkuCell = ({
     isSolveableSingle,
     isCellSingleSolve,
     isComplete,
+    isCompleteAnim,
     allSolveMethods,
     canActivate,
     activeCellID,
@@ -177,6 +178,7 @@ const DokkuCell = ({
   const innerStyle = () => {
     return buildStyle([
       { style: styles.inner, condition: true },
+      { style: styles.preset, condition: isPreset && hasValue },
       { style: styles.hasValue, condition: hasValue },
       { style: styles.active, condition: isActive },
       { style: styles.connectedBlock, condition: inConnectedBlock },
@@ -191,9 +193,10 @@ const DokkuCell = ({
       { style: styles.solveableColumn, condition: isSolveableColumn },
       { style: styles.solveableRow, condition: isSolveableRow },
       { style: styles.solveableSingle, condition: isSolveableSingle },
-      { style: styles.preset, condition: isPreset && hasValue },
+
       { style: styles.singleSolve, condition: isCellSingleSolve },
       { style: styles.complete, condition: isComplete },
+      { style: styles.completeAnimate, condition: isCompleteAnim },
       { style: styles.hoverable, condition: isHoverable },
     ]);
   };
@@ -229,7 +232,7 @@ const DokkuCell = ({
       <div
         className={innerStyle()}
         onClick={handleClick}
-        style={getAnimStyle(Number(value), 'pulse')}
+        // style={getAnimStyle(Number(value), 'pulse')}
       >
         {isBarred && renderBarred()}
         {renderCell()}

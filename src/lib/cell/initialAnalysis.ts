@@ -12,6 +12,7 @@ export const initialAnalysis = (
     inSelector: gridStatus === GridStatus.SELECTING,
     canActivate: (gridStatus !== GridStatus.PREVIEWING && gridStatus !== GridStatus.SELECTING && cellStatus !== CellStatus.PRESET) || gridStatus === GridStatus.BUILDING,
     isComplete: gridStatus === GridStatus.COMPLETED,
+    isCompleteAnim: false,
 
     hasValue: value !== undefined,
     isPreset: cellStatus === CellStatus.PRESET,

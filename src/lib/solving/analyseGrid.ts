@@ -4,7 +4,8 @@ import { updateEnneadsCounts } from "../ennead";
 import { updateCellCandidates } from "./updateCounts";
 import { findScanningSolves } from "./findScanningSolves";
 import { findSingleSolves } from "./findSingleSolves";
-import { Grid, Cell, Enneads, SolveableCells, SolveableCellsByType, DisplayMode, GridStatus, CellStatus } from "../types";
+import { Grid, Cell, Enneads, SolveableCells, SolveableCellsByType, DisplayMode, GridStatus, CellStatus, SequenceType } from "../types";
+import { initialiseSequence } from "../grid";
 
 export const analyseGrid = (grid: Grid): Grid => {
   const cells = updateCellCandidates(grid.cells, 1);
@@ -34,7 +35,7 @@ export const analyseGrid = (grid: Grid): Grid => {
     ...(complete && {
       gridStatus: GridStatus.COMPLETED,
       displayMode: DisplayMode.COMPLETE,
-      sequencer: { type: 'Complete', currentFrame: 1 }
+      ...((grid.gridStatus !== GridStatus.COMPLETED) && { sequencer: initialiseSequence(SequenceType.COMPLETE) })
     }),
     cells: analysedCells,
     enneads,
