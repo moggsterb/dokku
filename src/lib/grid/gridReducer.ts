@@ -1,4 +1,4 @@
-import { batchSolveCells, initialCells, setCells } from "../cell";
+import { batchSolveCells, initialAnalysis, initialCells, setCells } from "../cell";
 import { getDisplayModeForType, isCellSolveable } from "../solving/analyseCells";
 import { Cell, SolveType, Grid, GridStatus, DisplayMode, CellStatus, Sequencer, SequenceType } from "../types";
 import { analyseGrid } from "../solving/analyseGrid";
@@ -6,7 +6,7 @@ import { incSequenceFrame, initialiseSequence, sequencePresets } from "./sequenc
 
 export type GridActions =
   | { type: 'RESET_GRID' }
-  | { type: 'RESTART_GRID', payload: { cells: Cell[] } }
+  | { type: 'RESTART_GRID' }
   | { type: 'UPDATE_MODE', payload: { mode: DisplayMode; } }
   | { type: 'UPDATE_STATUS', payload: { status: GridStatus; } }
   | { type: 'INC_SEQUENCER' }
@@ -30,14 +30,28 @@ export const updateState = (state: Grid, action: GridActions) => {
       }
     }
     case 'RESTART_GRID': {
+
+      const restartedCells = [...state.cells.map(cell => {
+        return {
+          ...cell,
+          value: undefined,
+          ...(cell.status !== CellStatus.PRESET && { status: CellStatus.UNSOLVED }),
+          candidates: [1, 2, 3, 4, 5, 6, 7, 8, 9].map((value) => {
+            return { value };
+          }),
+          cellAnalysis: initialAnalysis(
+            undefined,
+            GridStatus.PLAYING,
+            CellStatus.UNSOLVED,
+            undefined,
+            []
+          )
+        }
+      })]
+
       return {
         ...state,
-        cells: [...action.payload.cells.map(cell => {
-          return {
-            ...cell,
-            value: undefined
-          }
-        })],
+        cells: restartedCells,
         gridStatus: GridStatus.ASSEMBLING,
         displayMode: DisplayMode.ASSEMBLE,
         sequencer: initialiseSequence(SequenceType.ASSEMBLE),
@@ -56,11 +70,13 @@ export const updateState = (state: Grid, action: GridActions) => {
         gridStatus: action.payload.status
       }
     case 'INC_SEQUENCER':
-      console.log('inc')
+      const seqType = state.sequencer?.sequenceType
       return {
         ...state,
-        ...(state.displayMode === DisplayMode.ASSEMBLE && sequencePresets(state.cells, state.sequencer)),
-        ...(state.displayMode === DisplayMode.COMPLETE && { sequencer: incSequenceFrame(state.sequencer, 9) })
+        ...(state.sequencer?.sequenceType === SequenceType.ASSEMBLE && sequencePresets(state.cells, state.sequencer)),
+        ...(seqType === SequenceType.COMPLETE && { sequencer: incSequenceFrame(state.sequencer, 9) }),
+        ...(seqType === SequenceType.SINGLE && { sequencer: incSequenceFrame(state.sequencer, 9) }),
+        ...(seqType === SequenceType.SCAN && { sequencer: incSequenceFrame(state.sequencer,) }),
       }
 
     case 'SET_CELL':
@@ -68,7 +84,7 @@ export const updateState = (state: Grid, action: GridActions) => {
         ...state,
         cells: setCells([...state.cells], [action.payload.cellID], action.payload.value, action.payload.type),
         activeCellID: undefined,
-        displayMode: DisplayMode.READY
+        // displayMode: DisplayMode.READY
       };
     case 'RESET_CELL':
       return {
@@ -87,21 +103,13 @@ export const updateState = (state: Grid, action: GridActions) => {
 
     case 'FOCUS_CELL':
       const id = action.payload.cellID;
-      const v = state.cells[id].value
-      if (v) {
-        return {
-          ...state,
-          activeCellID: id,
-          displayMode: DisplayMode.SCANNING_VALUE
-        }
-      }
       const solveable = isCellSolveable(state.solveableCells, id, action.payload.method || SolveType.ANY, 'any')
       const displayMode = solveable ? getDisplayModeForType(solveable.type) : DisplayMode.MANUAL;
-
       return {
         ...state,
         activeCellID: id,
-        displayMode
+        displayMode,
+        sequencer: initialiseSequence(displayMode, state, id)
       };
     case 'BLUR_CELL':
       return {

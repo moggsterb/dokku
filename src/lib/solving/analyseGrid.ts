@@ -14,8 +14,10 @@ export const analyseGrid = (grid: Grid): Grid => {
   const solveableCellsByType = summariseSolves(solveableCells);
   const { activeCellID } = grid;
 
-  const activeCell = activeCellID ? cells[activeCellID] : undefined;
-  const activeSolveable = activeCellID ? isCellSolveable(solveableCells, activeCellID, getTypeForDisplayMode(grid.displayMode) || 'any', 'any') : false;
+  const activeCell = activeCellID !== undefined ? cells[activeCellID] : undefined;
+  const activeSolveable = activeCellID !== undefined ? isCellSolveable(solveableCells, activeCellID, getTypeForDisplayMode(grid.displayMode) || 'any', 'any') : false;
+
+
 
   const analysedCells = analyseCells(
     cells,

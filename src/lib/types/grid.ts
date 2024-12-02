@@ -15,6 +15,8 @@ export interface SequencerTypes {
   sequenceType: SequenceType;
   currentFrame: number;
   frameRate: number;
+  data?: any;
+  limit?: number;
 }
 
 export type Sequencer = SequencerTypes | undefined

@@ -11,8 +11,9 @@ interface Props {
   rejected?: Rejected;
   canSolve: boolean;
   canSet: boolean;
+  animateSolve: boolean;
   clickHandler: (cellID: number, value: number) => void;
-  animStyle: Object;
+  // animStyle: Object;
 }
 
 const DokkuCandidate = ({
@@ -21,9 +22,10 @@ const DokkuCandidate = ({
   rejected,
   canSolve,
   canSet,
+  animateSolve,
   clickHandler,
-  animStyle,
-}: Props) => {
+}: // animStyle,
+Props) => {
   const handleClick = () => {
     if (!rejected) {
       clickHandler(cell.id, value);
@@ -37,6 +39,7 @@ const DokkuCandidate = ({
       { style: styles.solveable, condition: canSolve },
       { style: styles.notRejected, condition: !rejected },
       { style: styles.settable, condition: canSet },
+      { style: styles.animateSolve, condition: animateSolve },
       {
         style: styles.hoverable,
         condition: isBrowser && canClick,
@@ -48,7 +51,7 @@ const DokkuCandidate = ({
     <div
       className={candidateStyle()}
       onClick={canClick ? handleClick : undefined}
-      style={animStyle}
+      // style={animStyle}
     >
       {rejected ? '' : value}
     </div>

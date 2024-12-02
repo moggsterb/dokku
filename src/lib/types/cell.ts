@@ -5,13 +5,14 @@ import { IsSolveable } from "./solveable";
 export interface CellAnalysis {
   inSelector: boolean,
   canActivate: boolean;
-  isComplete: boolean;
-  isCompleteAnim: boolean;
+  // isComplete: boolean;
+  isCompleteAnim: boolean; // When grid complete, sequencer matches value
 
   hasValue: boolean;
   isPreset: boolean;
   hasFocusedValue: boolean;
   isActive: boolean;
+  // isMatched: 
 
   inConnectedBlock: boolean;
   inConnectedColumn: boolean;
@@ -20,6 +21,7 @@ export interface CellAnalysis {
   inBarredBlock: boolean;
   inBarredRow: boolean;
   inBarredColumn: boolean;
+  isBarredX: boolean,
 
   isSolveable: IsSolveable;
   isSolveableAny: boolean;
@@ -30,7 +32,8 @@ export interface CellAnalysis {
   isCellSingleSolve: boolean;
 
   allSolveMethods: SolveType[];
-  outstandingCellIDs: number[];
+  animateSolve: boolean;
+  // outstandingCellIDs: number[];
 
   activeCellID: number | undefined;
 }

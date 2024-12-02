@@ -22,7 +22,7 @@ const initialGrid = (
       single: []
     },
     activeCellID: undefined,
-    sequencer
+    sequencer,
   })
 }
 

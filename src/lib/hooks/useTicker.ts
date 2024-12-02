@@ -1,22 +1,18 @@
-import { useEffect, useReducer, useState } from "react";
-import { GridStatus, Cell, CellStatus, DisplayMode } from "../types";
-import { gridReducer, initialGrid, initialiseSequence } from "../grid";
-import { initialCells } from "../cell";
-import { SequenceType } from "../types/enums";
+import { useEffect, useReducer } from "react";
+import { Grid } from "../types";
+import { GridActions, gridReducer } from "../grid";
 
-const useTicker = (initialStatus: GridStatus, gridCells: Cell[]) => {
+// const useTicker = (initialStatus: GridStatus, gridCells: Cell[]) => {
+const useTicker = (startGrid: Grid) => {
+
   const [grid, gridDispatch] = useReducer(
     gridReducer,
-    initialGrid(
-      initialStatus,
-      initialStatus === GridStatus.ASSEMBLING ? DisplayMode.ASSEMBLE : DisplayMode.READY,
-      initialStatus === GridStatus.ASSEMBLING ? initialiseSequence(SequenceType.ASSEMBLE) : undefined,
-      gridCells,
-    )
+    startGrid
   );
 
   useEffect(() => {
     if (grid.sequencer) {
+      console.log('tic')
       const interval = setInterval(() => {
         gridDispatch({
           type: 'INC_SEQUENCER',

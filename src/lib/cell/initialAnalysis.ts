@@ -11,7 +11,6 @@ export const initialAnalysis = (
   return {
     inSelector: gridStatus === GridStatus.SELECTING,
     canActivate: (gridStatus !== GridStatus.PREVIEWING && gridStatus !== GridStatus.SELECTING && cellStatus !== CellStatus.PRESET) || gridStatus === GridStatus.BUILDING,
-    isComplete: gridStatus === GridStatus.COMPLETED,
     isCompleteAnim: false,
 
     hasValue: value !== undefined,
@@ -26,6 +25,7 @@ export const initialAnalysis = (
     inBarredBlock: false,
     inBarredColumn: false,
     inBarredRow: false,
+    isBarredX: false,
 
     isSolveable: false,
     isSolveableAny: false,
@@ -36,7 +36,7 @@ export const initialAnalysis = (
     isCellSingleSolve: false,
 
     allSolveMethods,
-    outstandingCellIDs: [],
+    animateSolve: false,
 
     activeCellID,
   }

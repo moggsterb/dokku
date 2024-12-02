@@ -1,8 +1,8 @@
 'use client';
 
-import React from 'react';
+import React, { useReducer } from 'react';
 
-import { DisplayMode, GridStatus, Cell } from '@/lib/types';
+import { DisplayMode, GridStatus, Cell, SequenceType, Grid } from '@/lib/types';
 import useTicker from '@/lib/hooks/useTicker';
 
 import DokkuGrid from './DokkuGrid';
@@ -13,20 +13,22 @@ import SolveControls from '../Controls/SolveControls';
 
 import styles from './GridWrapper.module.scss';
 interface Props {
-  initialCells: Cell[];
-  initialStatus: GridStatus;
+  // initialCells: Cell[];
+  // initialStatus: GridStatus;
+  startGrid: Grid;
   showCandidates?: boolean;
   showHints?: boolean;
 }
 
 const GridWrapper = ({
-  initialCells,
-  initialStatus,
+  // initialCells,
+  // initialStatus,
+  startGrid,
   showCandidates = false,
   showHints = false,
 }: Props) => {
-  const { grid, gridDispatch } = useTicker(initialStatus, initialCells);
-  const { gridStatus, displayMode, sequencer } = grid;
+  const { grid, gridDispatch } = useTicker(startGrid);
+  const { gridStatus, displayMode, sequencer, activeCellID } = grid;
 
   return (
     <div
@@ -40,6 +42,12 @@ const GridWrapper = ({
       {gridStatus === GridStatus.BUILDING && (
         <BuildControls grid={grid} gridDispatch={gridDispatch} />
       )}
+
+      {gridStatus !== GridStatus.PREVIEWING &&
+        gridStatus !== GridStatus.BUILDING && (
+          <CompleteControls gridDispatch={gridDispatch} />
+        )}
+
       {(gridStatus === GridStatus.PLAYING ||
         gridStatus === GridStatus.ASSEMBLING) && (
         <>
@@ -47,25 +55,23 @@ const GridWrapper = ({
           <Narrator grid={grid} gridDispatch={gridDispatch} />
         </>
       )}
-      {gridStatus === GridStatus.COMPLETED && (
-        <CompleteControls
-          grid={grid}
-          gridDispatch={gridDispatch}
-          initialCells={initialCells}
-        />
-      )}
+
       <DokkuGrid
         grid={grid}
         showCandidates={showCandidates}
         showHints={showHints}
         gridDispatch={gridDispatch}
       />
-      <span>
+      <span style={{ display: 'none', position: 'fixed', top: 75, left: 25 }}>
         Grid: {gridStatus}
         <br />
         Display: {displayMode}
         <br />
+        ActiveCellID: {activeCellID}
+        <br />
         Sequencer: {sequencer?.currentFrame}
+        <br />
+        Type: {sequencer?.sequenceType}
       </span>
     </div>
   );

@@ -25,7 +25,7 @@
     align-items: center;
     background: var(--cell-bg);
     color: var(--cell-fg);
-    transition: all 0.25s ease-in, transform 0.25s ease-in;
+    transition: all 0.25s ease-in, transform 0.2s ease-in;
     border-radius: var(--cell-radius);
     position: relative;
 
@@ -48,7 +48,6 @@
       color: var(--cell-active-fg);
       transform: scale(1.5);
       z-index: 10;
-      // border: 10px solid red;
       box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     }
 
@@ -60,7 +59,6 @@
           background-color: var(--cell-column-off);
         }
       }
-      // color: var(--cell-column);
       color: #ffffff50;
     }
 
@@ -100,7 +98,7 @@
       z-index: 10;
 
       @media only screen and (min-width: 640px) {
-        transform: scale(1.8);
+        transform: scale(1.6);
       }
 
       .solveIconWrapper {
@@ -110,20 +108,23 @@
 
     & .barred {
       position: absolute;
-
-      // background-color: var(--cell-barred-bg);
-      // color: var(--cell-barred-fg);
+      transition: opacity 0.25s ease-in, transform 0.25s ease-in;
       background: #00000090;
-      color: white;
       color: #000000cc;
       font-size: calc(var(--cell-value-size));
       font-weight: bold;
-      height: 100%;
+      height: 0;
       width: 100%;
       border-radius: var(--cell-radius);
       display: flex;
       justify-content: center;
       align-items: center;
+      opacity: 0;
+    }
+
+    & .barredOn {
+      opacity: 1;
+      height: 100%;
     }
 
     &.connectedRow,
@@ -173,12 +174,8 @@
       justify-content: center;
     }
 
-    // &.complete {
-    //   animation: 10s completed infinite forwards;
-    // }
-
     &.completeAnimate {
-      animation: 1s completed infinite forwards;
+      animation: 0.75s completed infinite forwards;
     }
   }
 

@@ -5,17 +5,20 @@ import React from 'react';
 import { initialCells } from '@/lib/cell';
 
 import MainContainer from '@/components/Layout/MainContainer';
-import Puzzle from '@/components/Sudoku/GridWrapper';
-import { GridStatus } from '@/lib/types';
+import GridWrapper from '@/components/Sudoku/GridWrapper';
+import { DisplayMode, GridStatus } from '@/lib/types';
+import { initialGrid } from '@/lib/grid';
 
 export default function Builder() {
+  const startGrid = initialGrid(
+    GridStatus.BUILDING,
+    DisplayMode.READY,
+    undefined,
+    initialCells()
+  );
   return (
     <MainContainer>
-      <Puzzle
-        initialCells={initialCells()}
-        initialStatus={GridStatus.BUILDING}
-        showCandidates={false}
-      />
+      <GridWrapper startGrid={startGrid} showCandidates={false} />
     </MainContainer>
   );
 }

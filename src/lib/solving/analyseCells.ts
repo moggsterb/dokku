@@ -2,6 +2,8 @@ import { cellsInEnnead, initialAnalysis } from "../cell";
 import { takenInEnnead } from "./updateCounts";
 import { Cell, Enneads, GridStatus, DisplayMode, SolveableCells, IsSolveable, SolveType, EnneadType, Sequencer } from "../types";
 import { CellAnalysis } from "../types/cell";
+import { faStarHalfStroke } from "@fortawesome/free-solid-svg-icons";
+import { cellIsBarred, cellMatches, cellNeedsAnX } from "../grid";
 
 export const analyseCells = (
   cells: Cell[],
@@ -117,56 +119,53 @@ const analyseCell = (
       // highlight a cell where solve method is single - and its influencing cells
       case DisplayMode.CELL_SINGLE:
         const isCellSingleSolve = cell.id === activeCellID ? isCellSolveable(solveableCells, cell.id, SolveType.SINGLE, 'any') : false
+        const isConnected = cell.block === activeBlock || cell.column === activeColumn || cell.row === activeRow
+        const animatedMatch = isConnected && cell.value === sequencer?.currentFrame
         return {
           ...state,
           isActive: cell.id === activeCellID,
+          hasFocusedValue: animatedMatch,
           inConnectedBlock: cell.block === activeBlock,
           inConnectedColumn: cell.column === activeColumn,
           inConnectedRow: cell.row === activeRow,
           isSolveable: isCellSingleSolve,
-          isCellSingleSolve: isCellSingleSolve !== false
+          ...(sequencer?.currentFrame === (isCellSingleSolve && isCellSingleSolve.value) && {
+            animateSolve: true
+          })
         }
 
-      // highlight a cell where solve method is block/column/row - and its barring cells
       case DisplayMode.CELL_BLOCK:
       case DisplayMode.CELL_COLUMN:
       case DisplayMode.CELL_ROW:
-
-        if (activeSolveable && activeCell && activeSolveable.scanEnneadType) {
-          const { scanEnneadType, value } = activeSolveable;
-          const scanEnneadID = activeCell[scanEnneadType]
-
-          const { inBarredBlock, inBarredColumn, inBarredRow, outstandingCellIDs } = getBarringEnneads(
-            cells,
-            enneads,
-            cell,
-            value,
-            scanEnneadType,
-            scanEnneadID)
-
-          const inConnectedBlock = scanEnneadType === EnneadType.BLOCK && cell.block === activeBlock; // && cell.value !== undefined;
-          const inConnectedColumn = scanEnneadType === EnneadType.COLUMN && cell.column === activeColumn; //  && cell.value !== undefined;
-          const inConnectedRow = scanEnneadType === EnneadType.ROW && cell.row === activeRow; //  && cell.value !== undefined;
-          const hasFocusedValue = (inBarredBlock || inBarredColumn || inBarredRow) && cell.value === activeSolveable.value
-
-          return {
-            ...state,
-            inBarredBlock,
-            inBarredColumn,
-            inBarredRow,
-            isActive: cell.id === activeCellID,
-            inConnectedBlock,
-            inConnectedColumn,
-            inConnectedRow,
-            outstandingCellIDs,
-            hasFocusedValue,
-            isSolveable: cell.id === activeCellID && isCellSolveable(solveableCells, cell.id, SolveType.ANY, activeValue)
-          }
+        if (!sequencer) {
+          return { ...state }
         }
+        const cycleFrame = sequencer.currentFrame - 5;
+        const allowedIntersections = sequencer.data.intersections
+
+        const cellMatched = cellMatches(cell, allowedIntersections) * 10;
+        const blockBarred = cellIsBarred(cell, allowedIntersections, EnneadType.BLOCK) * 10;
+        const columnBarred = cellIsBarred(cell, allowedIntersections, EnneadType.COLUMN) * 10;
+        const rowBarred = cellIsBarred(cell, allowedIntersections, EnneadType.ROW) * 10;
+        const xNeeded = cellNeedsAnX(cell, allowedIntersections) * 10
+
         return {
           ...state,
-          isActive: cell.id === activeCellID,
-          isSolveable: cell.id === activeCellID && isCellSolveable(solveableCells, cell.id, SolveType.ANY, activeValue)
+          isActive: cell.id === sequencer.data.activeCellID,
+          ...((sequencer.currentFrame > 1) && {
+            inConnectedBlock: sequencer.data.connectToBlock === cell.block,
+            inConnectedColumn: sequencer.data.connectToColumn === cell.column,
+            inConnectedRow: sequencer.data.connectToRow === cell.row
+          }),
+          ...((cellMatched >= 0 && cycleFrame > (cellMatched)) && { hasFocusedValue: true }),
+          ...((blockBarred >= 0 && cycleFrame > (blockBarred + 3)) && { inBarredBlock: true }),
+          ...((columnBarred >= 0 && cycleFrame > (columnBarred + 3)) && { inBarredColumn: true }),
+          ...((rowBarred >= 0 && cycleFrame > (rowBarred + 3)) && { inBarredRow: true }),
+          ...((xNeeded >= 0 && cycleFrame > (xNeeded + 6)) && { isBarredX: true }),
+          isSolveable: cell.id === activeCellID && isCellSolveable(solveableCells, cell.id, SolveType.ANY, activeValue),
+          ...((cycleFrame === allowedIntersections.length * 10) && {
+            animateSolve: true,
+          })
         }
 
       case DisplayMode.SCANNING_VALUE:

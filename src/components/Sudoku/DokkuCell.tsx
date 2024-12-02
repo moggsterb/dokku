@@ -63,11 +63,11 @@ const DokkuCell = ({
     inConnectedBlock,
     inConnectedColumn,
     inConnectedRow,
-    outstandingCellIDs,
     hasFocusedValue,
     inBarredBlock,
     inBarredColumn,
     inBarredRow,
+    isBarredX,
     isSolveable,
     isSolveableAny,
     isSolveableBlock,
@@ -75,11 +75,11 @@ const DokkuCell = ({
     isSolveableRow,
     isSolveableSingle,
     isCellSingleSolve,
-    isComplete,
     isCompleteAnim,
     allSolveMethods,
     canActivate,
     activeCellID,
+    animateSolve,
   } = cell.cellAnalysis;
 
   const [animID, setAnimID] = useState<number | undefined>(undefined);
@@ -142,14 +142,11 @@ const DokkuCell = ({
               value={value}
               rejected={rejected}
               canSolve={highlightSolve === value}
-              animStyle={getAnimStyle(
-                id === animID && value === highlightSolve ? highlightSolve : 0,
-                'pulseBig'
-              )}
               canSet={
                 (isActive && highlightSolve === value) ||
                 gridStatus === GridStatus.BUILDING
               }
+              animateSolve={animateSolve && highlightSolve === value}
               clickHandler={setHandler}
             />
           );
@@ -159,11 +156,15 @@ const DokkuCell = ({
   };
 
   const renderBarred = () => {
-    return (
-      <div className={styles.barred}>
-        {outstandingCellIDs.includes(cell.id) && 'X'}
-      </div>
-    );
+    return <div className={barredStyle()}>{isBarredX && 'X'}</div>;
+  };
+
+  const barredStyle = () => {
+    const isBarred = inBarredBlock || inBarredColumn || inBarredRow;
+    return buildStyle([
+      { style: styles.barred, condition: true },
+      { style: styles.barredOn, condition: isBarred },
+    ]);
   };
 
   const cellStyle = () => {
@@ -193,9 +194,7 @@ const DokkuCell = ({
       { style: styles.solveableColumn, condition: isSolveableColumn },
       { style: styles.solveableRow, condition: isSolveableRow },
       { style: styles.solveableSingle, condition: isSolveableSingle },
-
       { style: styles.singleSolve, condition: isCellSingleSolve },
-      { style: styles.complete, condition: isComplete },
       { style: styles.completeAnimate, condition: isCompleteAnim },
       { style: styles.hoverable, condition: isHoverable },
     ]);
@@ -208,33 +207,10 @@ const DokkuCell = ({
     }
   };
 
-  const getAnimStyle = (value: number, name: string) => {
-    if (isComplete) {
-      return {
-        animationDelay: `${Number(value - 1)}s`,
-      };
-    } else if (animID && animID === activeCellID && value) {
-      return {
-        animationName: name,
-        animationDuration: '5s',
-        animationIterationCount: 'infinite',
-        animationDelay: `${Number(value) / 2}s`,
-      };
-    } else {
-      return {};
-    }
-  };
-
-  const isBarred = inBarredBlock || inBarredColumn || inBarredRow;
-
   return (
     <div className={cellStyle()}>
-      <div
-        className={innerStyle()}
-        onClick={handleClick}
-        // style={getAnimStyle(Number(value), 'pulse')}
-      >
-        {isBarred && renderBarred()}
+      <div className={innerStyle()} onClick={handleClick}>
+        {renderBarred()}
         {renderCell()}
       </div>
     </div>
