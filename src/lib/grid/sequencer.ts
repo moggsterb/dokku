@@ -17,7 +17,7 @@ export const initialiseSequence = (type: SequenceType | DisplayMode, grid?: Grid
     case DisplayMode.CELL_ROW:
       const data = grid && activeCellID !== undefined && buildScanData(grid, type, activeCellID) || { intersections: [] }
       const limit = data?.intersections.length * 3 + 2
-      return { sequenceType: SequenceType.SCAN, currentFrame: 1, frameRate: 200, data, limit }
+      return { sequenceType: SequenceType.SCAN, currentFrame: 1, frameRate: 150, data, limit }
     default:
       return undefined
   }

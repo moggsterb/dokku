@@ -152,11 +152,11 @@ const analyseCell = (
         return {
           ...state,
           isActive: cell.id === sequencer.data.activeCellID,
-          ...((sequencer.currentFrame > 1) && {
-            inConnectedBlock: sequencer.data.connectToBlock === cell.block,
-            inConnectedColumn: sequencer.data.connectToColumn === cell.column,
-            inConnectedRow: sequencer.data.connectToRow === cell.row
-          }),
+
+          inConnectedBlock: sequencer.data.connectToBlock === cell.block,
+          inConnectedColumn: sequencer.data.connectToColumn === cell.column,
+          inConnectedRow: sequencer.data.connectToRow === cell.row,
+
           ...((cellMatched >= 0 && cycleFrame > (cellMatched)) && { hasFocusedValue: true }),
           ...((blockBarred >= 0 && cycleFrame > (blockBarred + 3)) && { inBarredBlock: true }),
           ...((columnBarred >= 0 && cycleFrame > (columnBarred + 3)) && { inBarredColumn: true }),
