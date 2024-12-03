@@ -41,10 +41,9 @@ const GridWrapper = ({
         <BuildControls grid={grid} gridDispatch={gridDispatch} />
       )}
 
-      {gridStatus !== GridStatus.PREVIEWING &&
-        gridStatus !== GridStatus.BUILDING && (
-          <CompleteControls gridDispatch={gridDispatch} />
-        )}
+      {gridStatus === GridStatus.COMPLETED && (
+        <CompleteControls gridDispatch={gridDispatch} />
+      )}
 
       <DokkuGrid
         grid={grid}

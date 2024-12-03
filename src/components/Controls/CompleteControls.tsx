@@ -1,7 +1,6 @@
 import React, { Dispatch } from 'react';
 
 import { GridActions } from '@/lib/grid';
-import { Cell, Grid } from '@/lib/types';
 
 import Control from './Control';
 import Portal from '../Layout/Portal';
@@ -17,9 +16,14 @@ const CompleteControls = ({ gridDispatch }: Props) => {
 
   return (
     <>
-      {/* <Portal type='header'>
-        <Control banner={{ title: 'Grid Complete', description: 'All done' }} />
-      </Portal> */}
+      <Portal type='header'>
+        <Control
+          banner={{
+            title: 'Grid Solved',
+            description: 'The puzzle is complete',
+          }}
+        />
+      </Portal>
       <Portal type='footer'>
         <Control
           beforeActions={[{ title: 'restart', handler: replayHandler }]}
