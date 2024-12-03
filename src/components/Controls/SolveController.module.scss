@@ -14,7 +14,7 @@
 
   transition: all 0.2s ease-in-out;
 
-  @media only screen and (min-width: 640px) {
+  @media only screen and (min-width: 768px) {
     height: 30px;
     border-radius: 15px;
     // padding-right: 40px;
@@ -93,7 +93,7 @@
     line-height: 18px;
     order: 1;
 
-    @media only screen and (min-width: 640px) {
+    @media only screen and (min-width: 768px) {
       border-radius: 15px;
       width: 30px;
       right: 10px;
@@ -140,7 +140,7 @@
   order: 2;
   text-align: center;
 
-  @media only screen and (min-width: 640px) {
+  @media only screen and (min-width: 768px) {
     min-width: 70px;
     font-size: 12px;
     padding: 3px 10px;

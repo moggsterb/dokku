@@ -9,6 +9,8 @@ import DokkuCell from './DokkuCell';
 
 import styles from './DokkuGrid.module.scss';
 import { isCellSolveable } from '@/lib/solving/analyseCells';
+import Narrator from './Narrator';
+import SolveControls from '../Controls/SolveControls';
 
 interface Props {
   grid: Grid;
@@ -102,9 +104,14 @@ const DokkuGrid = ({
       : ''
   }`;
 
+  const showExtras =
+    gridStatus === GridStatus.PLAYING || gridStatus === GridStatus.ASSEMBLING;
+
   return (
     <div className={styles.wrapper}>
+      {showExtras && <Narrator grid={grid} gridDispatch={gridDispatch} />}
       <div className={gridStyle}>{RenderCells()}</div>
+      {showExtras && <SolveControls grid={grid} gridDispatch={gridDispatch} />}
     </div>
   );
 };

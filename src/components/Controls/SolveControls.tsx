@@ -4,7 +4,6 @@ import { GridActions } from '@/lib/grid';
 import { GridStatus, Grid, EnneadType, SolveType } from '@/lib/types';
 
 import SolveController from './SolveController';
-import Portal from '../Layout/Portal';
 
 import styles from './SolveControls.module.scss';
 
@@ -24,7 +23,7 @@ const SolveControls = ({
   const singles = solveableCellsByType[SolveType.SINGLE];
 
   return (
-    <Portal type='footer'>
+    <div className={styles.placeHolder}>
       <div className={styles.wrapper}>
         {gridDispatch &&
           (gridStatus === GridStatus.PLAYING ||
@@ -63,7 +62,7 @@ const SolveControls = ({
             </div>
           )}
       </div>
-    </Portal>
+    </div>
   );
 };
 

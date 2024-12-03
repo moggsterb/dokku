@@ -97,7 +97,7 @@
       transform: scale(3);
       z-index: 10;
 
-      @media only screen and (min-width: 640px) {
+      @media only screen and (min-width: 768px) {
         transform: scale(1.6);
       }
 
@@ -216,7 +216,7 @@
     padding: calc(var(--cell-size) / 16);
     padding-left: calc(var(--cell-size) / 32 + 0.5px);
     padding-right: calc(var(--cell-size) / 32 - 1px);
-    @media only screen and (min-width: 640px) {
+    @media only screen and (min-width: 768px) {
       padding: calc(var(--cell-size) / 16);
       padding-left: calc(var(--cell-size) / 16 + 0.5px);
       padding-right: calc(var(--cell-size) / 16 - 1px);

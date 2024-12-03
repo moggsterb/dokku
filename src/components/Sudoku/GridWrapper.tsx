@@ -1,15 +1,13 @@
 'use client';
 
-import React, { useReducer } from 'react';
+import React from 'react';
 
 import { DisplayMode, GridStatus, Cell, SequenceType, Grid } from '@/lib/types';
 import useTicker from '@/lib/hooks/useTicker';
 
 import DokkuGrid from './DokkuGrid';
-import Narrator from './Narrator';
 import CompleteControls from '../Controls/CompleteControls';
 import BuildControls from '../Controls/BuildControls';
-import SolveControls from '../Controls/SolveControls';
 
 import styles from './GridWrapper.module.scss';
 interface Props {
@@ -47,14 +45,6 @@ const GridWrapper = ({
         gridStatus !== GridStatus.BUILDING && (
           <CompleteControls gridDispatch={gridDispatch} />
         )}
-
-      {(gridStatus === GridStatus.PLAYING ||
-        gridStatus === GridStatus.ASSEMBLING) && (
-        <>
-          <SolveControls grid={grid} gridDispatch={gridDispatch} />
-          <Narrator grid={grid} gridDispatch={gridDispatch} />
-        </>
-      )}
 
       <DokkuGrid
         grid={grid}

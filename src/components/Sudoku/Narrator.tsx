@@ -3,8 +3,6 @@ import React, { Dispatch } from 'react';
 import { GridActions } from '@/lib/grid';
 import { CellStatus, DisplayMode, Grid, SolveType } from '@/lib/types';
 
-import Portal from '../Layout/Portal';
-
 import styles from './Narrator.module.scss';
 import {
   getTypeForDisplayMode,
@@ -149,9 +147,9 @@ const Narrator = ({
   };
 
   return (
-    <Portal type='header'>
+    <div className={styles.placeHolder}>
       <div className={styles.wrapper}>{buildMessage()}</div>
-    </Portal>
+    </div>
   );
 };
 

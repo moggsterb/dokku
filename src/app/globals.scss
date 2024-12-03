@@ -11,7 +11,7 @@ body {
   // sizes
   --pixel-size: 5px;
   --grid-size: 300px;
-  --cell-value-size: 20px;
+  --cell-value-size: 15px;
 
   // colours
   --theme-09: #bfb9ad;
@@ -65,19 +65,19 @@ body {
   --cell-barred-fg: #1b1b1b;
 }
 
-/* Medium devices (tablets, 640px and up) */
-@media only screen and (min-width: 640px) {
+/* Medium devices (tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
   :root {
     --pixel-size: 10px;
     --grid-size: 540px;
-    --cell-value-size: 40px;
+    --cell-value-size: 30px;
   }
 }
 
 @media only screen and (min-width: 900px) and (orientation: portrait) {
   :root {
     --pixel-size: 15px;
-    --grid-size: 800px;
+    --grid-size: 750px;
     --cell-value-size: 30px;
   }
 }
@@ -86,7 +86,7 @@ body {
 @media only screen and (min-width: 1024px) and (orientation: landscape) {
   :root {
     --pixel-size: 15px;
-    --grid-size: 640px;
+    --grid-size: 650px;
     --cell-value-size: 30px;
   }
 }
